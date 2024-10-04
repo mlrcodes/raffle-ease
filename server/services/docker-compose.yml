@@ -7,6 +7,16 @@ services:
     networks:
       - configs-network
 
+  discovery-server:
+    image: discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - configs-network
+
 networks:
   configs-network:
     driver: bridge
