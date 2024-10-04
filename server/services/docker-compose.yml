@@ -1,0 +1,12 @@
+services:
+  config-server:
+    image: config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - configs-network
+
+networks:
+  configs-network:
+    driver: bridge
