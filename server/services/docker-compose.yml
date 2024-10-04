@@ -5,7 +5,7 @@ services:
     ports:
       - "8888:8888"
     networks:
-      - configs-network
+      - configs_net
 
   discovery-server:
     image: discovery-server
@@ -15,8 +15,27 @@ services:
     depends_on:
       - config-server
     networks:
-      - configs-network
+      - configs_net
+
+  associations_db_ms:
+    container_name: associations_db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${associations_db_user}
+      POSTGRES_PASSWORD: ${associations_db_password}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - associations_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - associations_net
 
 networks:
-  configs-network:
+  configs_net:
     driver: bridge
+  associations_net:
+    driver: bridge
+
+volumes:
+  associations_data:
