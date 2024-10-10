@@ -5,7 +5,7 @@ services:
     ports:
       - "8888:8888"
     networks:
-      - configs_net
+      - configs-net
 
   discovery-server:
     image: discovery-server
@@ -15,27 +15,80 @@ services:
     depends_on:
       - config-server
     networks:
-      - configs_net
+      - configs-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
-  associations_db_ms:
-    container_name: associations_db
+  associations-service:
+    image: associations-service
+    container_name: associations-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - discovery-server
+      - associations-db
+    networks:
+      - configs-net
+      - associations-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  associations-db:
+    container_name: associations-db
     image: postgres
     environment:
+      POSTGRES_DB: associations
       POSTGRES_USER: ${associations_db_user}
       POSTGRES_PASSWORD: ${associations_db_password}
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - associations_data:/var/lib/postgresql/data
+      - associations-data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     networks:
-      - associations_net
+      - associations-net
+
+  raffles-service:
+    image: raffles-service
+    container_name: raffles-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+      - discovery-server
+      - raffles-db
+      - associations-service
+    networks:
+      - configs-net
+      - raffles-net
+      - associations-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  raffles-db:
+    container_name: raffles-db
+    image: postgres
+    environment:
+      POSTGRES_DB: raffles
+      POSTGRES_USER: ${raffles_db_user}
+      POSTGRES_PASSWORD: ${raffles_db_password}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - raffles-data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - raffles-net
 
 networks:
-  configs_net:
+  configs-net:
     driver: bridge
-  associations_net:
+  associations-net:
+    driver: bridge
+  raffles-net:
     driver: bridge
 
 volumes:
-  associations_data:
+  associations-data:
+  raffles-data:

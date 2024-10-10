@@ -8,11 +8,11 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.raffleease</groupId>
+	<groupId>com.raffle-ease</groupId>
 	<artifactId>associations-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>associations-service</name>
-	<description>Associations Service</description>
+	<description>Associations-service</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -51,7 +51,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
