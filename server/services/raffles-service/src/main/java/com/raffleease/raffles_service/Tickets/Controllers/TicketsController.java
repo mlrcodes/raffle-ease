@@ -25,7 +25,7 @@ public class TicketsController {
     public ResponseEntity<TicketResponseSet> findByTicketNumber(
             @RequestBody SearchRequest request
     ) {
-        return ResponseEntity.ok(this.searchService.findByTicketNumber(request));
+        return ResponseEntity.ok(searchService.findByTicketNumber(request));
     }
 
     @PostMapping("/generate-random")
@@ -37,17 +37,10 @@ public class TicketsController {
 
     @PostMapping("/reserve")
     public ResponseEntity<Void> reserve(
-            @RequestBody TicketsIdsDTO request
+            @RequestBody Set<Long> ticketsIds
     ) {
-        service.reserve(request);
+        service.reserve(ticketsIds);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/check-reserved")
-    public ResponseEntity<Boolean> checkIfReserved(
-            @RequestBody TicketsIdsDTO request
-    ) {
-        return ResponseEntity.ok(service.checkIfReserved(request));
     }
 
     @PutMapping("/purchase")

@@ -48,8 +48,8 @@ public class TicketsService {
         return purchasedTickets;
     }
 
-    public void reserve(TicketsIdsDTO request) {
-        List<Ticket> tickets = findAllById(request.tickets());
+    public void reserve(Set<Long> ticketsIds) {
+        List<Ticket> tickets = findAllById(ticketsIds);
         checkTicketsAvailability(tickets);
         updateStatus(tickets, TicketStatus.RESERVED);
     }
@@ -76,22 +76,17 @@ public class TicketsService {
         });
     }
 
-    public TicketResponseSet buildResponseFromSet(Set<TicketResponse> ticketResponses) {
-        return TicketResponseSet.builder()
-                .tickets(ticketResponses)
-                .build();
-    }
-
-    public Boolean checkIfReserved(TicketsIdsDTO request) {
-        List<Ticket> tickets = findAllById(request.tickets());
-        return tickets.stream().anyMatch(ticket -> !ticket.getStatus().equals(TicketStatus.RESERVED));
-    }
-
     public List<Ticket> findAllById(Set<Long> ticketsIds) {
         List<Ticket> tickets = repository.findAllById(ticketsIds);
         if (tickets.isEmpty() || (ticketsIds.size() != tickets.size())) {
             throw new TicketNotFoundException("One ore more tickets were not found");
         }
         return tickets;
+    }
+
+    public TicketResponseSet buildResponseFromSet(Set<TicketResponse> ticketResponses) {
+        return TicketResponseSet.builder()
+                .tickets(ticketResponses)
+                .build();
     }
 }
