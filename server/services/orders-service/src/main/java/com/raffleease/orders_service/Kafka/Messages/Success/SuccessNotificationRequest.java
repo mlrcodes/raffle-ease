@@ -1,6 +1,6 @@
 package com.raffleease.orders_service.Kafka.Messages.Success;
 
-import com.raffleease.orders_service.Customers.DTO.CustomerDTO;
+import com.raffleease.orders_service.Customers.CustomerDTO;
 import com.raffleease.orders_service.Orders.DTO.OrderData;
 import com.raffleease.orders_service.Payments.DTO.PaymentData;
 import jakarta.validation.constraints.NotNull;

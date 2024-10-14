@@ -1,5 +1,5 @@
 package com.raffleease.orders_service.Orders.Services;
-import com.raffleease.orders_service.Customers.DTO.CustomerDTO;
+import com.raffleease.orders_service.Customers.CustomerDTO;
 import com.raffleease.orders_service.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.orders_service.Exceptions.CustomExceptions.NotificationException;
 import com.raffleease.orders_service.Exceptions.CustomExceptions.OrderNotFoundException;
@@ -13,7 +13,7 @@ import com.raffleease.orders_service.Orders.DTO.PurchaseRequest;
 import com.raffleease.orders_service.Orders.Mappers.OrdersMapper;
 import com.raffleease.orders_service.Orders.Models.Order;
 import com.raffleease.orders_service.Orders.Models.OrderStatus;
-import com.raffleease.orders_service.Orders.Repositories.OrderRepository;
+import com.raffleease.orders_service.Orders.Repositories.IOrdersRepository;
 import com.raffleease.orders_service.Payments.DTO.PaymentData;
 import com.raffleease.orders_service.Tickets.Client.TicketsClient;
 import com.raffleease.orders_service.Tickets.DTO.TicketDTO;
@@ -27,7 +27,7 @@ import java.util.Set;
 @Service
 public class OrderResultService {
 
-    private final OrderRepository repository;
+    private final IOrdersRepository repository;
     private final OrdersMapper mapper;
     private final TicketsClient ticketsClient;
     private final NotificationProducer producer;
@@ -108,7 +108,7 @@ public class OrderResultService {
         }
     }
 
-    public Order findById(Integer id) {
+    public Order findById(Long id) {
         return this.repository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
     }

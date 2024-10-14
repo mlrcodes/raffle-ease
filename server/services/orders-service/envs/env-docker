@@ -1,0 +1,14 @@
+configs_host=config-server
+configs_port=8888
+eureka_host=discovery-server
+eureka_port=8761
+orders_db_host=orders-db
+orders_db_port=5432
+orders_db=orders
+orders_db_user=orders-user
+orders_db_password=1234
+raffles_host=raffles-service
+raffles_port=8082
+payments_host=payments-service
+payments_port=8085
+

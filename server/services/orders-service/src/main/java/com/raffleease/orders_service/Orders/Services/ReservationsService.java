@@ -7,11 +7,11 @@ import com.raffleease.orders_service.Kafka.Messages.Tickets.TicketsReleaseReques
 import com.raffleease.orders_service.Orders.DTO.OrderRequest;
 import com.raffleease.orders_service.Orders.Models.Order;
 import com.raffleease.orders_service.Orders.Models.OrderStatus;
-import com.raffleease.orders_service.Orders.Repositories.OrderRepository;
+import com.raffleease.orders_service.Orders.Repositories.IOrdersRepository;
 import com.raffleease.orders_service.Payments.Client.PaymentClient;
 import com.raffleease.orders_service.Payments.DTO.CreateSessionRequest;
-import com.raffleease.orders_service.Payments.DTO.CreateSessionResponse;
 import com.raffleease.orders_service.Tickets.Client.TicketsClient;
+import com.raffleease.orders_service.Tickets.DTO.CheckReservationRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,27 +22,26 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Service
 public class ReservationsService {
-
     private final TicketsClient ticketsClient;
-
     private final PaymentClient paymentClient;
-
-    private final OrderRepository repository;
-
+    private final IOrdersRepository repository;
     private final NotificationProducer producer;
 
     @Transactional
-    public CreateSessionResponse reserve(OrderRequest request) {
-        reserveTickets(request.tickets());
+    public String reserve(OrderRequest request) {
+        checkReservation(request.reservationFlag(), request.tickets());
         Order order = saveOrder(request);
         return createSession(request, order.getId());
     }
 
-    private void reserveTickets(Set<Long> tickets) {
-        try {
-            ticketsClient.reserve(tickets);
-        } catch (RuntimeException exp) {
-            throw new TicketPurchaseException("Failed to reserve tickets: " + exp.getMessage());
+    private void checkReservation(String reservationFlag, Set<Long> tickets) {
+        CheckReservationRequest reservationRequest = CheckReservationRequest.builder()
+                .tickets(tickets)
+                .reservationFlag(reservationFlag)
+                .build();
+        Boolean areTicketsReserved = ticketsClient.checkReservation(reservationRequest);
+        if (!areTicketsReserved) {
+            throw new TicketPurchaseException("Tickets must be previously reserved to complete purchase");
         }
     }
 
@@ -56,7 +55,7 @@ public class ReservationsService {
         );
     }
 
-    private CreateSessionResponse createSession(OrderRequest request, Long orderId) {
+    private String createSession(OrderRequest request, Long orderId) {
         try {
             return paymentClient.createSession(
                     CreateSessionRequest.builder()

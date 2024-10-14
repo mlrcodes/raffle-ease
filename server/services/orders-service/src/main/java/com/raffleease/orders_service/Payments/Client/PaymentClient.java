@@ -1,7 +1,6 @@
 package com.raffleease.orders_service.Payments.Client;
 
 import com.raffleease.orders_service.Payments.DTO.CreateSessionRequest;
-import com.raffleease.orders_service.Payments.DTO.CreateSessionResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 )
 public interface PaymentClient {
     @PostMapping("/create-session")
-    CreateSessionResponse createSession(
+    String createSession(
             @RequestBody CreateSessionRequest request
     );
 }

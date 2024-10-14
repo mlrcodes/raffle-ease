@@ -34,7 +34,7 @@ public class Order {
 
     @PrePersist
     protected void onCreate() {
-        this.orderReference = UUID.randomUUID().toString();
+        orderReference = UUID.randomUUID().toString();
     }
 
 }

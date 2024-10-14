@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record FailureNotification(
         @NotNull(message = "Must indicate order")
-        Integer orderId,
+        Long orderId,
 
         @NotNull(message = "Must indicate new order status")
         OrderStatus status
