@@ -1,4 +1,12 @@
 package com.rafflease.payments_service.Exceptions.CustomExceptions;
 
-public class OrderUpdateException {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@EqualsAndHashCode(callSuper = true)
+@RequiredArgsConstructor
+@Getter
+public class OrderUpdateException extends RuntimeException {
+    private final String msg;
 }

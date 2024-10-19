@@ -1,11 +1,8 @@
 package com.raffleease.raffles_service.Tickets.Services;
 
-import com.raffleease.raffles_service.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.DataBaseHandlingException;
-import com.raffleease.raffles_service.Exceptions.CustomExceptions.TicketNotFoundException;
-import com.raffleease.raffles_service.Raffles.Models.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import com.raffleease.raffles_service.Tickets.DTO.*;
-import com.raffleease.raffles_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.raffles_service.Tickets.Models.Ticket;
 import com.raffleease.raffles_service.Tickets.Models.TicketStatus;
 import com.raffleease.raffles_service.Tickets.Repositories.TicketsRepository;
@@ -22,8 +19,6 @@ import java.util.stream.LongStream;
 @RequiredArgsConstructor
 @Service
 public class TicketsService {
-
-    private final TicketsMapper mapper;
     private final TicketsRepository repository;
 
     public Set<Ticket> createTickets(RaffleTicketsCreationRequest ticketsInfo, Raffle raffle) {
@@ -36,57 +31,19 @@ public class TicketsService {
                 ).collect(Collectors.toSet());
     }
 
-    public Set<TicketResponse> purchase(PurchaseRequest request) {
-        Set<TicketResponse> purchasedTickets = new HashSet<>();
-        List<Ticket> tickets = findAllById(request.ticketsIds());
-        tickets.forEach(ticket -> {
-            ticket.setStatus(TicketStatus.SOLD);
-            ticket.setCustomerId(request.customerId());
-            Ticket savedTicket = repository.save(ticket);
-            purchasedTickets.add(mapper.fromTicketToTicketResponse(savedTicket));
-        });
-        return purchasedTickets;
-    }
-
-    public void reserve(Set<Long> ticketsIds) {
-        List<Ticket> tickets = findAllById(ticketsIds);
-        checkTicketsAvailability(tickets);
-        updateStatus(tickets, TicketStatus.RESERVED);
-    }
-
-    public void release(TicketsIdsDTO request) {
-        List<Ticket> tickets = findAllById(request.tickets());
-        updateStatus(tickets, TicketStatus.AVAILABLE);
-    }
-
-    private void updateStatus(List<Ticket> tickets, TicketStatus status) {
-        tickets.forEach(ticket -> ticket.setStatus(status));
-        try {
-            this.repository.saveAll(tickets);
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to update tickets status: " + exp.getMessage());
-        }
-    }
-
-    public void checkTicketsAvailability(List<Ticket> tickets) {
-        tickets.forEach(ticket -> {
-            if (ticket.getStatus() != TicketStatus.AVAILABLE) {
-                throw new BusinessException("One or more tickets are not available");
-            }
-        });
-    }
-
     public List<Ticket> findAllById(Set<Long> ticketsIds) {
-        List<Ticket> tickets = repository.findAllById(ticketsIds);
-        if (tickets.isEmpty() || (ticketsIds.size() != tickets.size())) {
-            throw new TicketNotFoundException("One ore more tickets were not found");
+        try {
+            return repository.findAllById(ticketsIds);
+        } catch (DataAccessException exp) {
+            throw new DataBaseHandlingException("An error when retrieving tickets occurred");
         }
-        return tickets;
     }
 
-    public TicketResponseSet buildResponseFromSet(Set<TicketResponse> ticketResponses) {
-        return TicketResponseSet.builder()
-                .tickets(ticketResponses)
-                .build();
+    public Set<Ticket> saveAll(Set<Ticket> tickets) {
+        try {
+            return new HashSet<>(repository.saveAll(tickets));
+        } catch (DataAccessException exp) {
+            throw new DataBaseHandlingException("An error occurred when saving tickets occurred");
+        }
     }
 }

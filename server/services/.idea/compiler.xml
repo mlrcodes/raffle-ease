@@ -7,10 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="orders-service" />
         <module name="config-server" />
         <module name="discovery-server" />
-        <module name="associations-service" />
         <module name="raffles-service" />
+        <module name="associations-service" />
+        <module name="payments-service" />
+        <module name="notifications-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -19,6 +22,9 @@
       <module name="associations-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
+      <module name="notifications-service" options="-parameters" />
+      <module name="orders-service" options="-parameters" />
+      <module name="payments-service" options="-parameters" />
       <module name="raffles-service" options="-parameters" />
     </option>
   </component>

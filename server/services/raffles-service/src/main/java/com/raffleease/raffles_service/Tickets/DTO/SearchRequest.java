@@ -1,7 +1,6 @@
 package com.raffleease.raffles_service.Tickets.DTO;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 
 @Builder

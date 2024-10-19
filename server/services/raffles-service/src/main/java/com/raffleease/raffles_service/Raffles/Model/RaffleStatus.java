@@ -1,4 +1,4 @@
-package com.raffleease.raffles_service.Raffles.Models;
+package com.raffleease.raffles_service.Raffles.Model;
 
 public enum RaffleStatus {
     PENDING,

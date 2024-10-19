@@ -1,4 +1,11 @@
 package com.rafflease.payments_service.Exceptions.Handler;
 
-public class Errors {
+import lombok.Builder;
+
+import java.util.Map;
+
+@Builder
+public record Errors (
+        Map<String, String> errors
+) {
 }

@@ -1,4 +1,12 @@
 package com.rafflease.payments_service.Exceptions.CustomExceptions;
 
-public class StripeWebHookException {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@EqualsAndHashCode(callSuper = true)
+@RequiredArgsConstructor
+@Getter
+public class StripeWebHookException extends RuntimeException {
+    private final String msg;
 }

@@ -1,4 +1,12 @@
 package com.rafflease.payments_service.Exceptions.CustomExceptions;
 
-public class OrderNotFoundException {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Getter
+public class OrderNotFoundException extends RuntimeException {
+    private final String msg;
 }

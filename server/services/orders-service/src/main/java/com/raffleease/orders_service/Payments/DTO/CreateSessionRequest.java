@@ -13,10 +13,9 @@ public record CreateSessionRequest(
 
         @NotNull(message = "Amount cannot be null")
         @Min(value = 1, message = "Amount must be greater than 0")
-        Long amount,
+        Long quantity,
 
         @NotNull(message = "Order ID cannot be null")
         @Min(value = 1, message = "Order ID must be greater than 0")
         Long orderId
-) {
-}
+) {}

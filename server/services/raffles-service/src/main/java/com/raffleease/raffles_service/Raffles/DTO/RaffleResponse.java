@@ -1,10 +1,9 @@
 package com.raffleease.raffles_service.Raffles.DTO;
 
-import com.raffleease.raffles_service.Raffles.Models.RaffleStatus;
+import com.raffleease.raffles_service.Raffles.Model.RaffleStatus;
 import lombok.Builder;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -28,6 +27,8 @@ public record RaffleResponse(
         BigDecimal ticketPrice,
 
         Long availableTickets,
+
+        Long totalTickets,
 
         Long associationId
 ) {

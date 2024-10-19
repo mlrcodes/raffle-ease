@@ -1,0 +1,9 @@
+associations_db_host=associations-db
+associations_db_port=5432
+associations_db=associations
+associations_db_user=associations-user
+associations_db_password=1234
+configs_host=config-server
+configs_port=8888
+eureka_host=discovery-server
+eureka_port=8761

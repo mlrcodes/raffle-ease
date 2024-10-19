@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Lottery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header h1 {
+            color: #2c3e50;
+        }
+        .content {
+            margin: 20px 0;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .order-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .order-details h2 {
+            color: #16a085;
+        }
+        .ticket-list {
+            margin: 15px 0;
+        }
+        .ticket-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .ticket-list ul li {
+            background-color: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="'Thank you for your purchase, ' + ${customerName} + '!'">Thank you for your purchase!</h1>
+        <p>Your transaction was successful.</p>
+    </div>
+
+    <div class="content">
+        <p th:text="'Hello ' + ${customerName} + ','">Hello,</p>
+        <p th:text="'We have received your payment of ' + ${paymentTotal} + ' EUR using the ' + ${paymentMethod} + ' payment method.'">
+            We have received your payment of [amount] EUR using the [method] payment method.
+        </p>
+
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Order Reference:</strong> <span th:text="${orderReference}">[Order Reference]</span></p>
+            <p><strong>Order Date:</strong> <span th:text="${orderDate}">[Order Date]</span></p>
+            <p><strong>Number of tickets purchased:</strong> <span th:text="${ticketCount}">[Number of tickets]</span></p>
+
+            <div class="ticket-list">
+                <h3>Tickets</h3>
+                <ul>
+                    <li th:each="ticket : ${ticketList}">
+                        Ticket #<span th:text="${ticket.ticketNumber}">[Ticket Number]</span> (ID: <span th:text="${ticket.id}">[Ticket ID]</span>)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p>If you have any questions or need assistance, feel free to contact our customer support.</p>
+    </div>
+
+    <div class="footer">
+        <p>Thank you for trusting us to participate in our lotteries.</p>
+        <p>Best regards,<br>The Raffles Team</p>
+    </div>
+</div>
+</body>
+</html>

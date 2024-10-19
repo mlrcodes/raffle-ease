@@ -1,9 +1,8 @@
-package com.raffleease.raffles_service.Raffles.Models;
+package com.raffleease.raffles_service.Raffles.Model;
 
 import com.raffleease.raffles_service.Tickets.Models.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -42,6 +41,8 @@ public class Raffle {
     private BigDecimal ticketPrice;
 
     private Long availableTickets;
+
+    private Long totalTickets;
 
     @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets;

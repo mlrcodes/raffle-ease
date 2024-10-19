@@ -18,6 +18,8 @@ public class TicketsMapper {
                 .raffleId(ticket.getRaffle().getId())
                 .ticketNumber(ticket.getTicketNumber())
                 .status(ticket.getStatus())
+                .reservationFlag(ticket.getReservationFlag())
+                .reservationTime(ticket.getReservationTime())
                 .customerId(ticket.getCustomerId())
                 .build();
     }

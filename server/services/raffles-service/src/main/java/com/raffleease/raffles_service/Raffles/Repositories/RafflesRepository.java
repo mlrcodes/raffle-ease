@@ -1,6 +1,6 @@
 package com.raffleease.raffles_service.Raffles.Repositories;
 
-import com.raffleease.raffles_service.Raffles.Models.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

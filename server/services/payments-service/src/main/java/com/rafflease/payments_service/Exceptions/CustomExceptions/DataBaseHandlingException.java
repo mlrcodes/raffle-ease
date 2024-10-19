@@ -1,4 +1,12 @@
 package com.rafflease.payments_service.Exceptions.CustomExceptions;
 
-public class DataBaseHandlingException {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Getter
+public class DataBaseHandlingException extends RuntimeException {
+    private final String msg;
 }

@@ -1,0 +1,13 @@
+payments_db_user=payments-user
+payments_db_password=1234
+payments_db_host=localhost
+payments_db_port=27018
+payments_db=payments
+raffles_host=localhost
+raffles_port=8082
+raffles_db=raffles
+configs_host=localhost
+configs_port=8888
+eureka_host=localhost
+eureka_port=8761
+STRIPE_PUBLIC_KEY=

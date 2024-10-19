@@ -2,13 +2,16 @@ package com.raffleease.raffles_service.Raffles.Mappers;
 
 import com.raffleease.raffles_service.Raffles.DTO.RaffleCreationRequest;
 import com.raffleease.raffles_service.Raffles.DTO.RaffleResponse;
-import com.raffleease.raffles_service.Raffles.Models.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.RaffleStatus;
 import com.raffleease.raffles_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.raffles_service.Tickets.Models.Ticket;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -24,16 +27,11 @@ public class RafflesMapper {
                 .endDate(request.endDate())
                 .ticketPrice(request.ticketsInfo().price())
                 .availableTickets(request.ticketsInfo().amount())
+                .totalTickets(request.ticketsInfo().amount())
                 .photosURLs(request.photosURLs())
                 .associationId(request.associationId())
                 .build();
     }
-
-    @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Ticket> tickets;
-
-    @Column(nullable = false)
-    private Long associationId;
 
     public RaffleResponse fromRaffleToRaffleResponse(Raffle raffle) {
         return RaffleResponse.builder()
@@ -46,6 +44,7 @@ public class RafflesMapper {
                 .photosURLs(raffle.getPhotosURLs())
                 .ticketPrice(raffle.getTicketPrice())
                 .availableTickets(raffle.getAvailableTickets())
+                .totalTickets(raffle.getTotalTickets())
                 .associationId(raffle.getAssociationId())
                 .build();
     }

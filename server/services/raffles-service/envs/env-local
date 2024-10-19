@@ -1,0 +1,11 @@
+eureka_host=localhost
+eureka_port=8761
+raffles_db_host=localhost
+raffles_db_port=5434
+raffles_db=raffles
+raffles_db_user=raffles-user
+raffles_db_password=1234
+associations_host=localhost
+associations_port=8081
+configs_host=localhost
+configs_port=8888

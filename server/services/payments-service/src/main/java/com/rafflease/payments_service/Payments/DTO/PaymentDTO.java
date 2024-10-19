@@ -1,4 +1,11 @@
 package com.rafflease.payments_service.Payments.DTO;
 
-public class PaymentDTO {
+import lombok.Builder;
+
+@Builder
+public record PaymentDTO (
+        String paymentId,
+        Long orderId,
+        String paymentIntentId
+) {
 }

@@ -1,9 +1,8 @@
 package com.raffleease.raffles_service.Tickets.Controllers;
 
 import com.raffleease.raffles_service.Tickets.DTO.*;
-import com.raffleease.raffles_service.Tickets.Services.GenerateRandomService;
-import com.raffleease.raffles_service.Tickets.Services.SearchService;
-import com.raffleease.raffles_service.Tickets.Services.TicketsService;
+import com.raffleease.raffles_service.Tickets.Services.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,47 +13,52 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/tickets")
 public class TicketsController {
-
     private final TicketsService service;
-
+    private final PurchaseService purchaseService;
     private final SearchService searchService;
-
+    private final ReservationService reservationService;
     private final GenerateRandomService generateRandomService;
 
     @PostMapping("/find-by-number")
-    public ResponseEntity<TicketResponseSet> findByTicketNumber(
-            @RequestBody SearchRequest request
+    public ResponseEntity<Set<TicketResponse>> findByTicketNumber(
+            @Valid @RequestBody SearchRequest request
     ) {
         return ResponseEntity.ok(searchService.findByTicketNumber(request));
     }
 
     @PostMapping("/generate-random")
-    public ResponseEntity<TicketResponseSet> generateRandom(
-            @RequestBody GenerateRandomRequest request
+    public ResponseEntity<Set<TicketResponse>> generateRandom(
+            @Valid @RequestBody GenerateRandomRequest request
     ) {
         return ResponseEntity.ok(generateRandomService.generateRandom(request));
     }
 
     @PostMapping("/reserve")
-    public ResponseEntity<Void> reserve(
-            @RequestBody Set<Long> ticketsIds
+    public ResponseEntity<Set<TicketResponse>> reserve(
+            @Valid @RequestBody ReservationRequest request
     ) {
-        service.reserve(ticketsIds);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(reservationService.reserve(request));
     }
 
-    @PutMapping("/purchase")
+    @PostMapping("/purchase")
     public ResponseEntity<Set<TicketResponse>> purchase(
-            @RequestBody PurchaseRequest purchaseRequest
+            @Valid @RequestBody PurchaseRequest purchaseRequest
     ) {
-        return ResponseEntity.ok(service.purchase(purchaseRequest));
+        return ResponseEntity.ok(purchaseService.purchase(purchaseRequest));
     }
 
-    @PutMapping("/release")
+    @PostMapping("/release")
     public ResponseEntity<Void> release(
-            @RequestBody TicketsIdsDTO request
+            @Valid @RequestBody ReservationRequest request
     ) {
-        service.release(request);
+        reservationService.release(request);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/check-reservation")
+    public ResponseEntity<Boolean> checkReservation(
+            @Valid @RequestBody CheckReservationRequest request
+    ) {
+        return ResponseEntity.ok(reservationService.checkReservation(request));
     }
 }

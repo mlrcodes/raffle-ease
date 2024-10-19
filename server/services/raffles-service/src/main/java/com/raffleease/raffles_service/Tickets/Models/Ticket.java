@@ -1,8 +1,10 @@
 package com.raffleease.raffles_service.Tickets.Models;
 
-import com.raffleease.raffles_service.Raffles.Models.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +29,10 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TicketStatus status;
+
+    private String reservationFlag;
+
+    private LocalDateTime reservationTime;
 
     private String customerId;
 }

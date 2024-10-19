@@ -1,4 +1,8 @@
 package com.rafflease.payments_service.Raffles.Model;
 
-public class RaffleStatus {
+public enum RaffleStatus {
+    PENDING,
+    ACTIVE,
+    COMPLETED,
+    CANCELED
 }

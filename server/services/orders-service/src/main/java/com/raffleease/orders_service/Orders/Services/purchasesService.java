@@ -14,6 +14,8 @@ import com.raffleease.orders_service.Tickets.Client.TicketsClient;
 import com.raffleease.orders_service.Tickets.DTO.CheckReservationRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,14 +23,21 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class ReservationsService {
+public class purchasesService {
     private final TicketsClient ticketsClient;
     private final PaymentClient paymentClient;
     private final IOrdersRepository repository;
     private final NotificationProducer producer;
+    private static final Logger logger = LoggerFactory.getLogger(purchasesService.class);
 
     @Transactional
-    public String reserve(OrderRequest request) {
+    public String createOrder(OrderRequest request) {
+
+        logger.info("Reservation flag: " + request.reservationFlag());
+        logger.info("Tickets: " + request.tickets());
+        logger.info("Raffle: " + request.raffleId());
+        logger.info("TIckets quantity: " + (long) request.tickets().size());
+
         checkReservation(request.reservationFlag(), request.tickets());
         Order order = saveOrder(request);
         return createSession(request, order.getId());
@@ -60,7 +69,7 @@ public class ReservationsService {
             return paymentClient.createSession(
                     CreateSessionRequest.builder()
                             .raffleId(request.raffleId())
-                            .amount((long) request.tickets().size())
+                            .quantity((long) request.tickets().size())
                             .orderId(orderId)
                             .build()
             );
@@ -77,5 +86,4 @@ public class ReservationsService {
                         .build()
         );
     }
-
 }

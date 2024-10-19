@@ -1,64 +1,64 @@
 package com.raffleease.raffles_service.Tickets.Services;
 
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.BusinessException;
-import com.raffleease.raffles_service.Raffles.Models.Raffle;
+import com.raffleease.raffles_service.Exceptions.CustomExceptions.DataBaseHandlingException;
+import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import com.raffleease.raffles_service.Raffles.Services.RafflesService;
 import com.raffleease.raffles_service.Tickets.DTO.GenerateRandomRequest;
 import com.raffleease.raffles_service.Tickets.DTO.TicketResponse;
-import com.raffleease.raffles_service.Tickets.DTO.TicketResponseSet;
 import com.raffleease.raffles_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.raffles_service.Tickets.Models.Ticket;
 import com.raffleease.raffles_service.Tickets.Models.TicketStatus;
 import com.raffleease.raffles_service.Tickets.Repositories.TicketsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class GenerateRandomService {
-
-    private final TicketsService ticketsService;
-
+    private final ReservationService reservationService;
     private final RafflesService raffleService;
-
+    private final TicketsRepository repository;
     private final TicketsMapper mapper;
 
-    private final TicketsRepository repository;
-
-    public TicketResponseSet generateRandom(GenerateRandomRequest request) {
-        Raffle raffle = findRaffleById(request.raffleId());
-        List<Ticket> availableTickets = findAvailableTickets(raffle);
+    public Set<TicketResponse> generateRandom(GenerateRandomRequest request) {
+        Raffle raffle = raffleService.findById(request.raffleId());
+        Set<Ticket> availableTickets = findAvailableTickets(raffle);
         validateTicketAvailability(availableTickets, request.quantity());
-        List<Ticket> selectedTickets = selectRandomTickets(availableTickets, request.quantity());
-        Set<TicketResponse> ticketResponses = mapTicketsToResponses(selectedTickets);
-        return ticketsService.buildResponseFromSet(ticketResponses);
+        Set<Ticket> selectedTickets = selectRandomTickets(availableTickets, request.quantity());
+        reserveTickets(raffle, selectedTickets);
+        return mapper.fromTicketSetToTicketResponseSet(selectedTickets);
     }
 
-    private Raffle findRaffleById(Long raffleId) {
-        return raffleService.findById(raffleId);
-    }
-
-    private List<Ticket> findAvailableTickets(Raffle raffle) {
-        return repository.findByRaffleAndStatus(raffle, TicketStatus.AVAILABLE);
-    }
-
-    private void validateTicketAvailability(List<Ticket> availableTickets, Long requestedQuantity) {
-        if (availableTickets.isEmpty() || availableTickets.size() < requestedQuantity) {
-            throw new BusinessException("No tickets were found for this order");
+    private Set<Ticket> findAvailableTickets(Raffle raffle) {
+        try {
+            return new HashSet<>(repository.findByRaffleAndStatus(raffle, TicketStatus.AVAILABLE));
+        } catch (DataAccessException exp) {
+            throw new DataBaseHandlingException("Error when retrieving tickets info");
         }
     }
 
-    private List<Ticket> selectRandomTickets(List<Ticket> availableTickets, Long quantity) {
-        Collections.shuffle(availableTickets);
-        return availableTickets.subList(0, quantity.intValue());
+    private void validateTicketAvailability(Set<Ticket> availableTickets, Long requestedQuantity) {
+        if (availableTickets.isEmpty() || availableTickets.size() < requestedQuantity) {
+            throw new BusinessException("Not enough tickets were found for this order");
+        }
     }
 
-    private Set<TicketResponse> mapTicketsToResponses(List<Ticket> selectedTickets) {
-        return this.mapper.fromTicketSetToTicketResponseSet(new HashSet<>(selectedTickets));
+    private void reserveTickets(Raffle raffle, Set<Ticket> tickets) {
+        Set<Long> ticketIds = tickets.stream()
+                .map(Ticket::getId)
+                .collect(Collectors.toSet());
+        reservationService.reserve(raffle, ticketIds);
+    }
+
+    private Set<Ticket> selectRandomTickets(Set<Ticket> availableTickets, Long quantity) {
+        List<Ticket> tickets = new ArrayList<>(availableTickets);
+        Collections.shuffle(tickets);
+        tickets = tickets.subList(0, quantity.intValue());
+        return new HashSet<>(tickets);
     }
 }

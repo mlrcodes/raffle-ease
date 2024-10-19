@@ -1,4 +1,4 @@
-package com.rafflease.payments_service.Orders.Model;
+package com.rafflease.payments_service.Orders;
 
 public enum OrderStatus {
     PENDING,

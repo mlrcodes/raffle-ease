@@ -1,0 +1,11 @@
+eureka_host=discovery-server
+eureka_port=8761
+raffles_db_host=raffles-db
+raffles_db_port=5432
+raffles_db=raffles
+raffles_db_user=raffles-user
+raffles_db_password=1234
+associations_host=associations-service
+associations_port=8081
+configs_host=config-server
+configs_port=8888

@@ -13,30 +13,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/raffles")
 public class RafflesController {
-
     private final RafflesCreationService raffleCreationService;
-
     private final RafflesService service;
 
     @PostMapping("/create")
     public ResponseEntity<Long> create(
             @RequestBody @Valid RaffleCreationRequest request
     ) {
-        return ResponseEntity.ok(this.raffleCreationService.createRaffle(request));
+        return ResponseEntity.ok(raffleCreationService.createRaffle(request));
     }
 
     @PostMapping("/publish/{id}")
     public ResponseEntity<Long> publish(
             @PathVariable Long id
     )  {
-        return ResponseEntity.ok(this.service.publish(id));
+        return ResponseEntity.ok(service.publish(id));
     }
 
-    @GetMapping("/get-details/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<RaffleResponse> get(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(this.service.get(id));
+        return ResponseEntity.ok(service.get(id));
     }
 
 }

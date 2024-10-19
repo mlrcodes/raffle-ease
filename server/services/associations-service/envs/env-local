@@ -1,0 +1,9 @@
+associations_db_host=localhost
+associations_db_port=5433
+associations_db=associations
+associations_db_user=associations-user
+associations_db_password=1234
+configs_host=localhost
+configs_port=8888
+eureka_host=localhost
+eureka_port=8761
