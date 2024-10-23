@@ -30,21 +30,23 @@ public class ReservationService {
 
     public Set<TicketResponse> reserve(ReservationRequest request) {
         Raffle raffle = rafflesService.findById(request.raffleId());
-        return reserveInternal(raffle, request.ticketsIds());
+        Set<Ticket> tickets = findAllById(request.ticketsIds());
+        return reserveInternal(raffle, tickets);
     }
 
-    public void reserve(Raffle raffle, Set<Long> ticketsIds) {
-        reserveInternal(raffle, ticketsIds);
+    public Set<TicketResponse> reserve(Raffle raffle, Set<Ticket> tickets) {
+        return reserveInternal(raffle, tickets);
     }
 
-    private Set<TicketResponse> reserveInternal(Raffle raffle, Set<Long> ticketsIds) {
-        Set<Ticket> tickets = findAllById(ticketsIds);
+    @Transactional
+    private Set<TicketResponse> reserveInternal(Raffle raffle, Set<Ticket> tickets) {
         checkTicketsAvailability(tickets);
         Set<Ticket> reservedTickets = setReservationDetails(tickets);
         rafflesService.reduceAvailableTickets(raffle, tickets.size());
         return mapper.fromTicketSetToTicketResponseSet(reservedTickets);
     }
 
+    @Transactional
     public void release(ReservationRequest request) {
         Raffle raffle = rafflesService.findById(request.raffleId());
         Set<Ticket> tickets = findAllById(request.ticketsIds());

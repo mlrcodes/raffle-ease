@@ -15,7 +15,7 @@ public class EmailConfig {
 
     @PostConstruct
     public void init() {
-        String mailPassword = env.getProperty("MAIL_PASSWORD");
+        String mailPassword = env.getProperty("mail_password");
         mailSender.setPassword(mailPassword);
     }
 }

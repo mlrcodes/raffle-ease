@@ -7,14 +7,13 @@ import lombok.Builder;
 
 @Builder
 public record CustomerDTO(
-
         @NotBlank(message = "Must provide an id")
         String stripeId,
 
         @NotBlank(message = "Firstname should not be blank")
         String name,
 
-        @NotBlank(message = "Lastname should not be blank")
+        @NotBlank(message = "Email should not be blank")
         @Email(message = "Invalid email")
         String email,
 

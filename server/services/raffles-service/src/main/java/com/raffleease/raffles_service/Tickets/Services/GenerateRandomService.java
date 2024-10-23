@@ -30,8 +30,7 @@ public class GenerateRandomService {
         Set<Ticket> availableTickets = findAvailableTickets(raffle);
         validateTicketAvailability(availableTickets, request.quantity());
         Set<Ticket> selectedTickets = selectRandomTickets(availableTickets, request.quantity());
-        reserveTickets(raffle, selectedTickets);
-        return mapper.fromTicketSetToTicketResponseSet(selectedTickets);
+        return reserveTickets(raffle, selectedTickets);
     }
 
     private Set<Ticket> findAvailableTickets(Raffle raffle) {
@@ -48,11 +47,8 @@ public class GenerateRandomService {
         }
     }
 
-    private void reserveTickets(Raffle raffle, Set<Ticket> tickets) {
-        Set<Long> ticketIds = tickets.stream()
-                .map(Ticket::getId)
-                .collect(Collectors.toSet());
-        reservationService.reserve(raffle, ticketIds);
+    private Set<TicketResponse> reserveTickets(Raffle raffle, Set<Ticket> tickets) {
+        return reservationService.reserve(raffle, tickets);
     }
 
     private Set<Ticket> selectRandomTickets(Set<Ticket> availableTickets, Long quantity) {

@@ -8,7 +8,7 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.rafflease</groupId>
+	<groupId>com.raffleease</groupId>
 	<artifactId>payments-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>payments-service</name>
@@ -30,6 +30,15 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/mlrcodes/raffle-ease-mvn-packages</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,7 +51,7 @@
 		<dependency>
 			<groupId>com.stripe</groupId>
 			<artifactId>stripe-java</artifactId>
-			<version>26.0.0</version>
+			<version>27.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -79,6 +88,11 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.raffleease</groupId>
+			<artifactId>common-models</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

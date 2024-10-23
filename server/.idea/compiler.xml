@@ -16,10 +16,14 @@
         <module name="notifications-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common-models" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="associations-service" options="-parameters" />
+      <module name="common-models" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="notifications-service" options="-parameters" />

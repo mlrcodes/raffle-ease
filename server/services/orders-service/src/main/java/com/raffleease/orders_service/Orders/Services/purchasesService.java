@@ -2,8 +2,7 @@ package com.raffleease.orders_service.Orders.Services;
 
 import com.raffleease.orders_service.Exceptions.CustomExceptions.CheckoutException;
 import com.raffleease.orders_service.Exceptions.CustomExceptions.TicketPurchaseException;
-import com.raffleease.orders_service.Kafka.Brokers.NotificationProducer;
-import com.raffleease.orders_service.Kafka.Messages.Tickets.TicketsReleaseRequest;
+import com.raffleease.orders_service.Kafka.Brokers.Producers.NotificationProducer;
 import com.raffleease.orders_service.Orders.DTO.OrderRequest;
 import com.raffleease.orders_service.Orders.Models.Order;
 import com.raffleease.orders_service.Orders.Models.OrderStatus;
@@ -74,10 +73,11 @@ public class purchasesService {
                             .build()
             );
         } catch (RuntimeException exp) {
-            releaseTickets(request);
+            // releaseTickets(request);
             throw new CheckoutException("Error processing checkout: " + exp.getMessage());
         }
     }
+    /*
 
     private void releaseTickets(OrderRequest request) {
         producer.sendTicketsReleaseNotification(
@@ -86,4 +86,6 @@ public class purchasesService {
                         .build()
         );
     }
+
+     */
 }

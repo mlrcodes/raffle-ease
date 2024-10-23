@@ -1,1 +1,15 @@
-
+configs_host=config-server
+configs_port=8888
+eureka_host=discovery-server
+eureka_port=8761
+kafka_host=kafka-server
+kafka_port=9092
+notifications_db_host=notifications-db
+notifications_db_port=5432
+notifications_db=notifications
+notifications_db_user=notifications-user
+notifications_db_password=1234
+mail_host=smtp.gmail.com
+mail_port=587
+mail_username=raffle.ease.app@gmail.com
+mail_password=znim uepp tvpy mqio
