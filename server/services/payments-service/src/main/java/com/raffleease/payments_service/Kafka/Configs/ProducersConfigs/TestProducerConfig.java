@@ -1,5 +1,6 @@
 package com.raffleease.payments_service.Kafka.Configs.ProducersConfigs;
 
+import com.raffleease.common_models.DTO.MessageDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;

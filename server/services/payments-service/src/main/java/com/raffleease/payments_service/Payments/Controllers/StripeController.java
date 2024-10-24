@@ -1,6 +1,6 @@
 package com.raffleease.payments_service.Payments.Controllers;
 
-import org.raffleease.common_models.DTO.MessageDTO;
+import com.raffleease.common_models.DTO.MessageDTO;
 import com.raffleease.payments_service.Payments.DTO.CreateSessionRequest;
 import com.raffleease.payments_service.Payments.Services.StripeService;
 import com.raffleease.payments_service.Payments.Services.WebHookService;
@@ -39,7 +39,7 @@ public class StripeController {
     @PostMapping("/send-message")
     public ResponseEntity<String> sendMessage(
             @RequestBody MessageDTO message
-    ) {
+            ) {
         return ResponseEntity.ok(webHookService.sendMessage(message));
     }
 

@@ -1,5 +1,6 @@
 package com.raffleease.payments_service.Payments.Services;
 
+import com.raffleease.common_models.DTO.MessageDTO;
 import com.raffleease.payments_service.Customers.CustomerDTO;
 import com.raffleease.payments_service.Exceptions.CustomExceptions.CustomDeserializationException;
 import com.raffleease.payments_service.Exceptions.CustomExceptions.CustomStripeException;

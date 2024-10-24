@@ -1,5 +1,6 @@
 package com.raffleease.orders_service.Kafka.Configs.ConsumersConfigs;
 
+import com.raffleease.common_models.DTO.MessageDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,6 @@ public class TestConsumerConfig {
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "orders-group");
-        configProps.put(JsonDeserializer.TYPE_MAPPINGS, "test-topic:com.raffleease.orders_service.Kafka.Messages.MessageDTO");
         configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), new JsonDeserializer<>());
     }

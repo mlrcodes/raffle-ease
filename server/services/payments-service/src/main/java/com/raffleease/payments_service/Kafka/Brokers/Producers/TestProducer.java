@@ -1,5 +1,6 @@
 package com.raffleease.payments_service.Kafka.Brokers.Producers;
 
+import com.raffleease.common_models.DTO.MessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;

@@ -1,5 +1,6 @@
 package com.raffleease.orders_service.Kafka.Brokers.Consumers;
 
+import com.raffleease.common_models.DTO.MessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

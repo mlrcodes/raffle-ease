@@ -34,9 +34,6 @@
 		<repository>
 			<id>github</id>
 			<url>https://maven.pkg.github.com/mlrcodes/raffle-ease-mvn-packages</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -90,7 +87,7 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.raffleease</groupId>
+			<groupId>com.raffleease</groupId>
 			<artifactId>common-models</artifactId>
 			<version>0.0.1</version>
 		</dependency>
