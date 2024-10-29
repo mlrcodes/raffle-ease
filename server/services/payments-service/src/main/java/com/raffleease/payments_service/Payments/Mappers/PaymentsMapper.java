@@ -1,6 +1,6 @@
 package com.raffleease.payments_service.Payments.Mappers;
 
-import com.raffleease.payments_service.Payments.DTO.PaymentDTO;
+import com.raffleease.common_models.DTO.Payment.PaymentDTO;
 import com.raffleease.payments_service.Payments.Model.Payment;
 import org.springframework.stereotype.Service;
 

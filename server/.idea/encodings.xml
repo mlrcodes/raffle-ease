@@ -9,5 +9,6 @@
     <file url="file://$PROJECT_DIR$/services/orders-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/payments-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/raffles-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/tickets-service/src/main/java" charset="UTF-8" />
   </component>
 </project>

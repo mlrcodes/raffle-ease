@@ -1,5 +1,9 @@
+configs_host=config-server
+configs_port=8888
 eureka_host=discovery-server
 eureka_port=8761
+kafka_host=kafka-server
+kafka_port=9092
 raffles_db_host=raffles-db
 raffles_db_port=5432
 raffles_db=raffles
@@ -7,5 +11,5 @@ raffles_db_user=raffles-user
 raffles_db_password=1234
 associations_host=associations-service
 associations_port=8081
-configs_host=config-server
-configs_port=8888
+tickets_host=tickets-service
+tickets_port=8086

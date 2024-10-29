@@ -11,6 +11,7 @@
         <module name="config-server" />
         <module name="discovery-server" />
         <module name="raffles-service" />
+        <module name="tickets-service" />
         <module name="associations-service" />
         <module name="payments-service" />
         <module name="notifications-service" />
@@ -30,6 +31,7 @@
       <module name="orders-service" options="-parameters" />
       <module name="payments-service" options="-parameters" />
       <module name="raffles-service" options="-parameters" />
+      <module name="tickets-service" options="-parameters" />
     </option>
   </component>
 </project>

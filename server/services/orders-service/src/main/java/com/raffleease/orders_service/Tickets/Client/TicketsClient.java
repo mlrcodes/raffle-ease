@@ -1,8 +1,8 @@
 package com.raffleease.orders_service.Tickets.Client;
 
-import com.raffleease.orders_service.Orders.DTO.PurchaseRequest;
-import com.raffleease.orders_service.Tickets.DTO.CheckReservationRequest;
-import com.raffleease.orders_service.Tickets.DTO.TicketDTO;
+import com.raffleease.common_models.DTO.Tickets.CheckReservationRequest;
+import com.raffleease.common_models.DTO.Tickets.PurchaseRequest;
+import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +20,7 @@ public interface TicketsClient {
             @RequestBody CheckReservationRequest request
     );
 
-    @PutMapping("/purchase")
+    @PostMapping("/purchase")
     Set<TicketDTO> purchase(
             @RequestBody PurchaseRequest purchaseRequest
     );

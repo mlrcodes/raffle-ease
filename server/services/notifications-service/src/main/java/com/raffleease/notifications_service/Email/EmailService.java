@@ -1,9 +1,9 @@
 package com.raffleease.notifications_service.Email;
 
-import com.raffleease.notifications_service.Kafka.Messages.Success.CustomerDTO;
-import com.raffleease.notifications_service.Kafka.Messages.Success.OrderData;
-import com.raffleease.notifications_service.Kafka.Messages.Success.PaymentData;
-import com.raffleease.notifications_service.Kafka.Messages.Success.SuccessNotification;
+import com.raffleease.common_models.DTO.Customers.CustomerDTO;
+import com.raffleease.common_models.DTO.Kafka.OrderSuccess;
+import com.raffleease.common_models.DTO.Orders.OrderDTO;
+import com.raffleease.common_models.DTO.Payment.PaymentDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,43 +23,36 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 @RequiredArgsConstructor
 @Service
 public class EmailService {
-
     private final JavaMailSender mailSender;
-
     private final SpringTemplateEngine templateEngine;
 
     @Async
-    public void sendOrderSuccessNotification(SuccessNotification notificationRequest) throws MessagingException {
+    public void sendOrderSuccessNotification(OrderSuccess notificationRequest) throws MessagingException {
         Map<String, Object> variables = createOrderSuccessNotificationVariables(notificationRequest);
-        sendEmail(notificationRequest.customerData().email(),
+        sendEmail(notificationRequest.customer().email(),
                 ORDER_SUCCESS.getSubject(),
                 ORDER_SUCCESS.getTemplate(),
                 variables
         );
     }
 
-    private Map<String, Object> createOrderSuccessNotificationVariables(SuccessNotification paymentConfirmation) {
+    private Map<String, Object> createOrderSuccessNotificationVariables(OrderSuccess paymentConfirmation) {
         Map<String, Object> variables = new HashMap<>();
-
-        PaymentData paymentData = paymentConfirmation.paymentData();
-        CustomerDTO customer = paymentConfirmation.customerData();
-        OrderData orderData = paymentConfirmation.orderData();
+        PaymentDTO paymentData = paymentConfirmation.payment();
+        CustomerDTO customer = paymentConfirmation.customer();
+        OrderDTO orderData = paymentConfirmation.order();
 
         variables.put("customer", customer);
         variables.put("paymentData", paymentData);
         variables.put("orderData", orderData);
-
         variables.put("customerName", customer.name());
         variables.put("customerEmail", customer.email());
         variables.put("customerPhoneNumber", customer.phoneNumber());
-
         variables.put("paymentMethod", paymentData.paymentMethod());
         variables.put("paymentTotal", paymentData.total());
-
         variables.put("orderReference", orderData.orderReference());
         variables.put("orderDate", orderData.orderDate());
         variables.put("ticketList", orderData.tickets());
-
         variables.put("ticketCount", orderData.tickets().size());
 
         return variables;
@@ -86,5 +78,4 @@ public class EmailService {
 
         mailSender.send(mimeMessage);
     }
-
 }

@@ -1,63 +1,68 @@
 package com.raffleease.orders_service.Orders.Services;
-import com.raffleease.orders_service.Exceptions.CustomExceptions.DataBaseHandlingException;
-import com.raffleease.orders_service.Exceptions.CustomExceptions.OrderNotFoundException;
-import com.raffleease.orders_service.Kafka.Brokers.Producers.NotificationProducer;
+import com.raffleease.common_models.DTO.Customers.CustomerDTO;
+import com.raffleease.common_models.DTO.Kafka.OrderSuccess;
+import com.raffleease.common_models.DTO.Kafka.PaymentFailure;
+import com.raffleease.common_models.DTO.Kafka.PaymentSuccess;
+import com.raffleease.common_models.DTO.Kafka.TicketsReleaseRequest;
+import com.raffleease.common_models.DTO.Orders.OrderDTO;
+import com.raffleease.common_models.DTO.Orders.OrderStatus;
+import com.raffleease.common_models.DTO.Payment.PaymentDTO;
+import com.raffleease.common_models.DTO.Tickets.PurchaseRequest;
+import com.raffleease.common_models.DTO.Tickets.TicketDTO;
+import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
+import com.raffleease.common_models.Exceptions.CustomExceptions.NotificationException;
+import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
+import com.raffleease.orders_service.Kafka.Producers.ReleaseProducer;
+import com.raffleease.orders_service.Kafka.Producers.SuccessProducer;
 import com.raffleease.orders_service.Orders.Mappers.OrdersMapper;
 import com.raffleease.orders_service.Orders.Models.Order;
-import com.raffleease.orders_service.Orders.Models.OrderStatus;
 import com.raffleease.orders_service.Orders.Repositories.IOrdersRepository;
 import com.raffleease.orders_service.Tickets.Client.TicketsClient;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+
+import static com.raffleease.common_models.DTO.Orders.OrderStatus.COMPLETED;
 
 @RequiredArgsConstructor
 @Service
 public class OrderResultService {
-
     private final IOrdersRepository repository;
     private final OrdersMapper mapper;
     private final TicketsClient ticketsClient;
-    private final NotificationProducer producer;
-    private static final Logger logger = LoggerFactory.getLogger(OrderResultService.class);
+    private final SuccessProducer successProducer;
+    private final ReleaseProducer releaseProducer;
 
-
-    /*
     @Transactional
     public void handleOrderSuccess(
-            SuccessNotification request
+            PaymentSuccess request
     ) {
-        logger.info("HANDLING ORDER SUCCESS NOTIFICATION");
         Order order = findById(request.orderId());
-        logger.info("ORDER FOUND: {}",order.getId());
-        updateStatus(order, OrderStatus.COMPLETED);
-        logger.info("ORDER STATUS UPDATED: {}", order.getStatus());
+        updateStatus(order, COMPLETED);
         Set<TicketDTO> purchasedTickets = purchaseTickets(
                 order.getTicketsIds(),
-                request.customerData().stripeId()
+                request.customer().stripeId()
         );
-        logger.info("TICKETS PURCHASED: {}", purchasedTickets);
-        OrderData orderData = mapper.fromOrderToOrderData(order, purchasedTickets);
-        logger.info("ORDER DATA: {}", orderData);
+        OrderDTO orderData = mapper.fromOrder(order, purchasedTickets);
         notifyPaymentSuccess(
-                request.paymentData(),
-                request.customerData(),
+                request.payment(),
+                request.customer(),
                 orderData
         );
-        logger.info("NOTIFICATION SUCCESSFULLY SENT");
     }
 
     @Transactional
-    public void handleOrderFailure(FailureNotification request) {
+    public void handleOrderFailure(PaymentFailure request) {
         Order order = findById(request.orderId());
         updateStatus(order, request.status());
-        releaseTickets(order.getTicketsIds());
+        releaseTickets(order.getTicketsIds(), request.raffleId());
     }
 
     private Set<TicketDTO> purchaseTickets(
-            Set<Long> ticketsIds,
+            Set<String> ticketsIds,
             String customerId
     ) {
         return ticketsClient.purchase(
@@ -69,16 +74,16 @@ public class OrderResultService {
     }
 
     private void notifyPaymentSuccess(
-            PaymentData paymentData,
-            CustomerDTO customerData,
-            OrderData orderData
+            PaymentDTO payment,
+            CustomerDTO customer,
+            OrderDTO order
     ) {
         try {
-            producer.sendSuccessNotification(
-                    SuccessNotificationRequest.builder()
-                            .customerData(customerData)
-                            .orderData(orderData)
-                            .paymentData(paymentData)
+            successProducer.sendSuccessNotification(
+                    OrderSuccess.builder()
+                            .customer(customer)
+                            .order(order)
+                            .payment(payment)
                             .build()
             );
         } catch (RuntimeException ex) {
@@ -86,21 +91,18 @@ public class OrderResultService {
         }
     }
 
-
-
-    private void releaseTickets(Set<Long> ticketsIds) {
+    private void releaseTickets(Set<String> ticketsIds, Long raffleId) {
         try {
-            producer.sendTicketsReleaseNotification(
+            releaseProducer.sendTicketsReleaseNotification(
                     TicketsReleaseRequest.builder()
                             .ticketsIds(ticketsIds)
+                            .raffleId(raffleId)
                             .build()
             );
         } catch (RuntimeException ex) {
             throw new NotificationException("Order success notification failed");
         }
     }
-
-     */
 
     public void updateStatus(Order order, OrderStatus status) {
         order.setStatus(status);
@@ -113,6 +115,6 @@ public class OrderResultService {
 
     public Order findById(Long id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Order not found"));
     }
 }

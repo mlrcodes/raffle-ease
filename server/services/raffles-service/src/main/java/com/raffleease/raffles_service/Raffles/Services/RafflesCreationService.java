@@ -1,19 +1,20 @@
 package com.raffleease.raffles_service.Raffles.Services;
 
+import com.raffleease.common_models.DTO.Raffles.RaffleCreationRequest;
+import com.raffleease.common_models.DTO.Tickets.RaffleTicketsCreationRequest;
 import com.raffleease.raffles_service.Associations.AssociationsClient;
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.AssociationRetrievalException;
-import com.raffleease.raffles_service.Raffles.DTO.RaffleCreationRequest;
 import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
-import com.raffleease.raffles_service.Raffles.Model.RaffleStatus;
 import com.raffleease.raffles_service.Raffles.Repositories.RafflesRepository;
-import com.raffleease.raffles_service.Tickets.Models.Ticket;
-import com.raffleease.raffles_service.Tickets.Services.TicketsService;
+import com.raffleease.raffles_service.Tickets.TicketsClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+
+import static com.raffleease.common_models.DTO.Raffles.RaffleStatus.PENDING;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class RafflesCreationService {
 
     private final RafflesService rafflesService;
     private final RafflesMapper mapper;
-    private final TicketsService ticketsService;
+    private final TicketsClient ticketsClient;
     private final AssociationsClient associationsClient;
     private final RafflesRepository repository;
 
@@ -29,8 +30,9 @@ public class RafflesCreationService {
     public Long createRaffle(RaffleCreationRequest request) {
         Raffle raffle = mapper.toRaffle(request);
         validateAssociationExists(request.associationId());
-        createAndSetTickets(raffle, request);
-        raffle.setStatus(RaffleStatus.PENDING);
+        Set<String> createdTicketsId = createTickets(request.ticketsInfo());
+        raffle.setTicketsId(createdTicketsId);
+        raffle.setStatus(PENDING);
         Raffle savedRaffle = rafflesService.saveRaffle(raffle);
         return savedRaffle.getId();
     }
@@ -41,8 +43,7 @@ public class RafflesCreationService {
         }
     }
 
-    private void createAndSetTickets(Raffle raffle, RaffleCreationRequest request) {
-        Set<Ticket> tickets = ticketsService.createTickets(request.ticketsInfo(), raffle);
-        raffle.setTickets(tickets);
+    private Set<String> createTickets(RaffleTicketsCreationRequest request) {
+        return ticketsClient.createTickets(request);
     }
 }

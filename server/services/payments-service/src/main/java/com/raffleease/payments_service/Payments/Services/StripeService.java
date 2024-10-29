@@ -1,10 +1,10 @@
 package com.raffleease.payments_service.Payments.Services;
 
-import com.raffleease.payments_service.Exceptions.CustomExceptions.CustomStripeException;
-import com.raffleease.payments_service.Exceptions.CustomExceptions.RaffleRetrievalException;
-import com.raffleease.payments_service.Payments.DTO.CreateSessionRequest;
+import com.raffleease.common_models.DTO.Orders.CreateSessionRequest;
+import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
+import com.raffleease.common_models.Exceptions.CustomExceptions.CustomStripeException;
+import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectRetrievalException;
 import com.raffleease.payments_service.Raffles.Clients.RafflesClient;
-import com.raffleease.payments_service.Raffles.DTO.RaffleDTO;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -46,6 +46,7 @@ public class StripeService {
                 .setPaymentIntentData(
                         SessionCreateParams.PaymentIntentData.builder()
                                 .putMetadata("orderId", request.orderId().toString())
+                                .putMetadata("raffleId", request.raffleId().toString())
                                 .build()
                 )
                 .addLineItem(
@@ -80,7 +81,7 @@ public class StripeService {
         try {
             return rafflesClient.get(raffleId);
         } catch (RuntimeException exp) {
-            throw new RaffleRetrievalException("Raffle retrieval failed: " + exp.getMessage());
+            throw new ObjectRetrievalException("Raffle retrieval failed: " + exp.getMessage());
         }
     }
 

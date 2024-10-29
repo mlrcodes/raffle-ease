@@ -1,7 +1,6 @@
 package com.raffleease.payments_service.Payments.Controllers;
 
-import com.raffleease.common_models.DTO.MessageDTO;
-import com.raffleease.payments_service.Payments.DTO.CreateSessionRequest;
+import com.raffleease.common_models.DTO.Orders.CreateSessionRequest;
 import com.raffleease.payments_service.Payments.Services.StripeService;
 import com.raffleease.payments_service.Payments.Services.WebHookService;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +34,4 @@ public class StripeController {
         webHookService.handleWebHook(payload, sigHeader);
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping("/send-message")
-    public ResponseEntity<String> sendMessage(
-            @RequestBody MessageDTO message
-            ) {
-        return ResponseEntity.ok(webHookService.sendMessage(message));
-    }
-
 }

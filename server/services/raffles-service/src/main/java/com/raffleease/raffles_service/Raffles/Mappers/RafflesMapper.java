@@ -1,25 +1,14 @@
 package com.raffleease.raffles_service.Raffles.Mappers;
 
-import com.raffleease.raffles_service.Raffles.DTO.RaffleCreationRequest;
-import com.raffleease.raffles_service.Raffles.DTO.RaffleResponse;
+import com.raffleease.common_models.DTO.Raffles.RaffleCreationRequest;
+import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
-import com.raffleease.raffles_service.Raffles.Model.RaffleStatus;
-import com.raffleease.raffles_service.Tickets.Mappers.TicketsMapper;
-import com.raffleease.raffles_service.Tickets.Models.Ticket;
-import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class RafflesMapper {
-
-    private final TicketsMapper ticketsMapper;
-
     public Raffle toRaffle(RaffleCreationRequest request) {
         return Raffle.builder()
                 .title(request.title())
@@ -33,8 +22,8 @@ public class RafflesMapper {
                 .build();
     }
 
-    public RaffleResponse fromRaffleToRaffleResponse(Raffle raffle) {
-        return RaffleResponse.builder()
+    public RaffleDTO fromRaffle(Raffle raffle) {
+        return RaffleDTO.builder()
                 .id(raffle.getId())
                 .title(raffle.getTitle())
                 .description(raffle.getDescription())

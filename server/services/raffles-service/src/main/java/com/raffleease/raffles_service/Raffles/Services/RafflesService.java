@@ -1,12 +1,13 @@
 package com.raffleease.raffles_service.Raffles.Services;
 
+import com.raffleease.common_models.DTO.Kafka.TicketsAvailabilityRequest;
+import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
+import com.raffleease.common_models.DTO.Raffles.RaffleStatus;
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.raffles_service.Exceptions.CustomExceptions.RafflesNotFoundException;
-import com.raffleease.raffles_service.Raffles.DTO.RaffleResponse;
 import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
-import com.raffleease.raffles_service.Raffles.Model.RaffleStatus;
 import com.raffleease.raffles_service.Raffles.Repositories.RafflesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -20,8 +21,9 @@ public class RafflesService {
     private final RafflesRepository repository;
     private final RafflesMapper mapper;
 
-    public RaffleResponse get(Long id) {
-        return mapRaffle(findById(id));
+    public RaffleDTO get(Long id) {
+        Raffle raffle = findById(id);
+        return mapper.fromRaffle(raffle);
     }
 
     public Long publish(Long id) {
@@ -31,7 +33,15 @@ public class RafflesService {
         return saveRaffle(raffle).getId();
     }
 
-    public void reduceAvailableTickets(Raffle raffle, long reductionQuantity) {
+    public void modifyTicketsAvailability(TicketsAvailabilityRequest request) {
+        Raffle raffle = findById(request.raffleId());
+        switch (request.operationType()) {
+            case DECREASE -> reduceAvailableTickets(raffle, request.quantity());
+            case INCREASE -> increaseAvailableTickets(raffle, request.quantity());
+        }
+    }
+
+    private void reduceAvailableTickets(Raffle raffle, long reductionQuantity) {
         long availableTickets = raffle.getAvailableTickets() - reductionQuantity;
         if (availableTickets < 0) {
             throw new BusinessException("Insufficient tickets available to complete the operation");
@@ -40,7 +50,7 @@ public class RafflesService {
         saveRaffle(raffle);
     }
 
-    public void increaseAvailableTickets(Raffle raffle, long increaseQuantity) {
+    private void increaseAvailableTickets(Raffle raffle, long increaseQuantity) {
         Long availableTickets = raffle.getAvailableTickets() + increaseQuantity;
         if (availableTickets > raffle.getTotalTickets()) {
             throw new BusinessException("The operation exceeds the total ticket limit");
@@ -56,10 +66,6 @@ public class RafflesService {
         } catch (DataAccessException exp) {
             throw new DataBaseHandlingException("Failed to access database when retrieving raffle's information");
         }
-    }
-
-    private RaffleResponse mapRaffle(Raffle raffle) {
-        return mapper.fromRaffleToRaffleResponse(raffle);
     }
 
     public Raffle saveRaffle(Raffle raffle) {

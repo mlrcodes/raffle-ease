@@ -1,6 +1,6 @@
 package com.raffleease.raffles_service.Raffles.Model;
 
-import com.raffleease.raffles_service.Tickets.Models.Ticket;
+import com.raffleease.common_models.DTO.Raffles.RaffleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -44,8 +44,10 @@ public class Raffle {
 
     private Long totalTickets;
 
-    @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Ticket> tickets;
+    @ElementCollection
+    @CollectionTable(name = "raffle_tickets", joinColumns = @JoinColumn(name = "raffle_id"))
+    @Column(name = "ticket_id")
+    private Set<String> ticketsId;
 
     @Column(nullable = false)
     private Long associationId;

@@ -1,7 +1,7 @@
 package com.raffleease.raffles_service.Raffles.Controllers;
 
-import com.raffleease.raffles_service.Raffles.DTO.RaffleCreationRequest;
-import com.raffleease.raffles_service.Raffles.DTO.RaffleResponse;
+import com.raffleease.common_models.DTO.Raffles.RaffleCreationRequest;
+import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import com.raffleease.raffles_service.Raffles.Services.RafflesCreationService;
 import com.raffleease.raffles_service.Raffles.Services.RafflesService;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public class RafflesController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<RaffleResponse> get(
+    public ResponseEntity<RaffleDTO> get(
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(service.get(id));

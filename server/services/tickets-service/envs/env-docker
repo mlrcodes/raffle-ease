@@ -1,0 +1,11 @@
+configs_host=config-server
+configs_port=8888
+eureka_host=discovery-server
+eureka_port=8761
+kafka_host=kafka-server
+kafka_port=9092
+tickets_db_user=tickets-user
+tickets_db_password=1234
+tickets_db_host=tickets-db
+tickets_db_port=27017
+tickets_db=tickets

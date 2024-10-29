@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.raffleease</groupId>
 	<artifactId>payments-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>payments-service</name>
 	<description>Payments Service</description>
 	<url/>
@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>com.raffleease</groupId>
 			<artifactId>common-models</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

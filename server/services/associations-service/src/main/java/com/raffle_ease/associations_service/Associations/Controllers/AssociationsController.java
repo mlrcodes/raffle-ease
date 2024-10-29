@@ -1,7 +1,7 @@
 package com.raffle_ease.associations_service.Associations.Controllers;
 
-import com.raffle_ease.associations_service.Associations.DTO.AssociationDTO;
 import com.raffle_ease.associations_service.Associations.Services.AssociationsService;
+import com.raffleease.common_models.DTO.Associations.AssociationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/associations")
 public class AssociationsController {
+
     private final AssociationsService service;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<AssociationDTO> findById(
             @PathVariable("id") Long id
     ) {

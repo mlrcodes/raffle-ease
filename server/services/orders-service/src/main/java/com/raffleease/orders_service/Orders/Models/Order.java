@@ -1,5 +1,6 @@
 package com.raffleease.orders_service.Orders.Models;
 
+import com.raffleease.common_models.DTO.Orders.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
@@ -27,14 +28,8 @@ public class Order {
     @ElementCollection
     @CollectionTable(name = "order_tickets", joinColumns = @JoinColumn(name = "order_id"))
     @Column(name = "ticket_id")
-    private Set<Long> ticketsIds;
+    private Set<String> ticketsIds;
 
     @Column(nullable = false)
     private Long orderDate;
-
-    @PrePersist
-    protected void onCreate() {
-        orderReference = UUID.randomUUID().toString();
-    }
-
 }

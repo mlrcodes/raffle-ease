@@ -1,6 +1,6 @@
 package com.raffleease.payments_service.Raffles.Clients;
 
-import com.raffleease.payments_service.Raffles.DTO.RaffleDTO;
+import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

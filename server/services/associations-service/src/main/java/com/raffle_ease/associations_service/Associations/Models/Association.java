@@ -5,10 +5,10 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 @Entity
+@Table(name = "Associations")
 public class Association {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

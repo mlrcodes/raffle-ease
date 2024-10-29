@@ -1,7 +1,7 @@
 package com.raffle_ease.associations_service.Associations.Mappers;
 
-import com.raffle_ease.associations_service.Associations.DTO.AssociationDTO;
 import com.raffle_ease.associations_service.Associations.Models.Association;
+import com.raffleease.common_models.DTO.Associations.AssociationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
