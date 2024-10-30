@@ -1,0 +1,52 @@
+/* Admin Header Styling */
+.admin-header {
+    max-width: 1720px;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
+}
+
+.admin-header-left,
+.admin-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Admin Logo Text */
+.admin-logo-text {
+    font-size: 20px;
+    /* Default font size for large devices */
+    font-weight: 700;
+    color: #715cf8;
+}
+
+/* Admin Header Logo */
+.admin-header-logo {
+    height: 40px;
+    /* Default size for large devices */
+    width: 40px;
+    object-fit: contain;
+    /* Maintain aspect ratio */
+}
+
+/* Admin Navbar Links */
+.admin-nav-link {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect for Navbar Links */
+.admin-nav-link:hover {
+    color: #715cf8;
+    /* Primary theme color on hover */
+}

@@ -1,0 +1,72 @@
+.add-svg {
+    stroke: #008001;
+}
+
+.floating-add-icon {
+    position: fixed;
+    bottom: 2%;
+    /* Distance from the bottom */
+    right: 2%;
+    /* Distance from the right */
+    background-color: #fff;
+    /* Background color (optional) */
+    border-radius: 50%;
+    /* Make it circular */
+    padding: 0.8rem;
+    /* Spacing around the icon, in rem for responsiveness */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    /* Shadow effect */
+    transition: background-color 0.3s;
+    /* Transition effect */
+    z-index: 1000;
+    /* Ensure it appears above other elements */
+    width: 60px;
+    /* Responsive width */
+    height: 60px;
+    /* Responsive height */
+}
+
+.floating-add-icon img {
+    width: 100%;
+    /* Use a percentage to make the icon size responsive */
+    height: 100%;
+    /* Maintain aspect ratio */
+    padding: 2%;
+}
+
+/* Hover effect */
+.floating-add-icon:hover {
+    background-color: #056e05;
+    /* Darker background on hover */
+}
+
+.floating-add-icon:hover .add-svg {
+    stroke: #ffffff;
+}
+
+@media (max-width: 576px) {
+    .floating-add-icon {
+        width: 32px;
+        /* Increase size for mobile */
+        height: 32px;
+        /* Increase size for mobile */
+        padding: 1%;
+        /* Adjust padding for mobile */
+    }
+
+    .floating-add-icon img {
+        width: 70%;
+        /* Adjust image size */
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-add-icon {
+        width: 40px;
+        /* Larger size for better usability on small screens */
+        height: 40px;
+        /* Larger size for better usability on small screens */
+        padding: 1%;
+        /* Adjust padding */
+    }
+}

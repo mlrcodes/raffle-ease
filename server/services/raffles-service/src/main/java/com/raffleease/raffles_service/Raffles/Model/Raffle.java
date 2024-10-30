@@ -47,7 +47,7 @@ public class Raffle {
     @ElementCollection
     @CollectionTable(name = "raffle_tickets", joinColumns = @JoinColumn(name = "raffle_id"))
     @Column(name = "ticket_id")
-    private Set<String> ticketsId;
+    private Set<String> tickets;
 
     @Column(nullable = false)
     private Long associationId;

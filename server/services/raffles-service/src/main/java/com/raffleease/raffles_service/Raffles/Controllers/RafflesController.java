@@ -18,7 +18,7 @@ public class RafflesController {
 
     @PostMapping("/create")
     public ResponseEntity<Long> create(
-            @RequestBody @Valid RaffleCreationRequest request
+            @Valid @RequestBody RaffleCreationRequest request
     ) {
         return ResponseEntity.ok(raffleCreationService.createRaffle(request));
     }

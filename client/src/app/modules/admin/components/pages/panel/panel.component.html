@@ -1,0 +1,32 @@
+<!-- Raffle Cards Container -->
+<div class="raffle-cards-container">
+    <div class="dashboard-header">
+        <h1 class="section-title">Raffle Dashboard</h1>
+
+        <div class="status-container">
+            <div class="status-item">
+                <span class="status-circle ongoing"></span>
+                <span>5 <span class="count-text">Active</span></span>
+            </div>
+            <div class="status-item">
+                <span class="status-circle in-progress"></span>
+                <span>2 <span class="count-text">In Progress</span></span>
+            </div>
+            <div class="status-item">
+                <span class="status-circle finished"></span>
+                <span>10 <span class="count-text">Finished</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Raffle List -->
+    <section class="raffle-list">
+
+        @for (raffle of raffles; track raffle.id) {
+            <app-raffle-card [raffle]="raffle"></app-raffle-card>
+        }
+
+    </section>
+</div>
+<app-floating-add-btn></app-floating-add-btn>
+

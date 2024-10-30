@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Ensures footer stays at the bottom */
+}
+
+.background-splash {
+    background-image: url("/assets/images/background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Container Styling */
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 100%;
+    max-width: 1720px;
+    /* Max width for large devices */
+    margin: 20px auto;
+    flex-grow: 1;
+    /* Allow the container to grow and fill available space */
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.hidden {
+    display: hidden;
+}
+
+/* Button Styles */
+.btn {
+    background-color: #715cf8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    /* Full width for the button */
+}
+
+.btn:hover {
+    background-color: #543bf7;
+    /* Change button background on hover */
+}
+
+/* Logout Button Styling */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    /* Button-like styling */
+    background-color: #715cf8;
+    /* Background color for the logout button */
+    color: white;
+    /* Text color */
+    border-radius: 5px;
+    /* Rounded corners */
+    text-decoration: none;
+    /* Remove underline */
+    transition: background-color 0.3s ease;
+    /* Smooth hover effect */
+    margin-left: 20px;
+}
+
+.logout-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+/* Hover Effect for Logout Button */
+.logout-btn:hover {
+    background-color: #543bf7;
+    /* Darker shade of primary color */
+    color: white;
+}
+
+/* Input Field Label */
+label {
+    padding-left: 2px;
+    font-weight: 500;
+}
+
+/* Logo Styling */
+.logo {
+    width: 80px;
+    /* Default width for large devices */
+    height: auto;
+    /* Auto-calculate height to maintain aspect ratio */
+    object-fit: contain;
+}
+
+/* Footer Styles */
+footer {
+    margin: 0 -20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    font-weight: 600;
+    margin-top: auto;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+footer p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.relative {
+    position: relative;
+}
+
+/* Section Title Styling */
+.section-title {
+    font-size: 20px;
+    /* Default size for large desktops */
+    font-weight: bold;
+}
+
+
+.text-black-stroke {
+    text-shadow: -1px -1px 0 #000,
+        /* Top-left stroke */
+        1px -1px 0 #000,
+        /* Top-right stroke */
+        -1px 1px 0 #000,
+        /* Bottom-left stroke */
+        1px 1px 0 #000;
+    /* Bottom-right stroke */
+}
+
+/* Responsive Container Sizes for Different Breakpoints */
+@media (max-width: 1200px) {
+
+    .container,
+    .section-title {
+        font-size: 18px;
+        /* Medium size for tablets/medium devices */
+    }
+}
+
+@media (max-width: 992px) {
+
+    .container,
+    .admin-logo-text {
+        font-size: 16px;
+        /* Font size for medium devices */
+    }
+
+    .admin-header-logo {
+        height: 36px;
+        /* Logo size for medium devices */
+        width: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container,
+    .admin-logo-text {
+        display: none;
+        /* Hide the logo text on small devices */
+    }
+
+    .admin-nav-link {
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    .logout-btn {
+        padding: 6px 12px;
+        margin-left: 0px;
+    }
+
+    .logout-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .admin-header-logo {
+        height: 32px;
+        /* Logo size for small devices */
+        width: 32px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        /* Small size for mobile devices */
+    }
+}
+
+@media (max-width: 576px) {
+
+    .container,
+    footer p {
+        font-size: 12px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        /* Smaller font size for the button */
+    }
+
+    .form {
+        gap: 15px;
+        /* Adjust gap between form fields */
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .admin-header-logo {
+        height: 32px;
+        /* Logo size for extra small devices */
+        width: 32px;
+    }
+
+    .logo {
+        width: 40px;
+        /* Logo size for extra small devices */
+    }
+
+    .section-title {
+        font-size: 14px;
+        /* Smallest size for extra small devices */
+    }
+}

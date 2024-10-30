@@ -1,0 +1,92 @@
+<div class="raffle-cards-container">
+    <h1 class="section-title">Raffle Management</h1>
+    <section class="raffle-contents-container">
+        <div>
+            <img src="../assets/images/sample.png" alt="Raffle 1" id="raffleImage" class="raffle-image" />
+
+            <!-- Radio button group from 1 to 5 -->
+            <div class="raffle-radio-group">
+                <label>
+                    <input type="radio" name="raffle-rating" value="1" checked /> 1
+                </label>
+                <label>
+                    <input type="radio" name="raffle-rating" value="2" /> 2
+                </label>
+                <label>
+                    <input type="radio" name="raffle-rating" value="3" /> 3
+                </label>
+                <label>
+                    <input type="radio" name="raffle-rating" value="4" /> 4
+                </label>
+                <label>
+                    <input type="radio" name="raffle-rating" value="5" /> 5
+                </label>
+            </div>
+        </div>
+
+        <div class="raffle-item">
+            <h3 class="raffle-title">Title : Raffle 1</h3>
+            <h3 class="raffle-subtitle">Price : 20$</h3>
+            <div class="statistics">
+                <p>
+                    <span class="font-semibold">Description</span> : Lorem Ipsum is
+                    simply dummy text of the printing and typesetting industry. Lorem
+                    Ipsum has been the industry's standard dummy text ever since the
+                    1500s, when an unknown printer took a galley of type and scrambled
+                    it to make a type specimen book. It has survived not only five
+                    centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged. It was popularised in the 1960s
+                    with the release of Letraset sheets containing Lorem Ipsum
+                    passages, and more recently with desktop publishing software like
+                    Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+                <p class="mt-10">
+                    <span class="font-semibold">Tickets Sold:&nbsp;</span><span>50</span>
+                </p>
+                <p>
+                    <span class="font-semibold">Available Tickets:&nbsp;</span><span>150</span>
+                </p>
+                <p>
+                    <span class="font-semibold">Total Revenue:</span>&nbsp;<span>$500</span>
+                </p>
+            </div>
+            <div class="action-buttons">
+                <span class="font-semibold">Actions:&nbsp;</span>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-danger">Delete</button>
+                <button class="btn-default">Publish</button>
+            </div>
+            <div class="action-buttons">
+                <span class="font-semibold">Statistic:&nbsp;</span>
+                <button id="openTicketModal" class="btn-default">
+                    View Available Tickets
+                </button>
+                <button id="openPurchaseModal" class="btn-default">
+                    View Purchases
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Available Tickets Modal -->
+<div id="ticketsModal" class="modal">
+    <div class="modal-content">
+        <span class="close close-ticket">&times;</span>
+        <h2>Available Tickets</h2>
+        <ul id="ticketList" class="mt-10">
+            <!-- Dynamic content will be added here -->
+        </ul>
+    </div>
+</div>
+
+<!-- Purchases Modal -->
+<div id="purchasesModal" class="modal">
+    <div class="modal-content">
+        <span class="close close-purchase">&times;</span>
+        <h2>Purchases</h2>
+        <ul id="purchaseList" class="mt-10">
+            <!-- Dynamic content will be added here -->
+        </ul>
+    </div>
+</div>

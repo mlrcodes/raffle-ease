@@ -1,0 +1,185 @@
+/* Specific styles for Raffle Management */
+
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+/* Raffle List Section */
+.raffle-contents-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns */
+    gap: 40px;
+    /* space between grid items */
+    margin-top: 30px;
+}
+
+.raffle-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.raffle-radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.raffle-radio-group label {
+    display: flex;
+    align-items: center;
+}
+
+.raffle-radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.raffle-title {
+    font-size: 18px;
+    font-weight: 600;
+    /* Slightly bolder */
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.raffle-status {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 8px
+}
+
+.action-buttons button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.action-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-edit {
+    background-color: #543bf7;
+    /* Edit button */
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    /* Delete button */
+    color: white;
+}
+
+.btn-default {
+    background-color: #715cf8;
+    /* Publish/View button */
+    color: white;
+}
+
+/* Statistics Section */
+.statistics {
+    margin-top: 10px;
+}
+
+.statistics select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    /* Ensure modal is above other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Semi-transparent background */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 80%;
+    /* Adjust as needed */
+    position: relative;
+    max-width: 650px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#ticketList,
+#purchaseList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#ticketList li,
+#purchaseList li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.raffle-cards-container {
+    background-color: #fff;
+    flex-grow: 1;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1720px;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .raffle-contents-container {
+        grid-template-columns: 1fr;
+        /* 1 column on small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .raffle-cards-container {
+        max-width: 100%;
+        padding: 20px;
+        /* Reduced padding for extra small devices */
+    }
+}

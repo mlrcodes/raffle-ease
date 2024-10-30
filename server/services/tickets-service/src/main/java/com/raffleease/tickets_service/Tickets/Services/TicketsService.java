@@ -1,7 +1,7 @@
 package com.raffleease.tickets_service.Tickets.Services;
 
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
 import com.raffleease.common_models.DTO.Tickets.RaffleTicketsCreationRequest;
-import com.raffleease.common_models.DTO.Tickets.TicketStatus;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import com.raffleease.tickets_service.Tickets.Repositories.ITicketsRepository;
@@ -24,7 +24,6 @@ public class TicketsService {
     public Set<String> createTickets(RaffleTicketsCreationRequest request) {
         Set<Ticket> tickets = LongStream.rangeClosed(request.lowerLimit(), request.upperLimit())
                 .mapToObj(i -> Ticket.builder()
-                        .raffleId(request.raffleId())
                         .status(AVAILABLE)
                         .ticketNumber(Long.toString(i))
                         .build()
@@ -45,6 +44,14 @@ public class TicketsService {
             return new HashSet<>(repository.saveAll(tickets));
         } catch (DataAccessException exp) {
             throw new DataBaseHandlingException("An error occurred when saving tickets occurred");
+        }
+    }
+
+    public void setRaffle(TicketsRaffleRequest request) {
+        try {
+            repository.setRaffle(request);
+        } catch (DataAccessException exp) {
+            throw new DataBaseHandlingException("An error occurred when setting tickets raffle id");
         }
     }
 }

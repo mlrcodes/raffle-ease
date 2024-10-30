@@ -1,5 +1,6 @@
 package com.raffleease.tickets_service.Tickets.Repositories;
 
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
@@ -21,11 +22,9 @@ public class CustomTicketsRepositoryImpl implements CustomTicketsRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("status").is("RESERVED")
                 .and("reservationTime").lt(reservationTime));
-
         Update update = new Update();
         update.set("status", "AVAILABLE");
         update.unset("reservationFlag");
-
         mongoTemplate.updateMulti(query, update, Ticket.class);
     }
 
@@ -33,10 +32,16 @@ public class CustomTicketsRepositoryImpl implements CustomTicketsRepository {
     public void updateReservationTime(LocalDateTime reservationTime) {
         Query query = new Query();
         query.addCriteria(Criteria.where("reservationTime").lt(reservationTime));
-
         Update update = new Update();
         update.unset("reservationTime");
+        mongoTemplate.updateMulti(query, update, Ticket.class);
+    }
 
+    @Override
+    public void setRaffle(TicketsRaffleRequest request) {
+        Query query = new Query(Criteria.where("_id").in(request.tickets()));
+        Update update = new Update();
+        update.set("raffleId", request.raffleId());
         mongoTemplate.updateMulti(query, update, Ticket.class);
     }
 

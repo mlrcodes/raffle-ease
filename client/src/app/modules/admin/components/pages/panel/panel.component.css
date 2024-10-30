@@ -1,0 +1,217 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Ensures footer stays at the bottom */
+}
+
+/* Container Styling */
+.raffle-cards-container {
+    background-color: #fff;
+    flex-grow: 1;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1720px;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Title */
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Dashboard Header Styling */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+/* Status Container on the Right */
+.status-container {
+    display: flex;
+    gap: 8px;
+    /* Gap between each status */
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    /* Wrap items if they exceed the row width */
+}
+
+/* TODO */
+
+/* Status Item Styling */
+.status-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: black;
+}
+
+.black-outline {
+    color: white;
+    text-shadow: -1px -1px 0 #000,
+        /* Top-left stroke */
+        1px -1px 0 #000,
+        /* Top-right stroke */
+        -1px 1px 0 #000,
+        /* Bottom-left stroke */
+        1px 1px 0 #000;
+    /* Bottom-right stroke */
+}
+
+/* Status Circle with Ping Effect */
+.status-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+    position: relative;
+    animation: pulse 1.5s infinite;
+    /* Ping effect */
+}
+
+/* Circle Colors */
+.ongoing {
+    background-color: green;
+    animation: pulse-green 1.5s infinite;
+}
+
+/* Ping Effect */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 128, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
+    }
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 128, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
+    }
+}
+
+@keyframes pulse-yellow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
+    }
+}
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+}
+
+/* END TODO */
+
+.in-progress {
+    background-color: yellow;
+    animation: pulse-yellow 1.5s infinite;
+}
+
+.finished {
+    background-color: red;
+    animation: pulse-red 1.5s infinite;
+}
+
+/* Grid system for Raffle List */
+.raffle-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(1, 1fr);
+    /* Default for mobile */
+}
+
+@media (min-width: 768px) {
+    .raffle-list {
+        grid-template-columns: repeat(2, 1fr);
+        /* Grid for medium devices */
+    }
+
+
+}
+
+@media (min-width: 992px) {
+    .raffle-list {
+        grid-template-columns: repeat(3, 1fr);
+        /* Grid for large devices */
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .raffle-list {
+        grid-template-columns: repeat(4, 1fr);
+        /* Grid for extra-large devices */
+    }
+
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .status-container {
+        justify-content: flex-start;
+    }
+
+    .count-text {
+        display: none !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .count-text {
+        display: none !important;
+    }
+}
+
