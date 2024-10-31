@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/raffles")
@@ -35,6 +37,13 @@ public class RafflesController {
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(service.get(id));
+    }
+
+    @GetMapping("/get-all/{associationId}")
+    public ResponseEntity<Set<RaffleDTO>> getAll(
+            @PathVariable Long associationId
+    ) {
+        return ResponseEntity.ok(service.getAll(associationId));
     }
 
 }

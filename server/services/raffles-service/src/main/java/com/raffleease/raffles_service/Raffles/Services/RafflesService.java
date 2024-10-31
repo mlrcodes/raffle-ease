@@ -14,6 +14,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -73,6 +75,19 @@ public class RafflesService {
             return repository.save(raffle);
         } catch (DataAccessException exp) {
             throw new DataBaseHandlingException("Failed to access database when saving raffle");
+        }
+    }
+
+    public Set<RaffleDTO> getAll(Long associationId) {
+        Set<Raffle> raffles = findByAssociationId(associationId);
+        return mapper.fromRaffleSet(raffles);
+    }
+
+    public Set<Raffle> findByAssociationId(Long associationId) {
+        try {
+            return new HashSet<>(repository.findByAssociationId(associationId));
+        } catch (DataAccessException exp) {
+            throw new DataBaseHandlingException("Failed to access database when retrieving raffles");
         }
     }
 }

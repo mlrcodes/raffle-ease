@@ -60,12 +60,8 @@ export class RaffleFormComponent {
   onSubmit(event: Event) {
     event.preventDefault();
 
-    console.log("CREATING RAFFLE")
-
     if (this.raffleForm.invalid) return;
-    
-    console.log("VALID RAFFLE")
-    
+        
     const { title, description, endDate, endTime, photosURLs, amount, price, lowerLimit, upperLimit, associationId } = this.raffleForm.value;
     
     const ticketsInfo: RaffleTicketsCreationRequest = {

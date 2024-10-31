@@ -5,10 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RafflesRepository extends JpaRepository<Raffle, Long> {
     @Query("SELECT r.ticketPrice FROM Raffle r WHERE id = :id")
     Optional<String> getStripePriceIdById(Long id);
+
+    List<Raffle> findByAssociationId(Long associationId);
 }

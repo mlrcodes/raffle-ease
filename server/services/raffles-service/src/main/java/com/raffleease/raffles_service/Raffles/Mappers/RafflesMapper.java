@@ -6,6 +6,9 @@ import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class RafflesMapper {
@@ -36,5 +39,9 @@ public class RafflesMapper {
                 .totalTickets(raffle.getTotalTickets())
                 .associationId(raffle.getAssociationId())
                 .build();
+    }
+
+    public Set<RaffleDTO> fromRaffleSet(Set<Raffle> raffles) {
+        return raffles.stream().map(this::fromRaffle).collect(Collectors.toSet());
     }
 }
