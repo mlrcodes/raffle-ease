@@ -1,0 +1,6 @@
+configs_host=config-server
+configs_port=8888
+eureka_host=discovery-server
+eureka_port=8761
+auth_host=auth-server
+auth_port=8087

@@ -12,7 +12,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(DataBaseHandlingException.class)
     public ResponseEntity<String> HandleDataBaseAccessException(DataBaseHandlingException exp) {
         return ResponseEntity
@@ -21,7 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<String> HandleCustomerNotFoundException(ObjectNotFoundException exp) {
+    public ResponseEntity<String> HandleObjectNotFoundException(ObjectNotFoundException exp) {
         return ResponseEntity
                 .status(NOT_FOUND)
                 .body(exp.getMsg());

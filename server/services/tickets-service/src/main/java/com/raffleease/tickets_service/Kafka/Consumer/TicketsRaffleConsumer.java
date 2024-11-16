@@ -1,6 +1,6 @@
 package com.raffleease.tickets_service.Kafka.Consumer;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffle;
 import com.raffleease.tickets_service.Tickets.Services.TicketsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,7 +13,7 @@ public class TicketsRaffleConsumer {
 
     @KafkaListener(topics = "tickets-raffle-topic", groupId = "tickets-group")
     public void consumeTicketsRaffle (
-            TicketsRaffleRequest request
+            TicketsRaffle request
     ) {
         ticketsService.setRaffle(request);
     }

@@ -1,0 +1,24 @@
+@if (raffle) {
+<div class="raffle-details">
+    <h3 class="raffle-title"> {{raffle.title}} </h3>
+    <h3 class="raffle-price">Price : {{raffle.ticketPrice}}€</h3>
+    <div class="status">
+        <app-status-circle [status]="raffle.status"></app-status-circle>
+    </div>
+    <div class="statistics">
+        <p>
+            <span class="font-semibold">Description</span> : {{ raffle.description }}
+        </p>
+        <p class="mt-10">
+            <span class="font-semibold">Tickets Sold:&nbsp;</span><span> {{ raffle.soldTickets }}</span>
+        </p>
+        <p>
+            <span class="font-semibold">Available Tickets:&nbsp;</span><span> {{ raffle.availableTickets }}
+            </span>
+        </p>
+        <p>
+            <span class="font-semibold">Total Revenue:</span>&nbsp;<span> {{ raffle.revenue }}€ </span>
+        </p>
+    </div>
+</div>
+}

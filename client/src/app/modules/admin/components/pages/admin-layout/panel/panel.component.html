@@ -1,0 +1,33 @@
+<!-- Raffle Cards Container -->
+<div class="raffle-cards-container">
+    <div class="dashboard-header">
+        <h1 class="section-title">Raffle Dashboard</h1>
+
+        <div class="status-container">
+            <div class="status-item">
+                <app-status-circle [status]="'PENDING'"></app-status-circle>
+            </div>
+            <div class="status-item">
+                <app-status-circle [status]="'ACTIVE'"></app-status-circle>
+            </div>
+            <div class="status-item">
+                <app-status-circle [status]="'COMPLETED'"></app-status-circle>
+            </div>
+            <div class="status-item">
+                <app-status-circle [status]="'PAUSED'"></app-status-circle>
+            </div>
+        </div>
+    </div>
+
+    <!-- Raffle List -->
+    @if (raffles && images) {
+        <section class="raffle-list">
+            @for (raffle of raffles; track raffle.id) {
+                <app-raffle-card [raffle]="raffle" [images]="images.get(raffle.id) ?? []"></app-raffle-card>
+            }
+        </section>
+    }
+
+</div>
+<app-floating-add-btn></app-floating-add-btn>
+

@@ -1,9 +1,9 @@
 package com.raffleease.raffles_service.Raffles.Controllers;
 
-import com.raffleease.common_models.DTO.Raffles.RaffleCreationRequest;
+import com.raffleease.common_models.DTO.Raffles.CreateRaffle;
+import com.raffleease.common_models.DTO.Raffles.EditRaffle;
 import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
-import com.raffleease.raffles_service.Raffles.Services.RafflesCreationService;
-import com.raffleease.raffles_service.Raffles.Services.RafflesService;
+import com.raffleease.raffles_service.Raffles.Services.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,21 +15,46 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1/raffles")
 public class RafflesController {
-    private final RafflesCreationService raffleCreationService;
+    private final CreateService createService;
     private final RafflesService service;
+    private final StatusService statusService;
+    private final DeleteService deleteService;
+    private final EditService editService;
 
     @PostMapping("/create")
-    public ResponseEntity<Long> create(
-            @Valid @RequestBody RaffleCreationRequest request
+    public ResponseEntity<RaffleDTO> create(
+            @Valid @RequestBody CreateRaffle request
     ) {
-        return ResponseEntity.ok(raffleCreationService.createRaffle(request));
+        return ResponseEntity.ok(createService.createRaffle(request));
     }
 
-    @PostMapping("/publish/{id}")
-    public ResponseEntity<Long> publish(
+    @PutMapping("/publish/{id}")
+    public ResponseEntity<RaffleDTO> publish(
             @PathVariable Long id
     )  {
-        return ResponseEntity.ok(service.publish(id));
+        return ResponseEntity.ok(statusService.publish(id));
+    }
+
+    @PutMapping("/pause/{id}")
+    public ResponseEntity<RaffleDTO> pause(
+            @PathVariable Long id
+    )  {
+        return ResponseEntity.ok(statusService.pause(id));
+    }
+
+    @PutMapping("/restart/{id}")
+    public ResponseEntity<RaffleDTO> restart(
+            @PathVariable Long id
+    )  {
+        return ResponseEntity.ok(statusService.restart(id));
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<RaffleDTO> edit(
+            @PathVariable Long id,
+            @Valid @RequestBody EditRaffle editRaffle
+    )  {
+        return ResponseEntity.ok(editService.edit(id, editRaffle));
     }
 
     @GetMapping("/get/{id}")
@@ -44,6 +69,14 @@ public class RafflesController {
             @PathVariable Long associationId
     ) {
         return ResponseEntity.ok(service.getAll(associationId));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id
+    ) {
+        deleteService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

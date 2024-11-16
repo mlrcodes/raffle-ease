@@ -1,0 +1,104 @@
+<form [formGroup]="authForm" (ngSubmit)="onSubmit($event)" class="form">
+    <!-- Name Field -->
+    <div class="form-group">
+        <label>Name *</label>
+        <div class="input-field">
+            <img src="../assets/icons/user-icon.svg" alt="User Icon" class="input-icon" />
+            <input type="text" formControlName="name" placeholder="Enter your name" />
+        </div>
+        @if ((authForm.get('name')?.touched || formSubmitted) && authForm.get('name')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('name') }}
+        </small>
+        }
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+        <label>Email *</label>
+        <div class="input-field">
+            <img src="../assets/icons/email-icon.svg" alt="Email Icon" class="input-icon" />
+            <input type="email" formControlName="email" placeholder="Enter your email" />
+        </div>
+        @if ((authForm.get('email')?.touched || formSubmitted) && authForm.get('email')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('email') }}
+        </small>
+        }
+    </div>
+
+    <!-- Phone Number Field -->
+    <div class="form-group">
+        <label>Phone Number *</label>
+        <div class="input-field">
+            <img src="../assets/icons/phone-icon.svg" alt="Phone Icon" class="input-icon" />
+            <input type="text" formControlName="phoneNumber" placeholder="Enter your phone number" />
+        </div>
+        <small class="error-message">
+            @if ((authForm.get('phoneNumber')?.touched || formSubmitted) && authForm.get('phoneNumber')?.invalid) {
+            {{ getErrorMessage('phoneNumber') }}
+            }
+        </small>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+        <label>Password *</label>
+        <div class="input-field">
+            <img src="../assets/icons/password-icon.svg" alt="Password Icon" class="input-icon" />
+            <input type="password" formControlName="password" placeholder="Enter your password" />
+        </div>
+        @if ((authForm.get('password')?.touched || formSubmitted) && authForm.get('password')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('password') }}
+        </small>
+        }
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="form-group">
+        <label>Confirm Password *</label>
+        <div class="input-field">
+            <img src="../assets/icons/password-icon.svg" alt="Confirm Password Icon" class="input-icon" />
+            <input type="password" formControlName="confirmPassword" placeholder="Confirm your password" />
+        </div>
+        @if ((authForm.get('confirmPassword')?.touched || formSubmitted) && authForm.get('confirmPassword')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('confirmPassword') }}
+        </small>
+        }
+    </div>
+
+    <!-- City Field -->
+    <div class="form-group">
+        <label>City *</label>
+        <div class="input-field">
+            <img src="../assets/icons/location-icon.svg" alt="Location Icon" class="input-icon" />
+            <input type="text" formControlName="city" placeholder="Enter your city" />
+        </div>
+        @if ((authForm.get('city')?.touched || formSubmitted) && authForm.get('city')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('city') }}
+        </small>
+        }
+    </div>
+
+    <!-- Zip Code Field -->
+    <div class="form-group">
+        <label>Zip Code *</label>
+        <div class="input-field">
+            <img src="../assets/icons/zip-icon.svg" alt="Zip Icon" class="input-icon" />
+            <input type="text" formControlName="zipCode" placeholder="Enter your zip code" />
+        </div>
+        @if ((authForm.get('zipCode')?.touched || formSubmitted) && authForm.get('zipCode')?.invalid) {
+        <small class="error-message">
+            {{ getErrorMessage('zipCode') }}
+        </small>
+        }
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form>

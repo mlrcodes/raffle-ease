@@ -1,6 +1,6 @@
 package com.raffleease.orders_service.Orders.Services;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsReleaseRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRelease;
 import com.raffleease.common_models.DTO.Orders.CreateSessionRequest;
 import com.raffleease.common_models.DTO.Orders.OrderRequest;
 import com.raffleease.common_models.DTO.Tickets.CheckReservationRequest;
@@ -74,7 +74,7 @@ public class OrdersService {
 
     private void releaseTickets(OrderRequest request) {
         releaseProducer.sendTicketsReleaseNotification(
-                TicketsReleaseRequest.builder()
+                TicketsRelease.builder()
                         .ticketsIds(request.tickets())
                         .raffleId(request.raffleId())
                         .build()

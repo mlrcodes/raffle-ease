@@ -4,7 +4,7 @@ export interface RaffleCreationRequest {
     title: string, 
     description: string,
     endDate: Date,
-    photosURLs: string[],
+    imageKeys: string[],
     ticketsInfo: RaffleTicketsCreationRequest,
     associationId: number
 }

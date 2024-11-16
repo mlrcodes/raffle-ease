@@ -1,6 +1,6 @@
 package com.raffleease.tickets_service.Kafka.Consumer;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsReleaseRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRelease;
 import com.raffleease.common_models.DTO.Tickets.ReservationRequest;
 import com.raffleease.tickets_service.Tickets.Services.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class TicketsReleaseConsumer {
 
     @KafkaListener(topics = "tickets-release-topic", groupId = "tickets-group")
     public void consumeRelease (
-            TicketsReleaseRequest request
+            TicketsRelease request
     ) {
         reservationService.release(
                 ReservationRequest.builder()

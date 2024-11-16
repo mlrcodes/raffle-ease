@@ -60,30 +60,41 @@ body {
     cursor: pointer;
     font-size: 16px;
     width: 100%;
-    /* Full width for the button */
 }
 
 .btn:hover {
     background-color: #543bf7;
-    /* Change button background on hover */
 }
 
-/* Logout Button Styling */
+
+.btn-edit {
+    background-color: #543bf7;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #ca1312;
+}
+
+.btn-default {
+    background-color: #715cf8;
+    color: white;
+}
+
 .logout-btn {
     display: flex;
     align-items: center;
     padding: 8px 12px;
-    /* Button-like styling */
     background-color: #715cf8;
-    /* Background color for the logout button */
     color: white;
-    /* Text color */
     border-radius: 5px;
-    /* Rounded corners */
     text-decoration: none;
-    /* Remove underline */
     transition: background-color 0.3s ease;
-    /* Smooth hover effect */
     margin-left: 20px;
 }
 
@@ -93,29 +104,22 @@ body {
     margin-right: 8px;
 }
 
-/* Hover Effect for Logout Button */
 .logout-btn:hover {
     background-color: #543bf7;
-    /* Darker shade of primary color */
     color: white;
 }
 
-/* Input Field Label */
 label {
     padding-left: 2px;
     font-weight: 500;
 }
 
-/* Logo Styling */
 .logo {
     width: 80px;
-    /* Default width for large devices */
     height: auto;
-    /* Auto-calculate height to maintain aspect ratio */
     object-fit: contain;
 }
 
-/* Footer Styles */
 footer {
     margin: 0 -20px;
     padding: 10px;
@@ -136,56 +140,50 @@ footer p {
     position: relative;
 }
 
-/* Section Title Styling */
 .section-title {
     font-size: 20px;
-    /* Default size for large desktops */
     font-weight: bold;
 }
 
 
 .text-black-stroke {
     text-shadow: -1px -1px 0 #000,
-        /* Top-left stroke */
         1px -1px 0 #000,
-        /* Top-right stroke */
         -1px 1px 0 #000,
-        /* Bottom-left stroke */
         1px 1px 0 #000;
-    /* Bottom-right stroke */
 }
 
-/* Responsive Container Sizes for Different Breakpoints */
-@media (max-width: 1200px) {
+.black-outline {
+    color: white;
+    text-shadow: -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
 
+@media (max-width: 1200px) {
     .container,
     .section-title {
         font-size: 18px;
-        /* Medium size for tablets/medium devices */
     }
 }
 
 @media (max-width: 992px) {
-
     .container,
     .admin-logo-text {
         font-size: 16px;
-        /* Font size for medium devices */
     }
 
     .admin-header-logo {
         height: 36px;
-        /* Logo size for medium devices */
         width: 36px;
     }
 }
 
 @media (max-width: 768px) {
-
     .container,
     .admin-logo-text {
         display: none;
-        /* Hide the logo text on small devices */
     }
 
     .admin-nav-link {
@@ -205,18 +203,15 @@ footer p {
 
     .admin-header-logo {
         height: 32px;
-        /* Logo size for small devices */
         width: 32px;
     }
 
     .section-title {
         font-size: 16px;
-        /* Small size for mobile devices */
     }
 }
 
 @media (max-width: 576px) {
-
     .container,
     footer p {
         font-size: 12px;
@@ -229,12 +224,10 @@ footer p {
     .btn {
         padding: 10px 15px;
         font-size: 14px;
-        /* Smaller font size for the button */
     }
 
     .form {
         gap: 15px;
-        /* Adjust gap between form fields */
     }
 
     .btn {
@@ -244,17 +237,14 @@ footer p {
 
     .admin-header-logo {
         height: 32px;
-        /* Logo size for extra small devices */
         width: 32px;
     }
 
     .logo {
         width: 40px;
-        /* Logo size for extra small devices */
     }
 
     .section-title {
         font-size: 14px;
-        /* Smallest size for extra small devices */
     }
 }

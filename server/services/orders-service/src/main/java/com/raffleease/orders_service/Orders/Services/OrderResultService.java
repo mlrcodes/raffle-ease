@@ -1,9 +1,6 @@
 package com.raffleease.orders_service.Orders.Services;
 import com.raffleease.common_models.DTO.Customers.CustomerDTO;
-import com.raffleease.common_models.DTO.Kafka.OrderSuccess;
-import com.raffleease.common_models.DTO.Kafka.PaymentFailure;
-import com.raffleease.common_models.DTO.Kafka.PaymentSuccess;
-import com.raffleease.common_models.DTO.Kafka.TicketsReleaseRequest;
+import com.raffleease.common_models.DTO.Kafka.*;
 import com.raffleease.common_models.DTO.Orders.OrderDTO;
 import com.raffleease.common_models.DTO.Orders.OrderStatus;
 import com.raffleease.common_models.DTO.Payment.PaymentDTO;
@@ -13,6 +10,7 @@ import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandling
 import com.raffleease.common_models.Exceptions.CustomExceptions.NotificationException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
 import com.raffleease.orders_service.Kafka.Producers.ReleaseProducer;
+import com.raffleease.orders_service.Kafka.Producers.StatisticsProducer;
 import com.raffleease.orders_service.Kafka.Producers.SuccessProducer;
 import com.raffleease.orders_service.Orders.Mappers.OrdersMapper;
 import com.raffleease.orders_service.Orders.Models.Order;
@@ -22,7 +20,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
+import java.math.BigDecimal;
 import java.util.Set;
 
 import static com.raffleease.common_models.DTO.Orders.OrderStatus.COMPLETED;
@@ -35,6 +33,7 @@ public class OrderResultService {
     private final TicketsClient ticketsClient;
     private final SuccessProducer successProducer;
     private final ReleaseProducer releaseProducer;
+    private final StatisticsProducer statisticsProducer;
 
     @Transactional
     public void handleOrderSuccess(
@@ -47,6 +46,10 @@ public class OrderResultService {
                 request.customer().stripeId()
         );
         OrderDTO orderData = mapper.fromOrder(order, purchasedTickets);
+        updateRaffleStatistics(
+                request.payment().total(),
+                (long) purchasedTickets.size()
+        );
         notifyPaymentSuccess(
                 request.payment(),
                 request.customer(),
@@ -73,6 +76,15 @@ public class OrderResultService {
         );
     }
 
+    private void updateRaffleStatistics(BigDecimal total, Long quantity) {
+        statisticsProducer.updateStatistics(
+                PurchaseStatistics.builder()
+                        .total(total)
+                        .quantity(quantity)
+                        .build()
+        );
+    }
+
     private void notifyPaymentSuccess(
             PaymentDTO payment,
             CustomerDTO customer,
@@ -94,7 +106,7 @@ public class OrderResultService {
     private void releaseTickets(Set<String> ticketsIds, Long raffleId) {
         try {
             releaseProducer.sendTicketsReleaseNotification(
-                    TicketsReleaseRequest.builder()
+                    TicketsRelease.builder()
                             .ticketsIds(ticketsIds)
                             .raffleId(raffleId)
                             .build()

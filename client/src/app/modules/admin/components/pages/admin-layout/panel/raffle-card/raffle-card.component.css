@@ -1,0 +1,84 @@
+
+/* Individual Raffle Item */
+.raffle-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.raffle-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.raffle-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px 8px 0px 0px;
+    object-fit: cover;
+}
+
+.raffle-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.raffle-items-statusbar {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+    font: 700;
+    padding: 3px 7px;
+}
+
+.raffle-items-price {
+    position: absolute;
+    bottom: 4px;
+    padding: 3px 7px;
+    right: 0px;
+    font-weight: 900;
+    color: white;
+    border-radius: 3px;
+    font-size: 16px;
+    text-shadow: -1px -1px 0 #000,
+        /* Top-left stroke */
+        1px -1px 0 #000,
+        /* Top-right stroke */
+        -1px 1px 0 #000,
+        /* Bottom-left stroke */
+        1px 1px 0 #000;
+    /* Bottom-right stroke */
+}
+
+.raffle-items-contents {
+    padding: 10px 20px;
+}
+
+/* Raffle Dates and Info */
+.raffle-dates,
+.raffle-tickets {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.view-link {
+    display: flex;
+    justify-content: center;
+}
+
+.view-link a {
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .raffle-items-price {
+        font-size: 14px;
+    }
+}
+

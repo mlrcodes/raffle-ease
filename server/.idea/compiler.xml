@@ -11,7 +11,9 @@
         <module name="config-server" />
         <module name="discovery-server" />
         <module name="raffles-service" />
+        <module name="auth-server" />
         <module name="tickets-service" />
+        <module name="gateway-server" />
         <module name="associations-service" />
         <module name="payments-service" />
         <module name="notifications-service" />
@@ -24,9 +26,11 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="associations-service" options="-parameters" />
+      <module name="auth-server" options="-parameters" />
       <module name="common-models" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
+      <module name="gateway-server" options="-parameters" />
       <module name="notifications-service" options="-parameters" />
       <module name="orders-service" options="-parameters" />
       <module name="payments-service" options="-parameters" />

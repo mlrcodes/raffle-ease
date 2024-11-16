@@ -1,0 +1,31 @@
+<div id="ticketsModal" class="modal" [ngClass]="{'hidden': !display}">
+    <div class="modal-content">
+        <span class="close close-ticket" (click)="close()">&times;</span>
+        <h2> {{ header }} </h2>
+        <p> {{ body }} </p>
+        <div class="btns-group">
+            <button class="btn btn-default" (click)="confirm()">Confirm</button>
+            <button class="btn btn-danger" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Available Tickets Modal -->
+<!-- <div id="ticketsModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close close-ticket">&times;</span>
+        <h2>Available Tickets</h2>
+        <ul id="ticketList" class="mt-10">
+        </ul>
+    </div>
+</div> -->
+
+<!-- Purchases Modal -->
+<!-- <div id="purchasesModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close close-purchase">&times;</span>
+        <h2>Purchases</h2>
+        <ul id="purchaseList" class="mt-10">
+        </ul>
+    </div>
+</div> -->

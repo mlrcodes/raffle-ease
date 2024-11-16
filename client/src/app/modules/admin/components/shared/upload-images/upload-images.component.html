@@ -1,0 +1,9 @@
+<!-- upload-images.component.html -->
+<div class="upload-container">
+    <label for="fileInput" class="upload-area">
+        <span>Drag and drop or browse files</span>
+        <input id="fileInput" type="file" (change)="onFilesSelected($event)" multiple hidden>
+    </label>
+    <app-images-preview [urls]="urls" (delete)="onDelete($event)" (moveUp)="onMoveUp($event)"
+        (moveDown)="onMoveDown($event)"></app-images-preview>
+</div>

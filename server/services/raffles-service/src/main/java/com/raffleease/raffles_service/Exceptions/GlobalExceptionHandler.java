@@ -1,7 +1,7 @@
 package com.raffleease.raffles_service.Exceptions;
 
+import com.raffleease.common_models.Exceptions.CustomExceptions.*;
 import com.raffleease.common_models.Exceptions.ErrorResponse;
-import com.raffleease.raffles_service.Exceptions.CustomExceptions.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,13 +15,6 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(AssociationRetrievalException.class)
-    public ResponseEntity<String> handleAssociationRetrievalException(AssociationRetrievalException exp) {
-        return ResponseEntity
-                .status(BAD_REQUEST)
-                .body(exp.getMsg());
-    }
-
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<String> handleBusinessException(BusinessException exp) {
         return ResponseEntity
@@ -36,10 +29,24 @@ public class GlobalExceptionHandler {
                 .body(exp.getMsg());
     }
 
-    @ExceptionHandler(RafflesNotFoundException.class)
-    public ResponseEntity<String> handleRaffleNotFoundException(RafflesNotFoundException exp) {
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<String> handleObjectNotFoundException(ObjectNotFoundException exp) {
         return ResponseEntity
                 .status(NOT_FOUND)
+                .body(exp.getMsg());
+    }
+
+    @ExceptionHandler(S3HandlingException.class)
+    public ResponseEntity<String> handleS3HandlingException(S3HandlingException exp) {
+        return ResponseEntity
+                .status(INTERNAL_SERVER_ERROR)
+                .body(exp.getMsg());
+    }
+
+    @ExceptionHandler(CustomIOException.class)
+    public ResponseEntity<String> handleCustomIOException(CustomIOException exp) {
+        return ResponseEntity
+                .status(INTERNAL_SERVER_ERROR)
                 .body(exp.getMsg());
     }
 

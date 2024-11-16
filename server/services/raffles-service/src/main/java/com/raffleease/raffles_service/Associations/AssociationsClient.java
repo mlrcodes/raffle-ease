@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
         url = "${application.config.associations-url}"
 )
 public interface AssociationsClient {
-
     @GetMapping("/exists/{id}")
     Boolean existsById(@PathVariable("id") Long id);
-
 }

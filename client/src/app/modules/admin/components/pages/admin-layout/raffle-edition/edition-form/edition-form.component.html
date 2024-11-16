@@ -1,0 +1,71 @@
+@if (raffle) {
+<!-- Raffle Form Container -->
+<div class="raffle-form-container">
+    <h1 class="section-title">Create New Raffle</h1>
+    <form action="raffle_dashboard.html" class="form" [formGroup]="raffleForm" (ngSubmit)="onSubmit($event)">
+        <!-- Raffle Title Field -->
+        <div class="form-group">
+            <label>Raffle Title</label>
+            <div class="input-field">
+                <input type="text" formControlName="title" placeholder="Enter raffle title" required />
+            </div>
+        </div>
+
+        <!-- Raffle Description Field -->
+        <div class="form-group">
+            <label>Raffle Description</label>
+            <div class="input-field">
+                <textarea formControlName="description" placeholder="Enter raffle description" rows="4"
+                    required></textarea>
+            </div>
+        </div>
+
+        <!-- Start and End Dates Fields (Grid) -->
+        <div class="form-group form-dates grid">
+            <div>
+                <label>New End Date</label>
+                <div class="input-field">
+                    <input type="date" formControlName="endDate" required />
+                </div>
+            </div>
+
+            <div>
+                <label>New End Time</label>
+                <div class="input-field">
+                    <input type="time" formControlName="endTime" required />
+                </div>
+            </div>
+        </div>
+
+        <!-- Number of Available Tickets and Ticket Price (Grid) -->
+        <div class="form-group form-tickets grid">
+            <div>
+                <label>Number of Extra Tickets</label>
+                <div class="input-field">
+                    <input type="number" formControlName="totalTickets" placeholder="Enter number of tickets"
+                        required />
+                </div>
+            </div>
+            <div>
+                <label>New Ticket Price</label>
+                <div class="input-field">
+                    <input type="number" formControlName="ticketPrice" placeholder="Enter ticket price" required />
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Image Upload Field -->
+        <div class="form-group">
+            <label>Upload Images</label>
+            <app-upload-images (imageKeysChange)="setImageKeys($event)" [imageKeys]="imageKeys.value"></app-upload-images>
+        </div>
+
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+}

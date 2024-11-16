@@ -1,6 +1,6 @@
 package com.raffleease.tickets_service.Tickets.Services;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffle;
 import com.raffleease.common_models.DTO.Tickets.RaffleTicketsCreationRequest;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
@@ -47,7 +47,7 @@ public class TicketsService {
         }
     }
 
-    public void setRaffle(TicketsRaffleRequest request) {
+    public void setRaffle(TicketsRaffle request) {
         try {
             repository.setRaffle(request);
         } catch (DataAccessException exp) {

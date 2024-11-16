@@ -1,6 +1,6 @@
 package com.raffleease.tickets_service.Tickets.Repositories;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffle;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
@@ -38,7 +38,7 @@ public class CustomTicketsRepositoryImpl implements CustomTicketsRepository {
     }
 
     @Override
-    public void setRaffle(TicketsRaffleRequest request) {
+    public void setRaffle(TicketsRaffle request) {
         Query query = new Query(Criteria.where("_id").in(request.tickets()));
         Update update = new Update();
         update.set("raffleId", request.raffleId());

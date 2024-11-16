@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -15,7 +16,6 @@ import java.util.Set;
 @Entity
 @Table(name = "Raffles")
 public class Raffle {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,17 +32,19 @@ public class Raffle {
 
     private LocalDateTime endDate;
 
-    @ElementCollection
-    @CollectionTable(name = "raffle_photos", joinColumns = @JoinColumn(name = "raffle_id"))
-    @Column(name = "photo_url")
-    private Set<String> photosURLs;
+    @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RaffleImage> images;
 
     @Column(nullable = false)
     private BigDecimal ticketPrice;
 
-    private Long availableTickets;
+    private BigDecimal revenue;
 
     private Long totalTickets;
+
+    private Long availableTickets;
+
+    private Long soldTickets;
 
     @ElementCollection
     @CollectionTable(name = "raffle_tickets", joinColumns = @JoinColumn(name = "raffle_id"))

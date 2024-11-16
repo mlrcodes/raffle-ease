@@ -1,6 +1,6 @@
 package com.raffleease.tickets_service.Tickets.Services;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsAvailabilityRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsAvailability;
 import com.raffleease.common_models.DTO.Tickets.CheckReservationRequest;
 import com.raffleease.common_models.DTO.Tickets.ReservationRequest;
 import com.raffleease.common_models.DTO.Tickets.TicketDTO;
@@ -9,9 +9,7 @@ import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundEx
 import com.raffleease.tickets_service.Kafka.Producer.TicketsAvailabilityProducer;
 import com.raffleease.tickets_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
-import com.raffleease.tickets_service.Tickets.Repositories.CustomTicketsRepository;
 import com.raffleease.tickets_service.Tickets.Repositories.ITicketsRepository;
-import  com.raffleease.common_models.DTO.Kafka.TicketsAvailabilityRequest.OperationType;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,8 +21,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.raffleease.common_models.DTO.Kafka.TicketsAvailabilityRequest.OperationType.DECREASE;
-import static com.raffleease.common_models.DTO.Kafka.TicketsAvailabilityRequest.OperationType.INCREASE;
+import static com.raffleease.common_models.DTO.Kafka.TicketsAvailability.OperationType.DECREASE;
+import static com.raffleease.common_models.DTO.Kafka.TicketsAvailability.OperationType.INCREASE;
 import static com.raffleease.common_models.DTO.Tickets.TicketStatus.AVAILABLE;
 import static com.raffleease.common_models.DTO.Tickets.TicketStatus.RESERVED;
 
@@ -71,10 +69,10 @@ public class ReservationService {
     private void modifyAvailableTickets(
             Long raffleId,
             Long quantity,
-            OperationType operationType
+            TicketsAvailability.OperationType operationType
     ) {
         ticketsAvailabilityProducer.modifyAvailability(
-                TicketsAvailabilityRequest.builder()
+                TicketsAvailability.builder()
                         .raffleId(raffleId)
                         .quantity(quantity)
                         .operationType(operationType)

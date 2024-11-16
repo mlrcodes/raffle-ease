@@ -1,6 +1,6 @@
 package com.raffleease.raffles_service.Kafka.Producers;
 
-import com.raffleease.common_models.DTO.Kafka.TicketsRaffleRequest;
+import com.raffleease.common_models.DTO.Kafka.TicketsRaffle;
 import com.raffleease.common_models.Exceptions.CustomExceptions.CustomKafkaException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.KafkaException;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class TicketsRaffleProducer {
-    private final KafkaTemplate<String, TicketsRaffleRequest> raffleIdTemplate;
+    private final KafkaTemplate<String, TicketsRaffle> raffleIdTemplate;
 
-    public void produceTicketsRaffle(TicketsRaffleRequest request) {
-        Message<TicketsRaffleRequest> message = MessageBuilder
+    public void produceTicketsRaffle(TicketsRaffle request) {
+        Message<TicketsRaffle> message = MessageBuilder
                 .withPayload(request)
                 .setHeader(KafkaHeaders.TOPIC, "tickets-raffle-topic")
                 .build();

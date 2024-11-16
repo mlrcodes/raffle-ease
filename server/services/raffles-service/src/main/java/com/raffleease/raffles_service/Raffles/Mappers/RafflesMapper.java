@@ -1,8 +1,9 @@
 package com.raffleease.raffles_service.Raffles.Mappers;
 
-import com.raffleease.common_models.DTO.Raffles.RaffleCreationRequest;
+import com.raffleease.common_models.DTO.Raffles.CreateRaffle;
 import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
+import com.raffleease.raffles_service.Raffles.Model.RaffleImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class RafflesMapper {
-    public Raffle toRaffle(RaffleCreationRequest request) {
+    private final ImagesMapper imagesMapper;
+
+    public Raffle toRaffle(CreateRaffle request) {
         return Raffle.builder()
                 .title(request.title())
                 .description(request.description())
@@ -20,7 +23,6 @@ public class RafflesMapper {
                 .ticketPrice(request.ticketsInfo().price())
                 .availableTickets(request.ticketsInfo().amount())
                 .totalTickets(request.ticketsInfo().amount())
-                .photosURLs(request.photosURLs())
                 .associationId(request.associationId())
                 .build();
     }
@@ -33,10 +35,12 @@ public class RafflesMapper {
                 .startDate(raffle.getStartDate())
                 .endDate(raffle.getEndDate())
                 .status(raffle.getStatus())
-                .photosURLs(raffle.getPhotosURLs())
+                .imageKeys(imagesMapper.fromImages(raffle.getImages()))
                 .ticketPrice(raffle.getTicketPrice())
                 .availableTickets(raffle.getAvailableTickets())
                 .totalTickets(raffle.getTotalTickets())
+                .soldTickets(raffle.getSoldTickets())
+                .revenue(raffle.getRevenue())
                 .associationId(raffle.getAssociationId())
                 .build();
     }

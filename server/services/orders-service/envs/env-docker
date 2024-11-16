@@ -10,9 +10,7 @@ orders_db_port=5432
 orders_db=orders
 orders_db_user=orders-user
 orders_db_password=1234
-tickets_host=tickets-service
-tickets_port=8086
-payments_host=payments-service
-payments_port=8085
+gateway_host=gateway-service
+gateway_port=8080
 
 

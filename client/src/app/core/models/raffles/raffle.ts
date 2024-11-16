@@ -5,11 +5,13 @@ export interface Raffle {
     startDate: Date; 
     endDate: string;
     status: RaffleStatus;
-    photosURLs: Set<string>;
+    imageKeys: string[];
     ticketPrice: number;
     availableTickets: number;
+    soldTickets: number;
     totalTickets: number;
+    revenue: number;
     associationId: number;
 }
 
-export type RaffleStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELED';
+export type RaffleStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'PAUSED';

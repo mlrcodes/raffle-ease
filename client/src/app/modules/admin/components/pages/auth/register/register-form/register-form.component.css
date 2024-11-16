@@ -1,0 +1,53 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.input-field {
+    position: relative;
+    padding-top: 4px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.input-field input:focus {
+    border-color: #715CF8;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.error-message::before {
+    content: '⚠';
+    margin-right: 0.5rem;
+}

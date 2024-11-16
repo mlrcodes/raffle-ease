@@ -1,0 +1,74 @@
+/* General styles */ 
+.login-form-layout-container {
+    display: flex;
+    min-height: 95vh;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Form Container */
+.login-form-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    /* Maximum width for the form container */
+    margin: 20px;
+    height: fit-content;
+}
+
+/* Header styles */
+.header {
+    margin-bottom: 20px;
+}
+
+/* Page title */
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+
+/* Responsive adjustments for smaller devices */
+@media (max-width: 768px) {
+    .login-form-container {
+        padding: 30px;
+        /* Reduce padding on smaller devices */
+        max-width: 400px;
+        /* Smaller width on tablets */
+    }
+
+    .page-title {
+        font-size: 22px;
+        /* Slightly smaller title font */
+        margin-bottom: 28px;
+    }
+
+    .form {
+        gap: 15px;
+        /* Reduce gap between form fields */
+    }
+}
+
+@media (max-width: 576px) {
+    .login-form-container {
+        padding: 20px;
+        max-width: 100%;
+        /* Full width on mobile */
+    }
+
+    .page-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form {
+        gap: 12px;
+        /* Even smaller gap on mobile devices */
+    }
+}

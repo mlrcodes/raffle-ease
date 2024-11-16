@@ -50,4 +50,10 @@ public class SearchService {
                 .sorted(Comparator.comparing(Ticket::getTicketNumber))
                 .collect(Collectors.toList());
     }
+
+    public String getHighestTicketNumber(Long raffleId) {
+        Ticket ticket = ticketsRepository.findTopByRaffleIdOrderByTicketNumberDesc(raffleId)
+                .orElseThrow(() -> new ObjectNotFoundException("No tickets found for the given raffle"));
+        return ticket.getTicketNumber();
+    }
 }
