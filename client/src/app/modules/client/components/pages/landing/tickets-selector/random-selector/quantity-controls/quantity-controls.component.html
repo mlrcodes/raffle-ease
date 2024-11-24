@@ -1,0 +1,10 @@
+<div class="flex items-center justify-between gap-2">
+    <button class="px-3 py-2 text-base border border-gray-300 bg-gray-200 rounded cursor-pointer" (click)="decrease()">
+        -
+    </button>
+    <input type="text" class="w-16 p-2 text-center text-base border border-gray-300 rounded" placeholder="_"
+        [ngClass]="{'invalid-input': invalidInput}" [min]="1" [max]="availableTickets" [formControl]="quantityControl" />
+    <button class="px-3 py-2 text-base border border-gray-300 bg-gray-200 rounded cursor-pointer" (click)="increase()">
+        +
+    </button>
+</div>

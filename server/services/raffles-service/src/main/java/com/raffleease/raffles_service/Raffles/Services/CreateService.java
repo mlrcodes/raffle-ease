@@ -7,6 +7,7 @@ import com.raffleease.common_models.DTO.Tickets.RaffleTicketsCreationRequest;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.TicketsCreationException;
 import com.raffleease.raffles_service.Associations.AssociationsClient;
+import com.raffleease.raffles_service.Auth.AuthClient;
 import com.raffleease.raffles_service.Kafka.Producers.TicketsRaffleProducer;
 import com.raffleease.raffles_service.Raffles.Mappers.ImagesMapper;
 import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
@@ -31,11 +32,14 @@ public class CreateService {
     private final TicketsClient ticketsClient;
     private final AssociationsClient associationsClient;
     private final TicketsRaffleProducer ticketsRaffleProducer;
+    private final AuthClient authClient;
 
     @Transactional
-    public RaffleDTO createRaffle(CreateRaffle request) {
+    public RaffleDTO createRaffle(CreateRaffle request, String authHeader) {
+        Long associationId = authClient.getId(authHeader);
+        validateAssociationExists(associationId);
         Raffle raffle = rafflesMapper.toRaffle(request);
-        validateAssociationExists(request.associationId());
+        raffle.setAssociationId(associationId);
         Set<String> createdTickets = createTickets(request.ticketsInfo());
         raffle.setTickets(createdTickets);
         raffle.setStatus(PENDING);

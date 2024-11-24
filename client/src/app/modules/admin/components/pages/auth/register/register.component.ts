@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { RegisterFormComponent } from './register-form/register-form.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../../../core/services/auth/auth.service';
+import { RegisterRequest } from '../../../../../../core/models/auth/register-request';
+import { TokenService } from '../../../../../../core/services/token/token-service.service';
 
 @Component({
   selector: 'app-register',
@@ -11,4 +14,18 @@ import { RouterLink } from '@angular/router';
 })
 export class RegisterComponent {
 
+  constructor(
+    private authService: AuthService,
+    private tokenService: TokenService,
+    private router: Router
+  ) {}
+
+  register(registerRequest: RegisterRequest) {
+    this.authService.register(registerRequest).subscribe({
+      next: (token: string) => {
+        this.tokenService.setToken(token);
+        this.router.navigate(['/admin']);
+      }
+    })
+  }
 }

@@ -29,14 +29,14 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
                                         "/api/v1/auth/authenticate",
                                         "/api/v1/auth/register",
-                                        "api/v1/auth/validate"
-                                ).permitAll()
+                                        "api/v1/auth/validate",
+                                        "/api/v1/auth/get-id"
+                                        ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

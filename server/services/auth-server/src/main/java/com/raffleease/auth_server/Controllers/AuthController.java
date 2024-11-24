@@ -33,4 +33,11 @@ public class AuthController {
         authService.validateToken(token);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/get-id")
+    public ResponseEntity<Long> getId(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        return ResponseEntity.ok(authService.getId(authHeader));
+    }
 }

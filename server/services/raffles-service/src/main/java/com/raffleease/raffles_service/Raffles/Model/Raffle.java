@@ -38,6 +38,8 @@ public class Raffle {
     @Column(nullable = false)
     private BigDecimal ticketPrice;
 
+    private Long firstTicketNumber;
+
     private BigDecimal revenue;
 
     private Long totalTickets;

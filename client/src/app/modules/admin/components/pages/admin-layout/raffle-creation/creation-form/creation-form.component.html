@@ -1,84 +1,111 @@
-<!-- Raffle Form Container -->
 <div class="raffle-form-container">
     <h1 class="section-title">Create New Raffle</h1>
-    <form action="raffle_dashboard.html" class="form" [formGroup]="raffleForm" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="raffleForm" (ngSubmit)="onSubmit($event)" class="form">
         <!-- Raffle Title Field -->
         <div class="form-group">
-            <label>Raffle Title</label>
+            <label>Raffle Title *</label>
             <div class="input-field">
-                <input type="text" formControlName="title" placeholder="Enter raffle title" required />
+                <input type="text" formControlName="title" placeholder="Enter raffle title" />
             </div>
+            @if ((raffleForm.get('title')?.touched || formSubmitted) && raffleForm.get('title')?.invalid) {
+            <small class="error-message">
+                Title is required.
+            </small>
+            }
         </div>
 
         <!-- Raffle Description Field -->
         <div class="form-group">
-            <label>Raffle Description</label>
+            <label>Raffle Description *</label>
             <div class="input-field">
-                <textarea formControlName="description" placeholder="Enter raffle description" rows="4"
-                    required></textarea>
+                <textarea formControlName="description" placeholder="Enter raffle description" rows="4"></textarea>
             </div>
+            @if ((raffleForm.get('description')?.touched || formSubmitted) && raffleForm.get('description')?.invalid) {
+            <small class="error-message">
+                Description is required.
+            </small>
+            }
+
         </div>
 
-        <!-- Start and End Dates Fields (Grid) -->
+        <!-- Start and End Dates Fields -->
         <div class="form-group form-dates grid">
             <div>
-                <label>End Date</label>
+                <label>End Date *</label>
                 <div class="input-field">
-                    <input type="date" formControlName="endDate" required />
+                    <input type="date" formControlName="endDate" />
                 </div>
+                @if ((raffleForm.get('endDate')?.touched || formSubmitted) && raffleForm.get('endDate')?.invalid) {
+                <small class="error-message">
+                    End date is required.
+                </small>
+                }
             </div>
-
             <div>
-                <label>End Time</label>
+                <label>End Time *</label>
                 <div class="input-field">
-                    <input type="time" formControlName="endTime" required />
+                    <input type="time" formControlName="endTime" />
                 </div>
+                @if ((raffleForm.get('endTime')?.touched || formSubmitted) && raffleForm.get('endTime')?.invalid) {
+                <small class="error-message">
+                    End time is required.
+                </small>
+                }
             </div>
         </div>
 
-        <!-- Number of Available Tickets and Ticket Price (Grid) -->
+        <!-- Tickets Info Fields -->
         <div class="form-group form-tickets grid">
             <div>
-                <label>Number of Tickets</label>
+                <label>Number of Tickets *</label>
                 <div class="input-field">
-                    <input type="number" formControlName="amount" placeholder="Enter number of tickets" required />
+                    <input type="number" formControlName="amount" placeholder="Enter number of tickets" />
                 </div>
+                @if ((raffleForm.get('amount')?.touched || formSubmitted) && raffleForm.get('amount')?.invalid) {
+                <small class="error-message">
+                    Number of tickets is required.
+                </small>
+                }
             </div>
             <div>
-                <label>Ticket Price</label>
+                <label>Ticket Price *</label>
                 <div class="input-field">
-                    <input type="number" formControlName="price" placeholder="Enter ticket price" required />
+                    <input type="number" formControlName="price" placeholder="Enter ticket price" />
                 </div>
+                @if ((raffleForm.get('price')?.touched || formSubmitted) && raffleForm.get('price')?.invalid) {
+                <small class="error-message">
+                    Ticket price is required.
+                </small>
+                }
             </div>
         </div>
 
-        <!-- First and Last Ticket Number Fields (Grid) -->
+        <!-- First and Last Ticket Numbers -->
         <div class="form-group form-tickets-range grid">
             <div>
-                <label>First Available Ticket Number</label>
+                <label>First Available Ticket Number *</label>
                 <div class="input-field">
-                    <input type="number" formControlName="lowerLimit" placeholder="Enter first ticket number"
-                        required />
+                    <input type="number" formControlName="lowerLimit" placeholder="Enter first ticket number" />
                 </div>
-            </div>
-            <div>
-                <label>Last Available Ticket Number</label>
-                <div class="input-field">
-                    <input type="number" formControlName="upperLimit" placeholder="Enter last ticket number" required />
-                </div>
+                @if ((raffleForm.get('lowerLimit')?.touched || formSubmitted) && raffleForm.get('lowerLimit')?.invalid)
+                {
+                <small class="error-message">
+                    First ticket number is required.
+                </small>
+                }
             </div>
         </div>
 
         <!-- Image Upload Field -->
         <div class="form-group">
             <label>Upload Images</label>
-            <app-upload-images (imageKeysChange)="setImageKeys($event)" [imageKeys]="imageKeys.value"></app-upload-images>
+            <app-upload-images (imageKeysChange)="setImageKeys($event)"
+                [imageKeys]="imageKeys.value"></app-upload-images>
         </div>
-
 
         <!-- Submit Button -->
         <div class="form-group">
-            <input type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">Create Raffle</button>
         </div>
     </form>
 </div>

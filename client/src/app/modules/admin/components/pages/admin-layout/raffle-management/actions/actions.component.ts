@@ -20,7 +20,6 @@ export class ActionsComponent {
   @Output() actionTriggered = new EventEmitter<'publish' | 'pause' | 'restart' | 'delete'>();
 
   triggerAction(action: 'publish' | 'pause' | 'restart' | 'delete' ) {
-    console.log(action)
     this.actionTriggered.emit(action);
   }
 

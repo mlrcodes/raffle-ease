@@ -1,6 +1,7 @@
 package com.raffleease.tickets_service.Tickets.Services;
 
 import com.raffleease.common_models.DTO.Tickets.GenerateRandomRequest;
+import com.raffleease.common_models.DTO.Tickets.ReservationResponse;
 import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
@@ -22,7 +23,7 @@ public class GenerateRandomService {
     private final ITicketsRepository repository;
     private final TicketsMapper mapper;
 
-    public Set<TicketDTO> generateRandom(GenerateRandomRequest request) {
+    public ReservationResponse generateRandom(GenerateRandomRequest request) {
         Set<Ticket> availableTickets = findAvailableTickets(request.raffleId());
         validateTicketAvailability(availableTickets, request.quantity());
         Set<Ticket> selectedTickets = selectRandomTickets(availableTickets, request.quantity());
@@ -43,7 +44,7 @@ public class GenerateRandomService {
         }
     }
 
-    private Set<TicketDTO> reserveTickets(Long raffleId, Set<Ticket> tickets) {
+    private ReservationResponse reserveTickets(Long raffleId, Set<Ticket> tickets) {
         return reservationService.reserve(raffleId, tickets);
     }
 

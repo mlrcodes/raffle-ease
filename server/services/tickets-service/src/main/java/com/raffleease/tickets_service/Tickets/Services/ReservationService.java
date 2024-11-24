@@ -1,8 +1,9 @@
 package com.raffleease.tickets_service.Tickets.Services;
 
 import com.raffleease.common_models.DTO.Kafka.TicketsAvailability;
-import com.raffleease.common_models.DTO.Tickets.CheckReservationRequest;
+import com.raffleease.common_models.DTO.Orders.Reservation;
 import com.raffleease.common_models.DTO.Tickets.ReservationRequest;
+import com.raffleease.common_models.DTO.Tickets.ReservationResponse;
 import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
@@ -15,6 +16,7 @@ import org.bson.Document;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -34,21 +36,21 @@ public class ReservationService {
     private final TicketsMapper mapper;
     private final TicketsAvailabilityProducer ticketsAvailabilityProducer;
 
-    public Set<TicketDTO> reserve(ReservationRequest request) {
+    public ReservationResponse reserve(ReservationRequest request) {
         Set<Ticket> tickets = findAllById(request.ticketsIds());
         return reserveInternal(request.raffleId(), tickets);
     }
 
-    public Set<TicketDTO> reserve(Long raffleId, Set<Ticket> tickets) {
+    public ReservationResponse reserve(Long raffleId, Set<Ticket> tickets) {
         return reserveInternal(raffleId, tickets);
     }
 
     @Transactional
-    private Set<TicketDTO> reserveInternal(Long raffleId, Set<Ticket> tickets) {
+    private ReservationResponse reserveInternal(Long raffleId, Set<Ticket> tickets) {
         checkTicketsAvailability(tickets);
-        Set<Ticket> reservedTickets = setReservationDetails(tickets);
+        ReservationResponse reservationResponse = setReservationDetails(tickets);
         modifyAvailableTickets(raffleId, (long) tickets.size(), DECREASE);
-        return mapper.fromTicketSet(reservedTickets);
+        return reservationResponse;
     }
 
     @Transactional
@@ -97,7 +99,7 @@ public class ReservationService {
         ticketsService.saveAll(tickets);
     }
 
-    private Set<Ticket> setReservationDetails(Set<Ticket> tickets) {
+    private ReservationResponse setReservationDetails(Set<Ticket> tickets) {
         String reservationFlag = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now();
         tickets.forEach(ticket -> {
@@ -105,14 +107,18 @@ public class ReservationService {
             ticket.setReservationFlag(reservationFlag);
             ticket.setReservationTime(now);
         });
-        return ticketsService.saveAll(tickets);
+        ticketsService.saveAll(tickets);
+        Set<TicketDTO> ticketDTOS = mapper.fromTicketSet(tickets);
+        return ReservationResponse.builder()
+                .tickets(ticketDTOS)
+                .reservationFlag(reservationFlag)
+                .build();
     }
 
-    public Boolean checkReservation(CheckReservationRequest request) {
-        Set<Ticket> tickets = findAllById(request.tickets());
-        return tickets.stream().allMatch(ticket ->
-                ticket.getStatus().equals(RESERVED) && ticket.getReservationFlag().equals(request.reservationFlag())
-        );
+    public Boolean checkReservation(Set<Reservation> reservations) {
+        return reservations.stream().allMatch(reservation -> reservation.tickets().stream().allMatch(ticket ->
+                ticket.status().equals(RESERVED) && ticket.reservationFlag().equals(reservation.reservationFlag())
+        ));
     }
 
     @Scheduled(fixedRate = 600000)

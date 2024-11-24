@@ -30,7 +30,6 @@ export class RaffleEditionComponent {
   raffle!: Raffle;
 
   edit(editRaffle: EditRaffle) {
-    console.log(editRaffle);
     this.rafflesService.edit(this.raffleId, editRaffle).subscribe({
       next: (raffle: Raffle) => {
         this.shareRaffles.delete(this.raffleId);

@@ -21,10 +21,8 @@ export class LoginComponent {
   ) { }
 
   login(authRequest: AuthRequest) {
-    console.log(authRequest)
     this.authService.authenticate(authRequest).subscribe({
       next: (token: string) => {
-        console.log(token)
         this.tokenService.setToken(token);
         this.router.navigate(['/admin']);
       }

@@ -104,13 +104,11 @@ public class EditService {
     private void createAdditionalTickets(Raffle raffle, long ticketDifference) {
         String highestTicketNumber = ticketsClient.getHighestTicketNumber(raffle.getId());
         long lowerLimit = Long.parseLong(highestTicketNumber);
-        long upperLimit = lowerLimit + ticketDifference;
 
         RaffleTicketsCreationRequest request = new RaffleTicketsCreationRequest(
                 ticketDifference,
                 raffle.getTicketPrice(),
-                lowerLimit,
-                upperLimit
+                lowerLimit
         );
 
         Set<String> newTickets = ticketsClient.createTickets(request);

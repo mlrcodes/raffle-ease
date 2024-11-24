@@ -23,10 +23,10 @@ public class SearchService {
     private final TicketsMapper mapper;
     private final ITicketsRepository ticketsRepository;
 
-    public Set<TicketDTO> findByTicketNumber(SearchRequest request) {
+    public List<TicketDTO> findByTicketNumber(SearchRequest request) {
         Set<Ticket> searchResults = searchTicketsByNumber(request.raffleId(), request.ticketNumber());
         List<Ticket> sortedResult = sortTicketsByNumber(searchResults);
-        return mapper.fromTicketSet(new LinkedHashSet<>(sortedResult));
+        return mapper.fromTicketList(sortedResult);
     }
 
     private Set<Ticket> searchTicketsByNumber(Long raffleId, String ticketNumber) {

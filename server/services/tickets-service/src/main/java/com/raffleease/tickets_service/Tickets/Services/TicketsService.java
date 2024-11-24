@@ -22,14 +22,22 @@ public class TicketsService {
     private final ITicketsRepository repository;
 
     public Set<String> createTickets(RaffleTicketsCreationRequest request) {
-        Set<Ticket> tickets = LongStream.rangeClosed(request.lowerLimit(), request.upperLimit())
+        long upperLimit = request.lowerLimit() + request.amount() - 1;
+
+        Set<Ticket> tickets = LongStream.rangeClosed(request.lowerLimit(), upperLimit)
                 .mapToObj(i -> Ticket.builder()
                         .status(AVAILABLE)
+                        .price(request.price())
                         .ticketNumber(Long.toString(i))
                         .build()
                 ).collect(Collectors.toSet());
-        return saveAll(tickets).stream().map(Ticket::getId).collect(Collectors.toSet());
+        Set<Ticket> savedTickets = saveAll(tickets);
+
+        return savedTickets.stream()
+                .map(Ticket::getId)
+                .collect(Collectors.toSet());
     }
+
 
     public List<Ticket> findAllById(Set<String> ticketsIds) {
         try {

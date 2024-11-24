@@ -27,7 +27,6 @@ export class S3Service {
   } 
 
   delete(fileName: string): Observable<void> {
-    console.log("AAA")
     const params = new HttpParams().set('file', fileName);
     return this.httpClient.delete<void>(`${this.baseURL}/delete`, { params });
   }

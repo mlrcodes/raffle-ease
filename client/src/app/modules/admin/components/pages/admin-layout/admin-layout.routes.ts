@@ -1,17 +1,11 @@
 import { Routes } from "@angular/router";
-import { RafflesResolver } from "../../../../../core/resolvers/raffles.resolver";
-import { AuthGuard } from "../../../../../core/guards/auth.guard";
 
 export const ADMIN_ROUTES: Routes = [
     {
         path: '',
         loadComponent: () => import('./admin-layout.component').then(c => c.AdminLayoutComponent),
-        canActivate: [AuthGuard],
-        resolve: {
-            raffles: RafflesResolver
-        },
         children: [
-            { path: '', redirectTo: 'auth', pathMatch: 'full' },    
+            { path: '', redirectTo: 'panel', pathMatch: 'full' },    
             { 
                 path: 'panel',
                 loadComponent: () => import('./panel/panel.component').then(c => c.PanelComponent)

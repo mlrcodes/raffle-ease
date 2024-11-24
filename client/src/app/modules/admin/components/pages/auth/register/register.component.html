@@ -2,7 +2,7 @@
     <header>
         <h1 class="page-title">Sign Up</h1>
     </header>
-    <app-register-form></app-register-form>
+    <app-register-form (registerRequest)="register($event)"></app-register-form>
     <div class="back-login">
         <p><a routerLink="/admin/auth/login">Back to Login</a></p>
     </div>

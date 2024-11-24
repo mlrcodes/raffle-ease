@@ -1,0 +1,5 @@
+<div>
+  <img [src]="mainImage" alt="Imagen principal" class="raffle-image" />
+
+  <app-thumbnails [urls]="urls" [activeImage]="mainImage" (imageSelected)="onImageSelected($event)"></app-thumbnails>
+</div>

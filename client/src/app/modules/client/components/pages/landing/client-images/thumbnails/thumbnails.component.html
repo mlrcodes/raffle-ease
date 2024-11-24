@@ -1,0 +1,9 @@
+<div class="flex justify-start gap-2">
+    <div class="cursor-pointer">
+        @for (url of urls; track url; let i = $index) {
+        <img [src]="url" [alt]="'Miniatura ' + (i + 1)" [class.active-img]="url === activeImage"
+            (click)="selectImage(url)" class="w-[90px] h-[60px] object-cover"
+            [class]="url === activeImage ? 'border-b-4 border-red-600' : ''" />
+        }
+    </div>
+</div>

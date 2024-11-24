@@ -9,5 +9,5 @@ payments_db_password=1234
 payments_db_host=payments-db
 payments_db_port=27017
 payments_db=payments
-gateway_host=gateway-server
-gateway_port=8080
+raffles_host=raffles-service
+raffles_port=8082

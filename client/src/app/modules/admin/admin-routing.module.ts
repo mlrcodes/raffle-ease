@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RafflesResolver } from '../../core/resolvers/raffles.resolver';
 import { AuthGuard } from '../../core/guards/auth.guard';
+import { AdminRafflesResolver } from '../../core/resolvers/admin-raffles.resolver';
 
 const routes: Routes = [
   {
     path: '', loadChildren: () => import("./components/pages/admin-layout/admin-layout.routes").then(c => c.ADMIN_ROUTES),
     canActivate: [AuthGuard],
     resolve: {
-      raffles: RafflesResolver
+      raffles: AdminRafflesResolver
     }
   },
   {

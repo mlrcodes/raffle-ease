@@ -8,7 +8,7 @@ export class ShareImagesService {
 
     constructor() { }
 
-    private images!: Map<number, string[]>;
+    private images: Map<number, string[]> = new Map<number, string[]>();
     private imagesSubject: BehaviorSubject<Map<number, string[]>> = new BehaviorSubject<Map<number, string[]>>(this.images);
     imagesUpdates: Observable<Map<number, string[]>> = this.imagesSubject.asObservable().pipe(
         filter(value => !!value)

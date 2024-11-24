@@ -55,8 +55,6 @@ export class LoginFormComponent {
 
     const { email, password } = this.authForm.value;
 
-    console.log('Form Data:', this.authForm.value);
-
     this.authRequest.emit({
       email: email || '',
       password: password || ''

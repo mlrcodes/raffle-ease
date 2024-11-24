@@ -9,29 +9,31 @@ import { RaffleTicketsCreationRequest } from '../../../../../../../core/models/t
   standalone: true,
   imports: [ReactiveFormsModule, UploadImagesComponent],
   templateUrl: './creation-form.component.html',
-  styleUrl: './creation-form.component.css'
+  styleUrls: ['./creation-form.component.css']
 })
 export class CreationFormComponent {
-  constructor(
-    private fb: FormBuilder
-  ) {}
-
   @Output() createRaffle: EventEmitter<RaffleCreationRequest> = new EventEmitter<RaffleCreationRequest>();
   raffleForm!: FormGroup;
+  formSubmitted = false;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.initializeForm();
+  }
 
   initializeForm() {
     this.raffleForm = this.fb.group({
-      title: ['', Validators.required], 
-      description: ['', Validators.required], 
+      title: ['', Validators.required],
+      description: ['', Validators.required],
       endDate: ['', Validators.required],
       endTime: ['', Validators.required],
       imageKeys: this.fb.array([], Validators.required),
       amount: ['', Validators.required],
       price: ['', Validators.required],
-      lowerLimit: ['', Validators.required],
-      upperLimit: ['', Validators.required],
-      associationId: 1
-    })
+      lowerLimit: ['', Validators.min(0)],
+      associationId: [1, Validators.required]
+    });
   }
 
   get imageKeys(): FormArray {
@@ -40,24 +42,22 @@ export class CreationFormComponent {
 
   setImageKeys(imagesKeys: string[], markAsDirty = true) {
     this.imageKeys.clear();
-
-    imagesKeys.forEach((image: string) => {
-      this.imageKeys.push(this.fb.control(image, Validators.required));
-    });
+    imagesKeys.forEach((image: string) => this.imageKeys.push(this.fb.control(image)));
+    if (markAsDirty) this.imageKeys.markAsDirty();
   }
-  
+
   onSubmit(event: Event) {
     event.preventDefault();
+    this.formSubmitted = true;
 
     if (this.raffleForm.invalid) return;
-        
+
     const { title, description, endDate, endTime, imageKeys, amount, price, lowerLimit, upperLimit, associationId } = this.raffleForm.value;
-    
+
     const ticketsInfo: RaffleTicketsCreationRequest = {
       amount,
       price,
-      lowerLimit,
-      upperLimit
+      lowerLimit
     };
 
     const endDateTime: Date = new Date(`${endDate}T${endTime}:00`);
@@ -65,18 +65,11 @@ export class CreationFormComponent {
     const raffleCreationRequest: RaffleCreationRequest = {
       title,
       description,
-      endDate: endDateTime,  
+      endDate: endDateTime,
       imageKeys,
-      ticketsInfo,
-      associationId
-    }
-
-    console.log(raffleCreationRequest)
+      ticketsInfo
+    };
 
     this.createRaffle.emit(raffleCreationRequest);
-  }
-
-  ngOnInit() {
-    this.initializeForm();
   }
 }

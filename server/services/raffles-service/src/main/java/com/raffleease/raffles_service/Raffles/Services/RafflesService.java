@@ -3,6 +3,7 @@ package com.raffleease.raffles_service.Raffles.Services;
 import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
+import com.raffleease.raffles_service.Auth.AuthClient;
 import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import com.raffleease.raffles_service.Raffles.Model.RaffleImage;
@@ -21,6 +22,7 @@ public class RafflesService {
     private final RafflesRepository rafflesRepository;
     private final ImagesRepository imagesRepository;
     private final RafflesMapper mapper;
+    private final AuthClient authClient;
 
     public RaffleDTO get(Long id) {
         Raffle raffle = findById(id);
@@ -52,7 +54,8 @@ public class RafflesService {
         }
     }
 
-    public Set<RaffleDTO> getAll(Long associationId) {
+    public Set<RaffleDTO> getAll(String authHeader) {
+        Long associationId = authClient.getId(authHeader);
         Set<Raffle> raffles = findByAssociationId(associationId);
         return mapper.fromRaffleSet(raffles);
     }

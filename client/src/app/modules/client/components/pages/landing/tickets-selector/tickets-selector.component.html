@@ -1,0 +1,5 @@
+<div class="flex flex-col gap-5 mx-auto my-5">
+    <app-notification></app-notification>
+    <app-tickets-searcher [raffle]="raffle" (reservationCompleted)="notifyReservation()"></app-tickets-searcher>
+    <app-random-selector [raffle]="raffle" (reservationCompleted)="notifyReservation()"></app-random-selector>
+</div>

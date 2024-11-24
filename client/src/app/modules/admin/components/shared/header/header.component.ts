@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TokenService } from '../../../../../core/services/token/token-service.service';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +10,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  constructor(
+    private tokenService: TokenService,
+    private router: Router
+  ) {}
+
+  logout() {
+    this.tokenService.logout();
+    this.router.navigate(['/admin/auth'])
+  }
 
 }

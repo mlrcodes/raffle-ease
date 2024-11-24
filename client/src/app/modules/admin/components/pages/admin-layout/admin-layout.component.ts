@@ -22,49 +22,41 @@ export class AdminLayoutComponent {
     private shareRaffles: ShareRafflesService,
     private shareImages: ShareImagesService,
     private s3Service: S3Service
-  ) {}
+  ) { }
 
   setRaffles() {
     this.route.data.subscribe({
       next: (data: Data) => {
         const raffles: Raffle[] = data['raffles'];
         if (!raffles) return;
-
         const rafflesMap: Map<number, Raffle> = new Map(raffles.map((raffle: Raffle) => [raffle.id, raffle]));
         this.shareRaffles.updateRaffles(rafflesMap);
+        this.setImages(raffles);
       }
     })
   }
 
-  setImages() {
-    this.route.data.subscribe({
-      next: (data: Data) => {
-        const raffles: Raffle[] = data['raffles'];
-        if (!raffles) return;
+  setImages(raffles: Raffle[]) {
+    const images: Map<number, string[]> = new Map<number, string[]>();
+    const requests: Observable<{ id: number, urls: string[] }>[] = raffles.map((raffle: Raffle) =>
+      this.s3Service.getViewUrls(raffle.imageKeys).pipe(
+        map((urls: string[]) => ({ id: raffle.id, urls }))
+      )
+    );
 
-        const images: Map<number, string[]> = new Map<number, string[]>();
-        const requests: Observable<{id: number, urls: string[]}>[] = raffles.map((raffle: Raffle) =>
-          this.s3Service.getViewUrls(raffle.imageKeys).pipe(
-            map((urls: string[]) => ({ id: raffle.id, urls }))
-          )
-        );
-  
-        forkJoin(requests).subscribe({
-          next: (results) => {
-            results.forEach(({ id, urls }) => {
-              images.set(id, urls);
-            });
-            this.shareImages.updateImages(images);
-          }
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        results.forEach(({ id, urls }) => {
+          images.set(id, urls);
         });
+        this.shareImages.updateImages(images);
       }
     });
   }
-  
+
 
   ngOnInit() {
     this.setRaffles();
-    this.setImages();
   }
 
 }

@@ -1,0 +1,5 @@
+@if (notification) {
+<div [ngClass]="notification.type" class="notification" [class.show]="isVisible">
+    {{ notification.message }}
+</div>
+}

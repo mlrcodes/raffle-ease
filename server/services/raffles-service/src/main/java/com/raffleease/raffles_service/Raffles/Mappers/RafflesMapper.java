@@ -23,7 +23,7 @@ public class RafflesMapper {
                 .ticketPrice(request.ticketsInfo().price())
                 .availableTickets(request.ticketsInfo().amount())
                 .totalTickets(request.ticketsInfo().amount())
-                .associationId(request.associationId())
+                .firstTicketNumber(request.ticketsInfo().lowerLimit())
                 .build();
     }
 
@@ -37,6 +37,7 @@ public class RafflesMapper {
                 .status(raffle.getStatus())
                 .imageKeys(imagesMapper.fromImages(raffle.getImages()))
                 .ticketPrice(raffle.getTicketPrice())
+                .firstTicketNumber(raffle.getFirstTicketNumber())
                 .availableTickets(raffle.getAvailableTickets())
                 .totalTickets(raffle.getTotalTickets())
                 .soldTickets(raffle.getSoldTickets())

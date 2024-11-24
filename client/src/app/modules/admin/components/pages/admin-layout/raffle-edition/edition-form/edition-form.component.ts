@@ -15,6 +15,8 @@ export class EditionFormComponent {
   @Input() raffle!: Raffle;
   @Output() editRaffle: EventEmitter<EditRaffle> = new EventEmitter<EditRaffle>();
   raffleForm!: FormGroup;
+  formSubmitted = false;
+  private hasSentInitialKeys = false;
 
   constructor(private fb: FormBuilder) { }
 
@@ -31,7 +33,7 @@ export class EditionFormComponent {
       description: ['', Validators.required],
       endDate: ['', Validators.required],
       endTime: ['', Validators.required],
-      imageKeys: this.fb.array([], Validators.required),
+      imageKeys: this.fb.array([]),
       totalTickets: ['', Validators.required],
       ticketPrice: ['', Validators.required]
     });
@@ -43,17 +45,12 @@ export class EditionFormComponent {
 
   setImageKeys(imageKeys: string[], markAsDirty = true) {
     this.imageKeys.clear();
-    imageKeys.forEach((image: string) => {
-      this.imageKeys.push(this.fb.control(image, Validators.required));
-      console.log(this.imageKeys.value);
-    });
+    imageKeys.forEach((image: string) => this.imageKeys.push(this.fb.control(image)));
     if (markAsDirty) this.imageKeys.markAsDirty();
-    console.log(this.imageKeys.value);
   }
 
   fillForm(raffle: Raffle): void {
     const endDateTime = new Date(raffle.endDate);
-
     this.raffleForm.patchValue({
       title: raffle.title,
       description: raffle.description,
@@ -62,28 +59,26 @@ export class EditionFormComponent {
       totalTickets: raffle.totalTickets,
       ticketPrice: raffle.ticketPrice
     });
-
     if (raffle.imageKeys) {
       this.setImageKeys(raffle.imageKeys, false);
+      this.hasSentInitialKeys = true;
     }
   }
 
   onSubmit(event: Event) {
     event.preventDefault();
+    this.formSubmitted = true;
 
     if (this.raffleForm.invalid) return;
 
     const modifiedData: Partial<EditRaffle> = this.getModifiedFields();
-
     this.editRaffle.emit(modifiedData);
   }
 
   getModifiedFields(): Partial<EditRaffle> {
     const modifiedData: Partial<EditRaffle> = {};
-
     Object.keys(this.raffleForm.controls).forEach((key) => {
       const control = this.raffleForm.get(key);
-
       if (control?.dirty) {
         if (key === 'endDate' || key === 'endTime') {
           const endDate = this.raffleForm.get('endDate')?.value;
@@ -94,11 +89,8 @@ export class EditionFormComponent {
         } else {
           modifiedData[key as keyof EditRaffle] = control.value;
         }
-      } else {
-        modifiedData[key as keyof EditRaffle] = undefined;
       }
     });
-
     return modifiedData;
   }
 }

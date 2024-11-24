@@ -1,0 +1,21 @@
+.toggle-arrow {
+    position: absolute;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(160, 160, 160, 0.5);
+    /* Shadow instead of border */
+    width: 60px;
+    padding: 12px;
+    height: 60px;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+    transform: translateY(-100%);
+    transition: transform 0.8s ease;
+}
+
+.toggle-arrow.rotate {
+    transform: translateY(0) rotate(360deg);
+    box-shadow: none !important;
+    background-color: transparent !important;
+}

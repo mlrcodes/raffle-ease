@@ -146,7 +146,7 @@ public class WebHookService {
         return PaymentDTO.builder()
                 .orderId(orderId)
                 .paymentMethod(paymentMethod.getType())
-                .total(BigDecimal.valueOf(amount))
+                .total(BigDecimal.valueOf(amount).divide(BigDecimal.valueOf(100)))
                 .paymentIntentId(paymentIntentId)
                 .build();
     }

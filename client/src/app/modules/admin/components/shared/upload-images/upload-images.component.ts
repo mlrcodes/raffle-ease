@@ -70,13 +70,18 @@ export class UploadImagesComponent {
   }
 
   onMoveUp(index: number) {
-    this.swapItems(index, 1);
+    this.swapItems(index, -1);
     this.imageKeysChange.emit(this.imageKeys);
   }
 
   onMoveDown(index: number) {
-    this.swapItems(index, -1);
+    this.swapItems(index, 1);
     this.imageKeysChange.emit(this.imageKeys);
+  }
+
+  setKeys(keys: string[]) {
+    this.imageKeys = keys;
+    this.getViewUrls(keys);
   }
 
   getViewUrls(keys: string[]) {
@@ -87,24 +92,18 @@ export class UploadImagesComponent {
     })
   }
 
-  setKeys(keys: string[]) {
-    this.imageKeys = keys;
-    console.log(this.imageKeys);
-    this.getViewUrls(keys);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['imageKeys']) {
-      this.setKeys(changes['imageKeys'].currentValue);
-    }
-  }
-
   sendUrls() {
     this.shareUls.event.subscribe({
       next: () => {
         this.shareUls.updateUrls(this.urls);
       }
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['imageKeys']) {
+      this.setKeys(changes['imageKeys'].currentValue);
+    }
   }
 
   ngOnInit() {

@@ -2,7 +2,7 @@
     <span class="font-semibold">Actions:&nbsp;</span>
     <button class="btn-edit" (click)="edit()">Edit</button>
     @if (raffleStatus === 'PENDING') {
-        <button class="btn-danger" (click)="triggerAction('delete')">Pause</button>
+        <button class="btn-danger" (click)="triggerAction('delete')">Delete</button>
         <button class="btn-default" (click)="triggerAction('publish')">Publish</button>
     } @else if (raffleStatus === 'ACTIVE') {
         <button class="btn-danger" (click)="triggerAction('pause')">Pause</button>

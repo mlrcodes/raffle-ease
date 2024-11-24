@@ -11,12 +11,12 @@ export class AuthService {
 
     constructor(
         private httpClient: HttpClient
-    ) {}
+    ) { }
 
     private baseURL: string = 'http://localhost:8080/api/v1/auth';
 
     authenticate(authRequest: AuthRequest): Observable<string> {
-        return this.httpClient.post(`${this.baseURL}/authenticate`, authRequest, {responseType: 'text'}) as Observable<string>;
+        return this.httpClient.post(`${this.baseURL}/authenticate`, authRequest, {responseType: 'text'});
     }
 
     register(registerRequest: RegisterRequest): Observable<string> {

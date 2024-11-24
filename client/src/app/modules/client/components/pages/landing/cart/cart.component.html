@@ -1,0 +1,21 @@
+<div class="cart-summary" [class.show]="isCartVisible">
+    <p>Cart Summary:</p>
+    <app-cart-toggle></app-cart-toggle>
+    <hr />
+    <ul class="cart-items-list">
+        @for (ticket of tickets; track ticket;) {
+        <li>
+            <app-cart-item [ticket]="ticket"></app-cart-item>
+        </li>
+        }
+    </ul>
+    <hr />
+    <div class="total-row">
+        <span>Total:</span>
+        <span class="total-amount">{{ total }}€</span>
+    </div>
+    <div class="checkout-row">
+        <app-checkout-btn [disabled]="isBtnDisabled"></app-checkout-btn>
+    </div>
+</div>
+<app-overlay [isVisible]="isCartVisible" (click)="toggleCart()"></app-overlay>

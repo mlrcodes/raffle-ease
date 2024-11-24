@@ -24,17 +24,11 @@ export class RaffleDetailsComponent {
   @Output() raffleChange: EventEmitter<Raffle> = new EventEmitter<Raffle>();
 
   private getRaffle(): void {
-    if (this.shareRaffles.isNull()) {
-      console.log("AAAAA")
-      this.shareRaffles.rafflesUpdates.subscribe({
-        next: (raffles: Map<number, Raffle>) => {
-          this.setRaffle(raffles);
-        }
-      });
-    } else {
-      console.log("BBBB")
-      this.setRaffle(this.shareRaffles.getAll());
-    }
+    this.shareRaffles.rafflesUpdates.subscribe({
+      next: (raffles: Map<number, Raffle>) => {
+        this.setRaffle(raffles);
+      }
+    });
   }
 
   private setRaffle(raffles: Map<number, Raffle>) {
@@ -42,8 +36,6 @@ export class RaffleDetailsComponent {
     if (raffle) {
       this.raffle = raffle;
       this.raffleChange.emit(raffle);
-      console.log(this.raffle)
-      this.cdr.detectChanges();
     } else {
       this.redirectToAdmin();
     }

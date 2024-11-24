@@ -5,6 +5,5 @@ export interface RaffleCreationRequest {
     description: string,
     endDate: Date,
     imageKeys: string[],
-    ticketsInfo: RaffleTicketsCreationRequest,
-    associationId: number
+    ticketsInfo: RaffleTicketsCreationRequest
 }

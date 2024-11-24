@@ -16,7 +16,7 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } fr
       state: RouterStateSnapshot
     ): boolean => {
       const token = this.tokenService.getToken();
-      if (token) return true;
+      if (token && this.tokenService.validate(token)) return true;
       this.router.navigate(['/admin/auth']);
       return false;
     }

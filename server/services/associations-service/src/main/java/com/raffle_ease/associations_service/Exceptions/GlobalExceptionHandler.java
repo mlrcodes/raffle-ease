@@ -1,13 +1,13 @@
 package com.raffle_ease.associations_service.Exceptions;
 
+import com.raffleease.common_models.Exceptions.CustomExceptions.AuthException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 
 @RestControllerAdvice
@@ -25,5 +25,10 @@ public class GlobalExceptionHandler {
                 .status(NOT_FOUND)
                 .body(exp.getMsg());
     }
-
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<String> HandleAuthException(AuthException exp) {
+        return ResponseEntity
+                .status(UNAUTHORIZED)
+                .body(exp.getMsg());
+    }
 }

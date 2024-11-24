@@ -20,8 +20,12 @@ export class RafflesService {
     return this.httpClient.post(`${this.baseUrl}/create`, request) as Observable<Raffle>;
   }
 
-  getAll(associationId: number): Observable<Raffle[]> {
-    return this.httpClient.get(`${this.baseUrl}/get-all/${associationId}`) as Observable<Raffle[]>;
+  get(id: number): Observable<Raffle> {
+    return this.httpClient.get(`${this.baseUrl}/get/${id}`) as Observable<Raffle>;
+  }
+
+  getAll(): Observable<Raffle[]> {
+    return this.httpClient.get(`${this.baseUrl}/get-all/`) as Observable<Raffle[]>;
   }
 
   delete(id: number): Observable<void> {

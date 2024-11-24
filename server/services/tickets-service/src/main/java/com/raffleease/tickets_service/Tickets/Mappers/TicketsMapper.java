@@ -5,6 +5,7 @@ import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ public class TicketsMapper {
                 .id(ticket.getId())
                 .raffleId(ticket.getRaffleId())
                 .ticketNumber(ticket.getTicketNumber())
+                .price(ticket.getPrice())
                 .status(ticket.getStatus())
                 .reservationFlag(ticket.getReservationFlag())
                 .reservationTime(ticket.getReservationTime())
@@ -28,5 +30,11 @@ public class TicketsMapper {
         return tickets.stream()
                 .map(this::fromTicket)
                 .collect(Collectors.toSet());
+    }
+
+    public List<TicketDTO> fromTicketList(List<Ticket> tickets) {
+        return tickets.stream()
+                .map(this::fromTicket)
+                .collect(Collectors.toList());
     }
 }

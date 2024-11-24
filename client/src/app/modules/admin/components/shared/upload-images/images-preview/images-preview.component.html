@@ -1,17 +1,16 @@
-<!-- images-preview.component.html -->
 <div class="images-preview-container">
     @for (url of urls; track url; let i = $index) {
     <div class="image-item">
         <img [src]="url" alt="Selected Image" class="image-thumbnail" />
         <div class="controls">
-            <button (click)="onMoveUp(i)" aria-label="Move up">
+            <button type="button" (click)="onMoveUp(i)" aria-label="Move up">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1"
                     stroke-linecap="round" stroke-linejoin="miter">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="16 14 12 9 8 14"></polyline>
                 </svg>
             </button>
-            <button (click)="onDelete(i)" aria-label="Delete">
+            <button type="button" (click)="onDelete(i)" aria-label="Delete">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.5001 6H3.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" />
                     <path
@@ -24,7 +23,7 @@
                         stroke="#1C274C" stroke-width="1.5" />
                 </svg>
             </button>
-            <button (click)="onMoveDown(i)" aria-label="Move down">
+            <button type="button" (click)="onMoveDown(i)" aria-label="Move down">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1"
                     stroke-linecap="round" stroke-linejoin="miter">
                     <circle cx="12" cy="12" r="10"></circle>

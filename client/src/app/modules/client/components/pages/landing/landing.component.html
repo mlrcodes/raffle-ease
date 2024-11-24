@@ -1,0 +1,11 @@
+@if (raffle) {
+<div class="flex-grow flex flex-col w-full mx-auto rounded-lg lg:px-36 md:px-10 sm:px-5 px-5">
+    <section class="grid gap-5 sm:gap-10 sm:mx-5 sm:mt-10 grid-cols-1 sm:grid-cols-2">
+        <app-client-images [imageKeys]="raffle.imageKeys"></app-client-images>
+        <app-raffle-details></app-raffle-details>
+        <app-tickets-selector [raffle]="raffle"></app-tickets-selector>
+        <app-raffle-description></app-raffle-description>
+        <app-cart></app-cart>
+    </section>
+</div>
+}

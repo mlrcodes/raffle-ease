@@ -1,0 +1,13 @@
+ li {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 8px;
+ }
+
+ .product-name {
+     font-size: 14px;
+ }
+
+ .product-price {
+     font-size: 14px;
+ }

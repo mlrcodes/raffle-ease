@@ -23,29 +23,30 @@ public class RafflesController {
 
     @PostMapping("/create")
     public ResponseEntity<RaffleDTO> create(
-            @Valid @RequestBody CreateRaffle request
+            @Valid @RequestBody CreateRaffle request,
+            @RequestHeader("Authorization") String authHeader
     ) {
-        return ResponseEntity.ok(createService.createRaffle(request));
+        return ResponseEntity.ok(createService.createRaffle(request, authHeader));
     }
 
     @PutMapping("/publish/{id}")
     public ResponseEntity<RaffleDTO> publish(
             @PathVariable Long id
-    )  {
+    ) {
         return ResponseEntity.ok(statusService.publish(id));
     }
 
     @PutMapping("/pause/{id}")
     public ResponseEntity<RaffleDTO> pause(
             @PathVariable Long id
-    )  {
+    ) {
         return ResponseEntity.ok(statusService.pause(id));
     }
 
     @PutMapping("/restart/{id}")
     public ResponseEntity<RaffleDTO> restart(
             @PathVariable Long id
-    )  {
+    ) {
         return ResponseEntity.ok(statusService.restart(id));
     }
 
@@ -53,7 +54,7 @@ public class RafflesController {
     public ResponseEntity<RaffleDTO> edit(
             @PathVariable Long id,
             @Valid @RequestBody EditRaffle editRaffle
-    )  {
+    ) {
         return ResponseEntity.ok(editService.edit(id, editRaffle));
     }
 
@@ -64,11 +65,11 @@ public class RafflesController {
         return ResponseEntity.ok(service.get(id));
     }
 
-    @GetMapping("/get-all/{associationId}")
+    @GetMapping("/get-all/")
     public ResponseEntity<Set<RaffleDTO>> getAll(
-            @PathVariable Long associationId
+            @RequestHeader("Authorization") String authHeader
     ) {
-        return ResponseEntity.ok(service.getAll(associationId));
+        return ResponseEntity.ok(service.getAll(authHeader));
     }
 
     @DeleteMapping("/delete/{id}")

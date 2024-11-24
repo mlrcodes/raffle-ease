@@ -20,14 +20,15 @@
     </div>
 
     <!-- Raffle List -->
-    @if (raffles && images) {
-        <section class="raffle-list">
-            @for (raffle of raffles; track raffle.id) {
-                <app-raffle-card [raffle]="raffle" [images]="images.get(raffle.id) ?? []"></app-raffle-card>
-            }
-        </section>
-    }
+    <section class="raffle-list">
+        @if (raffles && images) {
+        @for (raffle of raffles; track raffle.id) {
+        <app-raffle-card [raffle]="raffle" [images]="images.get(raffle.id) ?? []"></app-raffle-card>
+        }
+        } @else {
+            <div class=""><p>No se encontró ningún sorteo</p></div>
+        }
+    </section>
 
 </div>
 <app-floating-add-btn></app-floating-add-btn>
-

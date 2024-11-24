@@ -6,6 +6,7 @@ import { ShareRafflesService } from '../../../../../../core/services/raffles/sha
 import { ShareImagesService } from '../../../../../../core/services/raffles/share-images.service';
 import { RaffleCreationRequest } from '../../../../../../core/models/raffles/raffle-creation-request';
 import { Raffle } from '../../../../../../core/models/raffles/raffle';
+import { ShareUrlsService } from '../../../../../../core/services/raffles/share-urls.service';
 
 @Component({
   selector: 'app-raffle-creation',
@@ -20,19 +21,33 @@ export class RaffleCreationComponent {
     private rafflesService: RafflesService,
     private shareRaffles: ShareRafflesService,
     private shareImages: ShareImagesService,
+    private shareUrls: ShareUrlsService,
     private router: Router
   ) {}
 
+  raffleId!: number;
+
   createRaffle(request: RaffleCreationRequest) {
-    console.log(request);
     this.rafflesService.create(request).subscribe({
       next: (raffle: Raffle) => {
         this.shareRaffles.setRaffle(raffle);
-        this.shareImages.setImages(raffle.id, raffle.imageKeys)
-        console.log(raffle)
-        this.router.navigate([`/admin/management/${raffle.id}`]);
+        this.raffleId = raffle.id;
+        this.shareUrls.updateEvent();
       }
     })
   }
 
+  private getUrls() {
+    this.shareUrls.urlsUpdates.subscribe({
+      next: (urls: string[]) => {
+        this.shareImages.delete(this.raffleId);
+        this.shareImages.setImages(this.raffleId, urls);
+        this.router.navigate([`/admin/management/${this.raffleId}`]);
+      }
+    })
+  }
+
+  ngOnInit() {
+    this.getUrls();
+  }
 }

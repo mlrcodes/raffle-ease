@@ -1,10 +1,8 @@
 package com.raffleease.auth_server.Services;
 
+import com.raffleease.auth_server.Model.User;
 import com.raffleease.common_models.Exceptions.CustomExceptions.AuthException;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +12,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 
@@ -41,9 +40,10 @@ public class JwtService {
     }
 
 
-    public String generateToken(String userName) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        claims.put("id", user.getAssociationId());
+        return createToken(claims, user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String userName) {
@@ -53,6 +53,20 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignKey(), HS256).compact();
+    }
+
+    public <T> T getClaim(String token, Function<Claims,T> claimsResolver) {
+        final Claims claims = getAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Key getSignKey() {
