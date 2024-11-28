@@ -11,7 +11,7 @@ export class StripeService {
     private httpClient: HttpClient
   ) { }
 
-  private baseURL: string = 'http://localhost:8080/api/v1/stripe';
+  private baseURL: string = 'http://13.51.175.242:8080/api/v1/stripe';
 
   getPublicKey(): Observable<string> {
     return this.httpClient.get(`${this.baseURL}/public-key`, {responseType: 'text'}) as Observable<string>;

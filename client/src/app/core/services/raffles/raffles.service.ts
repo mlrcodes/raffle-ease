@@ -14,7 +14,7 @@ export class RafflesService {
     private httpClient: HttpClient
   ) { }
 
-  private baseUrl: string = 'http://localhost:8080/api/v1/raffles';
+  private baseUrl: string = 'http://13.51.175.242:8080/api/v1/raffles';
 
   create(request: RaffleCreationRequest): Observable<Raffle> {
     return this.httpClient.post(`${this.baseUrl}/create`, request) as Observable<Raffle>;

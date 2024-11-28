@@ -12,7 +12,7 @@ export class OrdersService {
     private httpClient: HttpClient
   ) { }
 
-  private baseURL: string = 'http://localhost:8080/api/v1/orders';
+  private baseURL: string = 'http://13.51.175.242:8080/api/v1/orders';
 
   purchase(orderRequest: OrderRequest): Observable<string> {
     return this.httpClient.post(`${this.baseURL}/create-order`, orderRequest, { responseType: 'text'} ) as Observable<string>;

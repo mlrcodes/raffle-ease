@@ -11,7 +11,7 @@ export class S3Service {
     private httpClient: HttpClient
   ) { }
 
-  private baseURL: string = 'http://localhost:8080/api/v1/s3';
+  private baseURL: string = 'http://13.51.175.242:8080/api/v1/s3';
 
   upload(file: File, uploadUrl: string): Observable<void> {
     const headers = new HttpHeaders({ 'Content-Type': file.type });

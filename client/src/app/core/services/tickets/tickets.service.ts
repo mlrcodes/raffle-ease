@@ -17,7 +17,7 @@ export class TicketsService {
   ) { }
 
 
-  private baseURL: string = 'http://localhost:8080/api/v1/tickets';
+  private baseURL: string = 'http://13.51.175.242:8080/api/v1/tickets';
 
   generateRandom(body: GenerateRandomRequest): Observable<ReservationResponse> {
     return this.httpClient.post(`${this.baseURL}/generate-random`, body) as Observable<ReservationResponse>;

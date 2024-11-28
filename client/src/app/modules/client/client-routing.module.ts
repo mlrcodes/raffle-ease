@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'payment',
     loadComponent: () => import('./components/pages/payment/payment.component').then(c => c.PaymentComponent),
 
+  },
+  {
+    path: 'payment-success/:id',
+    loadComponent: () => import('./components/pages/payment-success/payment-success.component').then(c => c.PaymentSuccessComponent),    
   }
 ];
 
