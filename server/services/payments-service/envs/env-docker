@@ -11,3 +11,5 @@ payments_db_port=27017
 payments_db=payments
 raffles_host=raffles-service
 raffles_port=8082
+CLIENT_HOST=http://localhost:4000/
+CLIENT_PATH=client/payment-success/

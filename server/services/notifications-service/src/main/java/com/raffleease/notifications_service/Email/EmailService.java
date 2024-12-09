@@ -8,6 +8,7 @@ import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -33,6 +34,9 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 public class EmailService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+
+    @Value("${MAIL_USERNAME}")
+    private String userName;
 
     @Async
     public void sendOrderSuccessNotification(OrderSuccess notificationRequest) throws MessagingException {
@@ -92,7 +96,7 @@ public class EmailService {
         messageHelper.setSubject(subject);
         messageHelper.setText(htmlTemplate, true);
         messageHelper.setTo(to);
-        messageHelper.setFrom("${spring.mail.username}");
+        messageHelper.setFrom(userName);
 
         mailSender.send(mimeMessage);
     }

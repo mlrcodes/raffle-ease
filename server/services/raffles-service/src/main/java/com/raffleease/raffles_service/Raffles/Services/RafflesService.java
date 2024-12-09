@@ -3,7 +3,7 @@ package com.raffleease.raffles_service.Raffles.Services;
 import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.ObjectNotFoundException;
-import com.raffleease.raffles_service.Auth.AuthClient;
+import com.raffleease.raffles_service.Feign.Clients.AuthClient;
 import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import com.raffleease.raffles_service.Raffles.Model.RaffleImage;
@@ -33,24 +33,24 @@ public class RafflesService {
         try {
             return this.rafflesRepository.findById(id)
                     .orElseThrow(() -> new ObjectNotFoundException("Raffle not found"));
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to access database when retrieving raffle's information");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Failed to access database when retrieving raffle's information: " + exp.getMessage());
         }
     }
 
     public Raffle saveRaffle(Raffle raffle) {
         try {
             return rafflesRepository.save(raffle);
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to access database when saving raffle");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Failed to access database when saving raffle: " + exp.getMessage());
         }
     }
 
     public List<RaffleImage> saveImages(List<RaffleImage> images) {
         try {
             return imagesRepository.saveAll(images.stream().toList());
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to access database when saving images");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Failed to access database when saving images: " + exp.getMessage());
         }
     }
 
@@ -63,8 +63,8 @@ public class RafflesService {
     public Set<Raffle> findByAssociationId(Long associationId) {
         try {
             return new HashSet<>(rafflesRepository.findByAssociationId(associationId));
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to access database when retrieving raffles");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Failed to access database when retrieving raffles: " + exp.getMessage());
         }
     }
 }

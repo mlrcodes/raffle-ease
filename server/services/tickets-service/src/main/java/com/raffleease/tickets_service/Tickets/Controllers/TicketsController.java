@@ -70,11 +70,4 @@ public class TicketsController {
     ) {
         return ResponseEntity.ok(ticketsService.createTickets(request));
     };
-
-    @GetMapping("/get-highest/{raffleId}")
-    public ResponseEntity<String> getHighestTicketNumber(
-            @PathVariable("raffleId") Long raffleId
-    ) {
-        return ResponseEntity.ok(searchService.getHighestTicketNumber(raffleId));
-    }
 }

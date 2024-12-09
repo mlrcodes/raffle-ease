@@ -7,17 +7,17 @@ import com.raffleease.common_models.DTO.Orders.Reservation;
 import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.CheckoutException;
+import com.raffleease.common_models.Exceptions.CustomExceptions.CustomStripeException;
 import com.raffleease.orders_service.Kafka.Producers.ReleaseProducer;
 import com.raffleease.orders_service.Orders.Models.Order;
 import com.raffleease.orders_service.Orders.Repositories.IOrdersRepository;
-import com.raffleease.orders_service.Payments.Client.PaymentClient;
-import com.raffleease.orders_service.Tickets.Client.TicketsClient;
+import com.raffleease.orders_service.Feign.Clients.PaymentClient;
+import com.raffleease.orders_service.Feign.Clients.TicketsClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.raffleease.common_models.DTO.Orders.OrderStatus.PENDING;
@@ -39,19 +39,19 @@ public class OrdersService {
     }
 
     private void checkReservations(Set<Reservation> reservations) {
-        boolean areTicketsReserved = ticketsClient.checkReservation(reservations);
-        if (!areTicketsReserved) {
+        if (!ticketsClient.checkReservation(reservations)) {
             throw new BusinessException("Tickets must be previously reserved to complete purchase");
         }
     }
 
     private Order saveOrder(Set<String> allTicketIds) {
+        String orderReference = "O-" + Instant.now().getEpochSecond() + "-" + (int) (Math.random() * 10000);
         return repository.save(
                 Order.builder()
                         .status(PENDING)
                         .orderDate(Instant.now().toEpochMilli())
                         .ticketsIds(allTicketIds)
-                        .orderReference(UUID.randomUUID().toString())
+                        .orderReference(orderReference)
                         .build()
         );
     }
@@ -71,9 +71,9 @@ public class OrdersService {
                             .orderId(orderId)
                             .build()
             );
-        } catch (RuntimeException exp) {
+        } catch (Exception exp) {
             releaseTickets(raffleId, ticketIds);
-            throw new CheckoutException("Error processing checkout: " + exp.getMessage());
+            throw exp;
         }
     }
 

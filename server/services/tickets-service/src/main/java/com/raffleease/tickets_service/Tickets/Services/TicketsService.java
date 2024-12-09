@@ -42,24 +42,24 @@ public class TicketsService {
     public List<Ticket> findAllById(Set<String> ticketsIds) {
         try {
             return repository.findAllById(ticketsIds);
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("An error when retrieving tickets occurred");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("An error when retrieving tickets occurred: " + exp.getMessage());
         }
     }
 
     public Set<Ticket> saveAll(Set<Ticket> tickets) {
         try {
             return new HashSet<>(repository.saveAll(tickets));
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("An error occurred when saving tickets occurred");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("An error occurred when saving tickets: " + exp.getMessage());
         }
     }
 
     public void setRaffle(TicketsRaffle request) {
         try {
             repository.setRaffle(request);
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("An error occurred when setting tickets raffle id");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("An error occurred when setting tickets raffle id: " + exp.getMessage());
         }
     }
 }

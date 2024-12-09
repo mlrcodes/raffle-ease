@@ -8,7 +8,7 @@ import com.raffleease.raffles_service.Raffles.Mappers.RafflesMapper;
 import com.raffleease.raffles_service.Raffles.Model.Raffle;
 import com.raffleease.raffles_service.Raffles.Model.RaffleImage;
 import com.raffleease.raffles_service.S3.Services.S3Service;
-import com.raffleease.raffles_service.Tickets.TicketsClient;
+import com.raffleease.raffles_service.Feign.Clients.TicketsClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -101,15 +101,14 @@ public class EditService {
         }
     }
 
-    private void createAdditionalTickets(Raffle raffle, long ticketDifference) {
-        String highestTicketNumber = ticketsClient.getHighestTicketNumber(raffle.getId());
-        long lowerLimit = Long.parseLong(highestTicketNumber);
+    private void createAdditionalTickets(Raffle raffle, long amount) {
+        long lowerLimit = raffle.getFirstTicketNumber() + raffle.getTotalTickets();
 
-        RaffleTicketsCreationRequest request = new RaffleTicketsCreationRequest(
-                ticketDifference,
-                raffle.getTicketPrice(),
-                lowerLimit
-        );
+        RaffleTicketsCreationRequest request = RaffleTicketsCreationRequest.builder()
+                .amount(amount)
+                .price(raffle.getTicketPrice())
+                .lowerLimit(lowerLimit)
+                .build();
 
         Set<String> newTickets = ticketsClient.createTickets(request);
         raffle.getTickets().addAll(newTickets);

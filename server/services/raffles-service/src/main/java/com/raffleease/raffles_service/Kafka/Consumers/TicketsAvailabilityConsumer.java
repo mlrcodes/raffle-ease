@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TicketsAvailabilityConsumer {
     private final AvailabilityService service;
 
-    @KafkaListener(topics = "tickets-release-topic", groupId = "raffles-group")
+    @KafkaListener(topics = "tickets-availability-topic", groupId = "raffles-group")
     public void consumeTicketsAvailability (
             TicketsAvailability request
     ) {

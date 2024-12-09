@@ -31,7 +31,7 @@ public class PaymentsService {
     public Payment savePayment(Payment payment) {
         try {
             return repository.save(payment);
-        } catch (DataAccessException exp) {
+        } catch (Exception exp) {
             throw new DataBaseHandlingException("Error saving new payment information: " + exp.getMessage());
         }
     }

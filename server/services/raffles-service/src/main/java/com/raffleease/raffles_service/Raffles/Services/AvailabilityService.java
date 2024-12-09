@@ -36,5 +36,4 @@ public class AvailabilityService {
         raffle.setAvailableTickets(availableTickets);
         rafflesService.saveRaffle(raffle);
     }
-
 }

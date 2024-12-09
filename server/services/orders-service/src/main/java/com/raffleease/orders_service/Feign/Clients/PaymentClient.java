@@ -1,4 +1,4 @@
-package com.raffleease.orders_service.Payments.Client;
+package com.raffleease.orders_service.Feign.Clients;
 
 import com.raffleease.common_models.DTO.Orders.CreateSessionRequest;
 import org.springframework.cloud.openfeign.FeignClient;

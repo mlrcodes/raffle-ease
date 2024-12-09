@@ -1,4 +1,5 @@
 package com.raffleease.orders_service.Orders.Services;
+
 import com.raffleease.common_models.DTO.Customers.CustomerDTO;
 import com.raffleease.common_models.DTO.Kafka.*;
 import com.raffleease.common_models.DTO.Orders.OrderDTO;
@@ -15,11 +16,12 @@ import com.raffleease.orders_service.Kafka.Producers.SuccessProducer;
 import com.raffleease.orders_service.Orders.Mappers.OrdersMapper;
 import com.raffleease.orders_service.Orders.Models.Order;
 import com.raffleease.orders_service.Orders.Repositories.IOrdersRepository;
-import com.raffleease.orders_service.Tickets.Client.TicketsClient;
+import com.raffleease.orders_service.Feign.Clients.TicketsClient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -90,43 +92,35 @@ public class OrderResultService {
             CustomerDTO customer,
             OrderDTO order
     ) {
-        try {
-            successProducer.sendSuccessNotification(
-                    OrderSuccess.builder()
-                            .customer(customer)
-                            .order(order)
-                            .payment(payment)
-                            .build()
-            );
-        } catch (RuntimeException ex) {
-            throw new NotificationException("Order success notification failed");
-        }
+        successProducer.sendSuccessNotification(
+                OrderSuccess.builder()
+                        .customer(customer)
+                        .order(order)
+                        .payment(payment)
+                        .build()
+        );
     }
 
     private void releaseTickets(Set<String> ticketsIds, Long raffleId) {
-        try {
-            releaseProducer.sendTicketsReleaseNotification(
-                    TicketsRelease.builder()
-                            .ticketsIds(ticketsIds)
-                            .raffleId(raffleId)
-                            .build()
-            );
-        } catch (RuntimeException ex) {
-            throw new NotificationException("Order success notification failed");
-        }
+        releaseProducer.sendTicketsReleaseNotification(
+                TicketsRelease.builder()
+                        .ticketsIds(ticketsIds)
+                        .raffleId(raffleId)
+                        .build()
+        );
     }
 
     public void updateStatus(Order order, OrderStatus status) {
         order.setStatus(status);
         try {
-            this.repository.save(order);
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Failed to update tickets status: " + exp.getMessage());
+            repository.save(order);
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Unexpected error when accessing database to update tickets status: " + exp.getMessage());
         }
     }
 
     public Order findById(Long id) {
-        return this.repository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Order not found"));
+        return repository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Order not found for id <" + id + ">"));
     }
 }

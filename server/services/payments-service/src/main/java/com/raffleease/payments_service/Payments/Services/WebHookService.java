@@ -16,11 +16,10 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.*;
 import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.error.MissingEnvironmentVariableException;
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.math.RoundingMode;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +27,11 @@ public class WebHookService {
     private final PaymentsService paymentsService;
     private final SuccessProducer successProducer;
     private final FailureProducer failureProducer;
-    private final Environment env;
+
+    @Value("${STRIPE_WEBHOOK_KEY}")
+    private String webhookKey;
 
     public void handleWebHook(String payload, String sigHeader) {
-        String webhookKey = getWebhookKey();
         Event event = constructEvent(payload, sigHeader, webhookKey);
         StripeObject stripeObject = deserializeStripeObject(event);
         processPayment(event, stripeObject);
@@ -146,7 +146,7 @@ public class WebHookService {
         return PaymentDTO.builder()
                 .orderId(orderId)
                 .paymentMethod(paymentMethod.getType())
-                .total(BigDecimal.valueOf(amount).divide(BigDecimal.valueOf(100)))
+                .total(BigDecimal.valueOf(amount).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))
                 .paymentIntentId(paymentIntentId)
                 .build();
     }
@@ -166,13 +166,5 @@ public class WebHookService {
                 .customer(customer)
                 .payment(payment)
                 .build();
-    }
-
-    private String getWebhookKey() {
-        String webhookKey = env.getProperty("STRIPE_WEBHOOK_KEY");
-        if (Objects.isNull(webhookKey)) {
-            throw new MissingEnvironmentVariableException("Environment variable STRIPE_WEBHOOK_KEY is missing.");
-        }
-        return webhookKey;
     }
 }

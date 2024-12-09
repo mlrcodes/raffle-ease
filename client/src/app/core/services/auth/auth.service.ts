@@ -13,7 +13,7 @@ export class AuthService {
         private httpClient: HttpClient
     ) { }
 
-    private baseURL: string = 'http://13.51.175.242:8080/api/v1/auth';
+    private baseURL: string = 'http://16.170.234.198:8080/api/v1/auth';
 
     authenticate(authRequest: AuthRequest): Observable<string> {
         return this.httpClient.post(`${this.baseURL}/authenticate`, authRequest, {responseType: 'text'});

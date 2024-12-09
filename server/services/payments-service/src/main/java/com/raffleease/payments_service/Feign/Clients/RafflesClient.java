@@ -1,4 +1,4 @@
-package com.raffleease.payments_service.Raffles.Clients;
+package com.raffleease.payments_service.Feign.Clients;
 
 import com.raffleease.common_models.DTO.Raffles.RaffleDTO;
 import org.springframework.cloud.openfeign.FeignClient;

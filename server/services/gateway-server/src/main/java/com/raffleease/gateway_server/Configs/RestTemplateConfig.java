@@ -1,13 +1,6 @@
 package com.raffleease.gateway_server.Configs;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-
+/*
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +10,12 @@ public class RestTemplateConfig {
     private String authServerUrl;
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate restTemplate(ObjectMapper objectMapper) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new CustomErrorHandler(objectMapper));
+        return restTemplate;
     }
 }
+
+
+ */

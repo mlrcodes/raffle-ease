@@ -15,45 +15,48 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "Raffles")
-public class Raffle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public class Raffle {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @Column(nullable = false)
-    private String title;
+        @Column(nullable = false)
+        private String title;
 
-    private String description;
+        @Column(columnDefinition = "TEXT")
+        private String description;
 
-    @Column(nullable = false)
-    private RaffleStatus status;
+        @Column(nullable = false)
+        private RaffleStatus status;
 
-    private LocalDateTime startDate;
+        private String URL;
 
-    private LocalDateTime endDate;
+        private LocalDateTime startDate;
 
-    @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RaffleImage> images;
+        private LocalDateTime endDate;
 
-    @Column(nullable = false)
-    private BigDecimal ticketPrice;
+        @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<RaffleImage> images;
 
-    private Long firstTicketNumber;
+        @Column(nullable = false)
+        private BigDecimal ticketPrice;
 
-    private BigDecimal revenue;
+        private Long firstTicketNumber;
 
-    private Long totalTickets;
+        private BigDecimal revenue;
 
-    private Long availableTickets;
+        private Long totalTickets;
 
-    private Long soldTickets;
+        private Long availableTickets;
 
-    @ElementCollection
-    @CollectionTable(name = "raffle_tickets", joinColumns = @JoinColumn(name = "raffle_id"))
-    @Column(name = "ticket_id")
-    private Set<String> tickets;
+        private Long soldTickets;
 
-    @Column(nullable = false)
-    private Long associationId;
+        @ElementCollection
+        @CollectionTable(name = "raffle_tickets", joinColumns = @JoinColumn(name = "raffle_id"))
+        @Column(name = "ticket_id")
+        private Set<String> tickets;
 
-}
+        @Column(nullable = false)
+        private Long associationId;
+
+    }

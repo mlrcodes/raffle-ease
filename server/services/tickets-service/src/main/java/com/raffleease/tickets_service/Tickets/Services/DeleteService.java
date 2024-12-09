@@ -15,8 +15,8 @@ public class DeleteService {
     public void delete(TicketsDelete request) {
         try {
             ticketsRepository.deleteByRaffleId(request.raffleId());
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("An error occurred when deleting raffle tickets");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("An error occurred when deleting raffle tickets: " + exp.getMessage());
         }
     }
 }

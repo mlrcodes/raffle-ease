@@ -2,14 +2,11 @@ package com.raffleease.tickets_service.Tickets.Services;
 
 import com.raffleease.common_models.DTO.Tickets.GenerateRandomRequest;
 import com.raffleease.common_models.DTO.Tickets.ReservationResponse;
-import com.raffleease.common_models.DTO.Tickets.TicketDTO;
 import com.raffleease.common_models.Exceptions.CustomExceptions.BusinessException;
 import com.raffleease.common_models.Exceptions.CustomExceptions.DataBaseHandlingException;
-import com.raffleease.tickets_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import com.raffleease.tickets_service.Tickets.Repositories.ITicketsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,7 +18,6 @@ import static com.raffleease.common_models.DTO.Tickets.TicketStatus.AVAILABLE;
 public class GenerateRandomService {
     private final ReservationService reservationService;
     private final ITicketsRepository repository;
-    private final TicketsMapper mapper;
 
     public ReservationResponse generateRandom(GenerateRandomRequest request) {
         Set<Ticket> availableTickets = findAvailableTickets(request.raffleId());
@@ -33,8 +29,8 @@ public class GenerateRandomService {
     private Set<Ticket> findAvailableTickets(Long raffleId) {
         try {
             return new HashSet<>(repository.findByRaffleIdAndStatus(raffleId, AVAILABLE));
-        } catch (DataAccessException exp) {
-            throw new DataBaseHandlingException("Error when retrieving tickets info");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Error when retrieving tickets info: " + exp.getMessage());
         }
     }
 

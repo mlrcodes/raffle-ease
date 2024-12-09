@@ -1,7 +1,7 @@
 package com.raffleease.auth_server.Services;
 
 import com.raffleease.auth_server.Model.User;
-import com.raffleease.common_models.Exceptions.CustomExceptions.AuthException;
+import com.raffleease.common_models.Exceptions.CustomExceptions.AuthorizationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -28,14 +28,14 @@ public class JwtService {
     public void validateToken(final String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new AuthException("Invalid JWT signature or token: " + e);
-        } catch (ExpiredJwtException e) {
-            throw new AuthException("JWT token is expired: " + e);
-        } catch (UnsupportedJwtException e) {
-            throw new AuthException("JWT token is unsupported: " + e);
-        } catch (IllegalArgumentException e) {
-            throw new AuthException("JWT claims string is empty: " + e);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException exp) {
+            throw new AuthorizationException("Invalid JWT signature or token: " + exp.getMessage());
+        } catch (ExpiredJwtException exp) {
+            throw new AuthorizationException("JWT token is expired: " + exp.getMessage());
+        } catch (UnsupportedJwtException exp) {
+            throw new AuthorizationException("JWT token is unsupported: " + exp.getMessage());
+        } catch (IllegalArgumentException exp) {
+            throw new AuthorizationException("JWT claims string is empty: " + exp.getMessage());
         }
     }
 

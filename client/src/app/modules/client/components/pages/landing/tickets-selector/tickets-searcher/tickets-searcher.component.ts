@@ -63,6 +63,7 @@ export class TicketsSearcherComponent {
     this.searchControl.setValue(ticket.ticketNumber, { emitEvent: false });
     this.searchResults = [];
     this.selectedTicket = ticket;
+    console.log(this.selectTicket)
   }
 
   closeReservation() {

@@ -8,7 +8,6 @@ import com.raffleease.tickets_service.Tickets.Mappers.TicketsMapper;
 import com.raffleease.tickets_service.Tickets.Models.Ticket;
 import com.raffleease.tickets_service.Tickets.Repositories.ITicketsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -40,20 +39,14 @@ public class SearchService {
                 throw new ObjectNotFoundException("No ticket for search was found");
             }
             return new HashSet<>(searchResults);
-        } catch (DataAccessException ex) {
-            throw new DataBaseHandlingException("Failed to access database when searching tickets");
+        } catch (Exception exp) {
+            throw new DataBaseHandlingException("Failed to access database when searching tickets: " + exp.getMessage());
         }
     }
 
     private List<Ticket> sortTicketsByNumber(Set<Ticket> tickets) {
         return tickets.stream()
-                .sorted(Comparator.comparing(Ticket::getTicketNumber))
+                .sorted(Comparator.comparing(ticket -> Long.parseLong(ticket.getTicketNumber())))
                 .collect(Collectors.toList());
-    }
-
-    public String getHighestTicketNumber(Long raffleId) {
-        Ticket ticket = ticketsRepository.findTopByRaffleIdOrderByTicketNumberDesc(raffleId)
-                .orElseThrow(() -> new ObjectNotFoundException("No tickets found for the given raffle"));
-        return ticket.getTicketNumber();
     }
 }

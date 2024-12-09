@@ -23,7 +23,7 @@ public class TicketsAvailabilityProducer {
         try {
             availableTicketsTemplate.send(message);
         } catch (KafkaException exp) {
-            throw new CustomKafkaException("Error sending tickets availability modification message: " + exp.getMessage());
+            throw new CustomKafkaException("Unexpected error sending tickets availability modification message: " + exp.getMessage());
         }
     }
 }

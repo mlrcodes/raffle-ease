@@ -24,7 +24,7 @@ public class FailureProducer {
         try {
             failureTemplate.send(message);
         } catch (KafkaException exp) {
-            throw new CustomKafkaException("Error sending order failure notification: " + exp.getMessage());
+            throw new CustomKafkaException("Unexpected error sending order failure notification: " + exp.getMessage());
         }
     }
 }

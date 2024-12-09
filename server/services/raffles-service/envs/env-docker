@@ -15,3 +15,5 @@ associations_host=associations-service
 associations_port=8081
 tickets_host=tickets-service
 tickets_port=8086
+RAFFLE_CLIENT_HOST=http://localhost:4200/
+RAFFLE_CLIENT_PATH=client/raffle/

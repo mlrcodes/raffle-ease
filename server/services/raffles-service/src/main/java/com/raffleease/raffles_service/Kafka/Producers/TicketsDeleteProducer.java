@@ -1,6 +1,7 @@
 package com.raffleease.raffles_service.Kafka.Producers;
 
 import com.raffleease.common_models.DTO.Kafka.TicketsDelete;
+import com.raffleease.common_models.Exceptions.CustomExceptions.CustomKafkaException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -19,6 +20,10 @@ public class TicketsDeleteProducer {
                 .setHeader(KafkaHeaders.TOPIC, "tickets-delete-topic")
                 .build();
 
-        ticketsDeleteTemplate.send(message);
+        try {
+            ticketsDeleteTemplate.send(message);
+        } catch (Exception exp) {
+            throw new CustomKafkaException("Unexpected error sending kafka message for deleting tickets: " + exp.getMessage());
+        }
     }
 }

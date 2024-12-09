@@ -1,7 +1,9 @@
 package com.raffleease.orders_service.Kafka.Producers;
 
 import com.raffleease.common_models.DTO.Kafka.PurchaseStatistics;
+import com.raffleease.common_models.Exceptions.CustomExceptions.CustomKafkaException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -19,6 +21,10 @@ public class StatisticsProducer {
                 .setHeader(KafkaHeaders.TOPIC, "purchase-statistics-topic")
                 .build();
 
-        statisticsTemplate.send(message);
+        try {
+            statisticsTemplate.send(message);
+        } catch (KafkaException exp) {
+            throw new CustomKafkaException("Unexpected error sending update statistics message: " + exp.getMessage());
+        }
     }
 }

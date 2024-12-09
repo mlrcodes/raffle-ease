@@ -32,6 +32,7 @@ public class RafflesMapper {
                 .id(raffle.getId())
                 .title(raffle.getTitle())
                 .description(raffle.getDescription())
+                .url(raffle.getURL())
                 .startDate(raffle.getStartDate())
                 .endDate(raffle.getEndDate())
                 .status(raffle.getStatus())

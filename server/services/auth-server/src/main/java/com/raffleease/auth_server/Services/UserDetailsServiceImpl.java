@@ -1,7 +1,7 @@
 package com.raffleease.auth_server.Services;
 
-import com.raffleease.auth_server.Model.User;
 import com.raffleease.auth_server.Model.UserPrincipal;
+import com.raffleease.common_models.Exceptions.CustomExceptions.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +15,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = usersService.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+        try {
+            return new UserPrincipal(usersService.findByEmail(email));
+        } catch (UsernameNotFoundException exp) {
+            throw new AuthenticationException(exp.getMessage());
         }
-        return new UserPrincipal(user);
     }
 }

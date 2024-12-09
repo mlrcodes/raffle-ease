@@ -1,7 +1,9 @@
 package com.raffleease.orders_service.Kafka.Producers;
 
 import com.raffleease.common_models.DTO.Kafka.TicketsRelease;
+import com.raffleease.common_models.Exceptions.CustomExceptions.CustomKafkaException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -20,6 +22,10 @@ public class ReleaseProducer {
                 .setHeader(KafkaHeaders.TOPIC, "tickets-release-topic")
                 .build();
 
-        ticketsReleaseTemplate.send(message);
+        try {
+            ticketsReleaseTemplate.send(message);
+        } catch (KafkaException exp) {
+            throw new CustomKafkaException("Unexpected error sending tickets release message: " + exp.getMessage());
+        }
     }
 }

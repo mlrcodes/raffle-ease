@@ -51,7 +51,7 @@ public class DeleteService {
     private void deleteDBRegistry(Long id) {
         try {
             repository.deleteById(id);
-        } catch (DataAccessException exp) {
+        } catch (Exception exp) {
             throw new DataBaseHandlingException("Failed to access database when deleting raffle");
         }
     }

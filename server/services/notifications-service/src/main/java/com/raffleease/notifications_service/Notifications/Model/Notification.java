@@ -30,5 +30,4 @@ public class Notification {
 
     @Column(unique = true)
     private Long orderId;
-
 }

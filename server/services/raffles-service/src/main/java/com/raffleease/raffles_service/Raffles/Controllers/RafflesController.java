@@ -65,7 +65,7 @@ public class RafflesController {
         return ResponseEntity.ok(service.get(id));
     }
 
-    @GetMapping("/get-all/")
+    @GetMapping("/get-all")
     public ResponseEntity<Set<RaffleDTO>> getAll(
             @RequestHeader("Authorization") String authHeader
     ) {

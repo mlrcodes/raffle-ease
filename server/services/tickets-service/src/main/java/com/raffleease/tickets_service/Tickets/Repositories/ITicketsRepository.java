@@ -19,6 +19,4 @@ public interface ITicketsRepository extends MongoRepository<Ticket, String>, Cus
     );
 
     void deleteByRaffleId(Long raffleId);
-
-    Optional<Ticket> findTopByRaffleIdOrderByTicketNumberDesc(Long raffleId);
 }

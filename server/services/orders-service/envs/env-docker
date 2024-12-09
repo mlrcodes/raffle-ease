@@ -4,7 +4,6 @@ eureka_host=discovery-server
 eureka_port=8761
 kafka_host=kafka-server
 kafka_port=9092
-kafka_server=kafka-server:9092
 orders_db_host=orders-db
 orders_db_port=5432
 orders_db=orders

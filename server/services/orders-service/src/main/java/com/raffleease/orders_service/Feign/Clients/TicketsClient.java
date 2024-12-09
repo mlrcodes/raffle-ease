@@ -1,6 +1,5 @@
-package com.raffleease.orders_service.Tickets.Client;
+package com.raffleease.orders_service.Feign.Clients;
 
-import com.raffleease.common_models.DTO.Orders.OrderRequest;
 import com.raffleease.common_models.DTO.Orders.Reservation;
 import com.raffleease.common_models.DTO.Tickets.PurchaseRequest;
 import com.raffleease.common_models.DTO.Tickets.TicketDTO;

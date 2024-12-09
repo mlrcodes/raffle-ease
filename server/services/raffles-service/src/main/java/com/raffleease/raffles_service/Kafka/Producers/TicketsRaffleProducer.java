@@ -23,8 +23,8 @@ public class TicketsRaffleProducer {
 
         try {
             raffleIdTemplate.send(message);
-        } catch (KafkaException exp) {
-            throw new CustomKafkaException("Error sending tickets availability modification message: " + exp.getMessage());
+        } catch (Exception exp) {
+            throw new CustomKafkaException("Unexpected error sending tickets availability modification message: " + exp.getMessage());
         }
     }
 }
